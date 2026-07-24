@@ -3,7 +3,7 @@ import { PrismaClient } from "../../generated/prisma/client";
 import dotenv from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
-
+import bcrypt from "bcryptjs";
 dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString, max: 1 });
@@ -20,23 +20,26 @@ async function main() {
   const admin = await prismaSeedClient.user.create({
     data: {
       email: "admin@devlog.com",
-      name: "Alex Rivera",
+      username: "Alex Rivera",
       role: Role.Admin,
+      password: await bcrypt.hash("12345", 12),
     },
   });
   const member1 = await prismaSeedClient.user.create({
     data: {
       email: "sarah.j@techhub.io",
-      name: "Sarah Chen",
+      username: "Sarah Chen",
       role: Role.Member,
+      password: await bcrypt.hash("12345", 12),
     },
   });
 
   const member2 = await prismaSeedClient.user.create({
     data: {
       email: "marcus.v@builder.dev",
-      name: "Marcus Vance",
+      username: "Marcus Vance",
       role: Role.Member,
+      password: await bcrypt.hash("12345", 12),
     },
   });
 
