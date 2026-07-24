@@ -34,11 +34,11 @@ model Post {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    Int
-  createdAt DateTime @default(now())
-  content   String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  id       Int      @id @default(autoincrement())
+  post     Post     @relation(fields: [postId], references: [id])
+  postId   Int
+  postedAt DateTime @default(now())
+  content  String
+  author   User     @relation(fields: [authorId], references: [id])
+  authorId Int
 }
