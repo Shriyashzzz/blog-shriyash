@@ -1,18 +1,5 @@
 import { prisma } from "../config/prisma";
 import { type Role } from "../../generated/prisma/enums";
-import { type User } from "../../generated/prisma/client";
-interface JwtPayLoad {
-  id: number;
-  username: string;
-  role: Role;
-}
-
-type UserDetailWithoutPassword = Omit<User, "password">;
-
-interface ReturnValidPayload {
-  isValid: Boolean;
-  user?: UserDetailWithoutPassword;
-}
 
 class Queries {
   async getPublishedPosts() {
@@ -27,18 +14,6 @@ class Queries {
       console.error(e);
       return undefined;
     }
-  }
-  async verifyTokenPayload(payload: JwtPayLoad): Promise<ReturnValidPayload> {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: payload.id,
-        role: payload.role,
-        username: payload.username,
-      },
-    });
-    if (!user) return { isValid: false };
-    const { password, ...userData } = user;
-    return { isValid: true, user: userData };
   }
 }
 

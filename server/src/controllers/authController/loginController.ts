@@ -1,5 +1,4 @@
 import type { NextFunction, Response, Request } from "express";
-import queries from "../../models/queries";
 import { prisma } from "../../config/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -27,11 +26,18 @@ const loginController = async (
   jwt.sign(
     { username: user.username, id: user.id, role: user.role },
     config.JWT_SECRET,
-    { expiresIn: user.role === Role.Member ? "7d" : "2d" },
+    { expiresIn: user.role === Role.Member ? "7d" : "2d" }, //remember to change cookies maxAge too if you change this!
     (err: Error | null, token: string | undefined) => {
       if (err) return next(err);
       // if no error send the signed token
-      return res.status(200).json({ token });
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: config.nodeEnv === "DEV" ? false : true,
+        sameSite: "lax",
+        maxAge: user.role === Role.Member ? 604800000 : 172800000, // 7days if an member, 2 days for admins in miliseconds // remember to change token expieresIn too if you change this!
+        path: "/",
+      });
+      res.sendStatus(200);
     },
   );
 };

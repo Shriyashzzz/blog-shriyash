@@ -1,17 +1,47 @@
 // import { Strategy as JwtStrategy } from "passport-jwt";
-import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
-import queries from "./models/queries";
+import { Strategy as JWTStrategy } from "passport-jwt";
 import config from "./config/config";
+import { type Request } from "express";
+import type { Role } from "../generated/prisma/enums";
+import type { DoneCallback } from "passport";
+import type { Algorithm } from "jsonwebtoken";
 
-const opts = {
+interface JwtPayload {
+  username: string;
+  id: number;
+  role: Role;
+  iat: number;
+  exp: number;
+}
+
+type ExtractTokenFunction = (req: Request) => string | null;
+
+interface JwtOptions {
+  secretOrKey: string;
+  jwtFromRequest: ExtractTokenFunction; // write your own custom extractor to get the session out the cookie
+  algorithms: Array<Algorithm>;
+}
+
+// options to check jwt tokens
+const opts: JwtOptions = {
   secretOrKey: config.JWT_SECRET,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // write your own custom extractor to get the session out the cookie
+  jwtFromRequest: extractTokenFromCookie, // write your own custom extractor to get the session out the cookie
+  algorithms: ["HS256"], // the algotithm to amke the token
 };
 
-const jwtStrategy = new JWTStrategy(opts, async (jwt_payload, done) => {
-  const isUserValid = await queries.verifyTokenPayload(jwt_payload);
-  if (isUserValid.isValid) return done(null, isUserValid.user);
-  return done(null, false);
-});
+function extractTokenFromCookie(req: Request) {
+  const authToken = req.cookies["auth_token"];
+  if (!authToken) return null;
+  return authToken;
+}
+
+const jwtStrategy = new JWTStrategy(
+  opts,
+  async (jwt_payload: JwtPayload, done: DoneCallback) => {
+    console.log(jwt_payload);
+    const { iat, exp, ...user } = jwt_payload;
+    return done(null, user);
+  },
+);
 
 export { jwtStrategy };
