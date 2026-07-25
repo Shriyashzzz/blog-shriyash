@@ -4,6 +4,7 @@ import { prisma } from "../../config/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "../../config/config";
+import { Role } from "../../../generated/prisma/enums";
 
 const loginController = async (
   req: Request,
@@ -26,7 +27,7 @@ const loginController = async (
   jwt.sign(
     { username: user.username, id: user.id, role: user.role },
     config.JWT_SECRET,
-    { expiresIn: "14d" },
+    { expiresIn: user.role === Role.Member ? "7d" : "2d" },
     (err: Error | null, token: string | undefined) => {
       if (err) return next(err);
       // if no error send the signed token
