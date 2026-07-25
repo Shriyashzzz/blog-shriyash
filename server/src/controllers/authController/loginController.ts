@@ -34,7 +34,7 @@ const loginController = async (
         httpOnly: true,
         secure: config.nodeEnv === "DEV" ? false : true,
         sameSite: "lax",
-        maxAge: user.role === Role.Member ? 604800000 : 172800000, // 7days if an member, 2 days for admins in miliseconds // remember to change token expieresIn too if you change this!
+        maxAge: user.role === Role.Member ? 604800000 : 172800000, // 7days if an member, 2 days for admins both in miliseconds // remember to change token expieresIn too if you change this!
         path: "/",
       });
       res.sendStatus(200);

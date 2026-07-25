@@ -2,10 +2,10 @@ import express from "express";
 import config from "./config/config";
 import { type Response, type Request } from "express";
 import homeRouter from "./routes/homeRouter";
-import loginRouter from "./routes/authRoutes/loginRouter";
 import passport from "passport";
 import { jwtStrategy } from "./jwtAuth";
 import cookieParser from "cookie-parser";
+import authRouter from "./routes/authRoutes/authRouters";
 
 const app = express();
 app.use(passport.initialize());
@@ -17,15 +17,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api", homeRouter);
-app.use("/api/login", loginRouter);
-app.get(
-  "/api/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    return res.send("welcome to the protected route");
-  },
-);
+app.use("/api/auth", authRouter);
+
 app.listen(config.port, () => {
   console.log(`Live: http://localhost:${config.port}`);
 });

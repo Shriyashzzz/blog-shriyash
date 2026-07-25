@@ -29,16 +29,17 @@ const opts: JwtOptions = {
   algorithms: ["HS256"], // the algotithm to amke the token
 };
 
+//custom token extract function from the cookie
 function extractTokenFromCookie(req: Request) {
   const authToken = req.cookies["auth_token"];
   if (!authToken) return null;
   return authToken;
 }
 
+// strategy to populate req.user
 const jwtStrategy = new JWTStrategy(
   opts,
   async (jwt_payload: JwtPayload, done: DoneCallback) => {
-    console.log(jwt_payload);
     const { iat, exp, ...user } = jwt_payload;
     return done(null, user);
   },
