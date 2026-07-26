@@ -14,6 +14,7 @@ const setUserCookie = (res: Response, user: User) => {
         if (err) return resolve(false);
         // if no error send the signed token
         res.cookie("auth_token", token, {
+          // branch this out to make this function completely independent
           httpOnly: true,
           secure: config.nodeEnv === "DEV" ? false : true,
           sameSite: "lax",

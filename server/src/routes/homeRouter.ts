@@ -1,9 +1,8 @@
-import { type Request, type Response } from "express";
 import { Router } from "express";
-import { sendPostsController } from "../controllers/sendpostController";
+import { clientHomePageController } from "../controllers/clientHomePageController";
 
 const homeRouter = Router();
 
-homeRouter.get("/", sendPostsController);
+homeRouter.get("/", clientHomePageController);
 
 export default homeRouter;
