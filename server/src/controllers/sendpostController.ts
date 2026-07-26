@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import queries from "../models/queries";
 
-const sendPostController = async (
+const sendPostsController = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -11,4 +11,4 @@ const sendPostController = async (
   res.json({ posts: publishedPosts });
 };
 
-export { sendPostController };
+export { sendPostsController };

@@ -1,13 +1,20 @@
 import { type Request, type Response } from "express";
 import config from "../../config/config";
+import { clearCookie } from "../../ultility/cookie";
 
-const logOutController = async (req: Request, res: Response) => {
-  res.clearCookie("auth_token", {
+const logOutController = (req: Request, res: Response) => {
+  const logInCookie = "auth_token";
+  const cookieOptions = {
     httpOnly: true,
     secure: config.nodeEnv === "DEV" ? false : true,
     path: "/",
-  });
-  return res.status(200).json({ message: "Logged Out Successfully" });
+  };
+  const isCookieCleared = clearCookie(res, logInCookie, cookieOptions);
+  if (isCookieCleared) {
+    return res.status(201).json({ message: "You have been logged out!" });
+  } else {
+    return res.status(500).json({ message: "Error Logging out" });
+  }
 };
 
 export default logOutController;

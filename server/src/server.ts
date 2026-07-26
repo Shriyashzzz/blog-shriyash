@@ -5,7 +5,7 @@ import homeRouter from "./routes/homeRouter";
 import passport from "passport";
 import { jwtStrategy } from "./jwtAuth";
 import cookieParser from "cookie-parser";
-import authRouter from "./routes/authRoutes/authRouters";
+import authRouter from "./routes/authRouters";
 
 const app = express();
 app.use(passport.initialize());
