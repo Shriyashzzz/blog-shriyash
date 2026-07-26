@@ -4,14 +4,14 @@ import config from "../config/config";
 import { Role } from "../../generated/prisma/enums";
 import type { User } from "../../generated/prisma/client";
 
-const setUserCookie = (res: Response, next: NextFunction, user: User) => {
-  try {
+const setUserCookie = (res: Response, user: User) => {
+  return new Promise((resolve) => {
     jwt.sign(
       { username: user.username, id: user.id, role: user.role },
       config.JWT_SECRET,
       { expiresIn: user.role === Role.Member ? "7d" : "2d" }, //remember to change cookies maxAge too if you change this!
       (err: Error | null, token: string | undefined) => {
-        if (err) return next(err);
+        if (err) return resolve(false);
         // if no error send the signed token
         res.cookie("auth_token", token, {
           httpOnly: true,
@@ -20,13 +20,10 @@ const setUserCookie = (res: Response, next: NextFunction, user: User) => {
           maxAge: user.role === Role.Member ? 604800000 : 172800000, // 7days if an member, 2 days for admins both in miliseconds // remember to change token expieresIn too if you change this!
           path: "/",
         });
-        return true;
+        return resolve(true);
       },
     );
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  });
 };
 
 interface CookieOption {

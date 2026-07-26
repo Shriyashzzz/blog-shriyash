@@ -13,6 +13,6 @@ authRouter.get(
   logOutController,
 );
 
-authRouter.post("/signUp", signUpController);
+authRouter.post("/signup", signUpController);
 
 export default authRouter;

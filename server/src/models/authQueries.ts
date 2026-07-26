@@ -21,12 +21,11 @@ class AuthQueries {
           email: email,
         },
       });
-
       if (newUser) {
         return {
           success: true,
           user: newUser,
-          message: "Successfulyy created a new user",
+          message: "Successfully created a new user",
         };
       }
       return {

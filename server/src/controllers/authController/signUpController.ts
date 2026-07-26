@@ -8,7 +8,7 @@ const signUpController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  // Incomplete: Make sure to validate the incoming payload!
+  // Incomplete: Make sure to validate the incoming payload including cheking if user already exists in a db!
   const { username, email, password, cpassword } = req.body;
   //hash password, call authqueries method to create new user, if unsuccessfull handle the error gracefully, will have an error message with the response
   const hashedPassword = await bcrypt.hash(password, 12);
@@ -20,7 +20,7 @@ const signUpController = async (
   if (!response.success)
     return res.status(500).json({ message: "Server Error" });
   if (response.user) {
-    const isCookieAdded = setUserCookie(res, next, response.user);
+    const isCookieAdded = await setUserCookie(res, response.user);
     if (isCookieAdded)
       return res
         .status(200)

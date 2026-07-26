@@ -21,7 +21,7 @@ const loginController = async (
   if (!isValidPass)
     return res.status(401).json({ message: "Incorrect Password" });
   try {
-    setUserCookie(res, next, user);
+    setUserCookie(res, user);
   } catch (e) {
     console.error(e);
     return res.sendStatus(501);
