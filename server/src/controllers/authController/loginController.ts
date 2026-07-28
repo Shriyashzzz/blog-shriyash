@@ -2,8 +2,7 @@ import type { NextFunction, Response, Request } from "express";
 import { prisma } from "../../config/prisma";
 import bcrypt from "bcryptjs";
 import { setTokenCookie } from "../../ultility/cookie";
-import config from "../../config/config";
-import { Role } from "../../../generated/prisma/enums";
+import { buildAuthCookieAndToken } from "../../ultility/cookie";
 import { validationResult, matchedData, body } from "express-validator";
 
 const loginValidator = [
@@ -40,21 +39,8 @@ const loginController = [
     if (!isValidPass)
       return res.status(401).json({ message: "Incorrect Password" });
     try {
-      const cookieOptions = {
-        httpOnly: true,
-        secure: config.nodeEnv === "DEV" ? false : true,
-        sameSite: "lax",
-        maxAge: user.role === Role.Member ? 604800000 : 172800000, // 7days if an member, 2 days for admins both in miliseconds // remember to change token "expieresIn" too if you change this!
-        path: "/",
-      };
-      const tokenPayload = {
-        username: user.username,
-        id: user.id,
-        role: user.role,
-      };
-      const tokenOptions = {
-        expiresIn: user.role === Role.Member ? "7d" : "2d", //remember to change cookies "maxAge" too if you change this!
-      };
+      const { cookieOptions, tokenPayload, tokenOptions } =
+        buildAuthCookieAndToken(user);
       const response = await setTokenCookie(
         res,
         "auth_token",

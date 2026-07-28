@@ -37,4 +37,10 @@ const newCommentController = [
   },
 ];
 
-export { newCommentController };
+const deleteComment = [
+  async (req: Request, res: Response) => {
+    const { commentId } = req.params;
+  },
+];
+
+export { newCommentController, deleteComment };

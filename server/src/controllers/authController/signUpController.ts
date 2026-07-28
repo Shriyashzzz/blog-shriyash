@@ -2,8 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import authQueries from "../../models/authQueries";
 import bcrypt from "bcryptjs";
 import { setTokenCookie } from "../../ultility/cookie";
-import config from "../../config/config";
-import { Role } from "../../../generated/prisma/enums";
+import { buildAuthCookieAndToken } from "../../ultility/cookie";
 import { validationResult, matchedData, body } from "express-validator";
 
 const signUpValidator = [
@@ -61,21 +60,8 @@ const signUpController = [
       return res.status(500).json({ message: "Server Error" });
     if (response.user) {
       // ------**cookie options**----------
-      const cookieOptions = {
-        httpOnly: true,
-        secure: config.nodeEnv === "DEV" ? false : true,
-        sameSite: "lax",
-        maxAge: response.user.role === Role.Member ? 604800000 : 172800000, // 7days if an member, 2 days for admins both in miliseconds // remember to change token "expieresIn" too if you change this!
-        path: "/",
-      };
-      const tokenPayload = {
-        username: response.user.username,
-        id: response.user.id,
-        role: response.user.role,
-      };
-      const tokenOptions = {
-        expiresIn: response.user.role === Role.Member ? "7d" : "2d", //remember to change cookies "maxAge" too if you change this!
-      };
+      const { cookieOptions, tokenPayload, tokenOptions } =
+        buildAuthCookieAndToken(response.user);
       // ------------**************************-----------
       const isCookieAdded = await setTokenCookie(
         res,
