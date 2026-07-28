@@ -7,6 +7,7 @@ import { jwtStrategy } from "./jwtAuth";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRouters";
 import postRouter from "./routes/postRouter";
+import commentRouter from "./routes/commentsRouters";
 
 const app = express();
 app.use(passport.initialize());
@@ -20,6 +21,8 @@ app.use(cookieParser());
 app.use("/api", homeRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
+app.use("/api/comment", commentRouter);
+
 app.listen(config.port, () => {
   console.log(`Live: http://localhost:${config.port}`);
 });

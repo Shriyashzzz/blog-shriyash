@@ -1,11 +1,10 @@
 import { prisma } from "../config/prisma";
 import { type Role } from "../../generated/prisma/enums";
-import type { Post } from "../../generated/prisma/client";
+import type { Comment } from "../../generated/prisma/client";
 
-interface QueryPost {
-  found: boolean;
-  published?: boolean;
-  post?: Post;
+interface CommentPost {
+  ok: boolean;
+  comments?: Array<Comment>;
 }
 
 class Queries {
@@ -14,6 +13,17 @@ class Queries {
       const getPosts = await prisma.post.findMany({
         where: {
           published: true,
+        },
+        include: {
+          comments: {
+            select: {
+              id: true,
+              postId: false,
+              postedAt: true,
+              content: true,
+              author: { select: { id: true, username: true, email: true } },
+            },
+          },
         },
       });
       return getPosts;
@@ -53,6 +63,35 @@ class Queries {
       return { found: true, published: false };
     } catch (e) {
       return { found: false };
+    }
+  }
+
+  async addnewComment(
+    postid: number,
+    commentContent: string,
+    authorId: number,
+  ): Promise<CommentPost> {
+    try {
+      const comment = await prisma.comment.create({
+        data: { postId: postid, content: commentContent, authorId: authorId },
+      });
+      if (comment) return { ok: true };
+      return { ok: false };
+    } catch (e) {
+      console.error(e);
+      return { ok: false };
+    }
+  }
+
+  async getPostComments(postId: number): Promise<CommentPost> {
+    try {
+      const comments = await prisma.comment.findMany({
+        where: { postId: postId },
+      });
+      return { ok: true, comments: comments };
+    } catch (e) {
+      console.error(e);
+      return { ok: false };
     }
   }
 }

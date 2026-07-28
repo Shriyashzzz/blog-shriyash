@@ -20,12 +20,14 @@ const loginValidator = [
 const loginController = [
   ...loginValidator,
   async (req: Request, res: Response, next: NextFunction) => {
-    //Incomplete!: validate the incoming payload from the client // correct errors on empty form | correct error on non existing users
+    // ---------------------**incoming payload vlaidatoin**-----------------
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res
         .status(400)
         .json({ message: "Invalid Login Info", errors: errors.array() });
+    // ----------------------------------------------------------------------
+
     const { email, password } = matchedData(req);
     if (!email || !password)
       return res
@@ -39,7 +41,6 @@ const loginController = [
       return res.status(401).json({ message: "Incorrect Password" });
     try {
       const cookieOptions = {
-        // branch this out to make this function completely independent
         httpOnly: true,
         secure: config.nodeEnv === "DEV" ? false : true,
         sameSite: "lax",
