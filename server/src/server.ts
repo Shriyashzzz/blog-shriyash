@@ -9,13 +9,14 @@ import authRouter from "./routes/authRouters";
 import postRouter from "./routes/postRouter";
 import commentRouter from "./routes/commentsRouters";
 import { errorHandler } from "./ultility/error";
+import cors from "cors";
 
 const app = express();
 app.use(passport.initialize());
 passport.use(jwtStrategy);
 
 app.disable("x-powered-by");
-
+app.use(cors());
 app.set("trust proxy", true);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
