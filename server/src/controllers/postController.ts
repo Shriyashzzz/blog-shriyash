@@ -7,7 +7,7 @@ const getPost = async (req: Request, res: Response) => {
   const intPostId = _.toInteger(postId);
   const response = await queries.getPost(intPostId);
   if (!response.found)
-    return res.status(401).json({ message: "Post Not Found!" });
+    return res.status(404).json({ message: "Post Not Found!" });
   if (!response.published) {
     return res
       .status(418)

@@ -7,7 +7,7 @@ import signUpController from "../controllers/authController/signUpController";
 const authRouter = Router();
 authRouter.post("/login", loginController);
 
-authRouter.get(
+authRouter.delete(
   "/logout",
   passport.authenticate("jwt", { session: false }),
   logOutController,

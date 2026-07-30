@@ -21,7 +21,8 @@ const newCommentController = [
   ...newCommentValidator,
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
     const { commentContent, postId } = matchedData(req);
     const intPostId = _.toInteger(postId);
     if (!req.user) return res.status(401).json("Error: User not logged in!");
@@ -57,7 +58,7 @@ const deleteComment = [
     if (!preOwnerCheck.ok)
       return next(new AppError("Could not delete the message", 400));
     if (preOwnerCheck.comment?.authorId !== req.user?.id)
-      return next(new AppError("Only an author can delete the message", 400));
+      return next(new AppError("Only an author can delete the message", 403));
     const response = await queries.deleteComment(intCommentId);
     if (!response.ok && response.error) return next(response.error);
     if (!response.ok)

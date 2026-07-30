@@ -14,9 +14,9 @@ import cors from "cors";
 const app = express();
 app.use(passport.initialize());
 passport.use(jwtStrategy);
-
+const corsOpts = { origin: process.env.CLIENT_URL, credentials: true };
 app.disable("x-powered-by");
-app.use(cors());
+app.use(cors(corsOpts));
 app.set("trust proxy", true);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
