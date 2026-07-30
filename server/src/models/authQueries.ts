@@ -1,10 +1,12 @@
-import type { User } from "../../generated/prisma/client";
+import { error } from "node:console";
+import { Prisma, type User } from "../../generated/prisma/client";
 import { prisma } from "../config/prisma";
 
 interface newUser {
   success: Boolean;
   user?: User;
   message: string;
+  errorCode?: string;
 }
 
 class AuthQueries {
@@ -32,7 +34,14 @@ class AuthQueries {
         success: false,
         message: "Error making a new user",
       };
-    } catch (e) {
+    } catch (e: unknown) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        return {
+          success: false,
+          message: "Error creating a new user, check error log",
+          errorCode: e.code,
+        };
+      }
       console.error(e);
       return {
         success: false,

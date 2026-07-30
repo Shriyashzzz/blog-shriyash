@@ -57,7 +57,12 @@ const signUpController = [
       username,
     );
     if (!response.success)
-      return res.status(500).json({ message: "Server Error" });
+      if (response.errorCode == "P2002")
+        return res
+          .status(400)
+          .json({ message: "User Already Exists! Please Log In!" });
+
+    return res.status(500).json({ message: "Server Error" });
     if (response.user) {
       const { cookieOptions, tokenPayload, tokenOptions } =
         buildAuthCookieAndToken(response.user);
