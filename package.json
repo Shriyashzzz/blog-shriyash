@@ -19,6 +19,9 @@
     "dev": "echo \" set up dev run time on the global packg.json\" && exit 1"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3",
+    "passport-jwt": "^4.0.1",
     "typescript": "^7.0.2"
   },
   "devDependencies": {

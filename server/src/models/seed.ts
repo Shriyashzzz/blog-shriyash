@@ -27,7 +27,7 @@ async function main() {
   });
   const member1 = await prismaSeedClient.user.create({
     data: {
-      email: "sarah.j@techhub.io",
+      email: " ",
       username: "Sarah Chen",
       role: Role.Member,
       password: await bcrypt.hash("12345", 12),
