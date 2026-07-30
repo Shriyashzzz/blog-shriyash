@@ -82,6 +82,25 @@ class Queries {
       return { ok: false };
     }
   }
+  async deleteComment(commentId: number) {
+    try {
+      const comment = await prisma.comment.delete({ where: { id: commentId } });
+      if (!comment) return { ok: false };
+      return { ok: true, comment: comment };
+    } catch (e: unknown) {
+      return { ok: false, error: e };
+    }
+  }
+  async getComment(commentId: number) {
+    try {
+      const comment = await prisma.comment.findUniqueOrThrow({
+        where: { id: commentId },
+      });
+      return { ok: true, comment: comment };
+    } catch (e: unknown) {
+      return { ok: false, error: e };
+    }
+  }
 
   async getPostComments(postId: number): Promise<CommentPost> {
     try {

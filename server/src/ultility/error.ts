@@ -26,7 +26,6 @@ function errorHandler(
   console.error(err);
 
   res.status(statusCode).json({
-    success: false,
     error: err.isIntentional ? err.message : "Something went wrong",
   });
 }

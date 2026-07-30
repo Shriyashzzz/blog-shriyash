@@ -1,7 +1,14 @@
-import { type Request, type Response, type NextFunction } from "express";
+import {
+  type Request,
+  type Response,
+  type NextFunction,
+  response,
+} from "express";
 import queries from "../models/queries";
 import _ from "lodash";
 import { validationResult, matchedData, body, param } from "express-validator";
+import { AppError, NotFoundError } from "../ultility/error";
+import { type } from "node:os";
 
 const newCommentValidator = [
   body("commentContent")
@@ -38,8 +45,24 @@ const newCommentController = [
 ];
 
 const deleteComment = [
-  async (req: Request, res: Response) => {
+  async (
+    req: Request<{ commentId: string }>,
+    res: Response,
+    next: NextFunction,
+  ) => {
     const { commentId } = req.params;
+    if (!commentId) return next(new AppError("No comment Id ", 400));
+    const intCommentId = _.parseInt(commentId);
+    const preOwnerCheck = await queries.getComment(intCommentId);
+    if (!preOwnerCheck.ok)
+      return next(new AppError("Could not delete the message", 400));
+    if (preOwnerCheck.comment?.authorId !== req.user?.id)
+      return next(new AppError("Only an author can delete the message", 400));
+    const response = await queries.deleteComment(intCommentId);
+    if (!response.ok && response.error) return next(response.error);
+    if (!response.ok)
+      return res.status(404).json({ message: "comment not found" });
+    return res.status(200).json({ message: "comment successfully deleted" });
   },
 ];
 
