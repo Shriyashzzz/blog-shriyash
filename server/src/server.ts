@@ -8,10 +8,13 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRouters";
 import postRouter from "./routes/postRouter";
 import commentRouter from "./routes/commentsRouters";
+import { errorHandler } from "./ultility/error";
 
 const app = express();
 app.use(passport.initialize());
 passport.use(jwtStrategy);
+
+app.disable("x-powered-by");
 
 app.set("trust proxy", true);
 app.use(express.urlencoded({ extended: true }));
@@ -22,6 +25,7 @@ app.use("/api", homeRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
+app.use(errorHandler);
 
 app.listen(config.port, () => {
   console.log(`Live: http://localhost:${config.port}`);

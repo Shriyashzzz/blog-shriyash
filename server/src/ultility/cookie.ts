@@ -56,6 +56,7 @@ interface AuthUser {
 }
 
 const buildAuthCookieAndToken = (user: AuthUser) => {
+  //builds cookie options for login and sign up controllers
   const isMember = user.role === Role.Member;
   const maxAge = isMember ? 604800000 : 172800000; // 7d vs 2d in ms
   const expiresIn = isMember ? "7d" : "2d";

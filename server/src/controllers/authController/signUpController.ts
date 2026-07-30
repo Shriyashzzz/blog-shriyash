@@ -59,10 +59,8 @@ const signUpController = [
     if (!response.success)
       return res.status(500).json({ message: "Server Error" });
     if (response.user) {
-      // ------**cookie options**----------
       const { cookieOptions, tokenPayload, tokenOptions } =
         buildAuthCookieAndToken(response.user);
-      // ------------**************************-----------
       const isCookieAdded = await setTokenCookie(
         res,
         "auth_token",
