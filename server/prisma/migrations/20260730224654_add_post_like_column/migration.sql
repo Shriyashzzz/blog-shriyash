@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Comment" ALTER COLUMN "postId" SET DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "Post" ADD COLUMN     "love" INTEGER NOT NULL DEFAULT 0,
+ALTER COLUMN "viewCount" DROP DEFAULT;

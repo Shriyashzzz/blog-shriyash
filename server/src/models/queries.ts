@@ -1,12 +1,15 @@
 import { prisma } from "../config/prisma";
-import { type Role } from "../../generated/prisma/enums";
 import type { Comment } from "../../generated/prisma/client";
-
+import { Prisma } from "../../generated/prisma/client";
 interface CommentPost {
   ok: boolean;
   comments?: Array<Comment>;
 }
 
+interface PostLove {
+  ok: boolean;
+  loved?: boolean;
+}
 class Queries {
   async getPublishedPosts() {
     try {
@@ -15,6 +18,9 @@ class Queries {
           published: true,
         },
         include: {
+          _count: {
+            select: { loves: true },
+          },
           comments: {
             select: {
               id: true,
@@ -38,7 +44,11 @@ class Queries {
       const post = await prisma.post.findUniqueOrThrow({
         where: { id: postId },
         include: {
-          authorId: false,
+          _count: {
+            select: {
+              loves: true,
+            },
+          },
           author: {
             select: { id: false, username: true, email: true }, // making sure password is not fetched
           },
@@ -82,20 +92,50 @@ class Queries {
       return { ok: false };
     }
   }
-  async deleteComment(commentId: number) {
+
+  async lovePost(postId: number, authorId: number): Promise<PostLove> {
     try {
-      const comment = await prisma.comment.delete({ where: { id: commentId } });
-      if (!comment) return { ok: false };
-      return { ok: true, comment: comment };
+      const postLove = await prisma.postLove.create({
+        data: {
+          postId: postId,
+          authorId: authorId,
+        },
+      });
+      return { ok: true, loved: true };
     } catch (e: unknown) {
-      return { ok: false, error: e };
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code == "P2002"
+      ) {
+        try {
+          const postLove = await prisma.postLove.delete({
+            where: { postId_authorId: { postId, authorId } },
+          });
+          return { ok: true, loved: false };
+        } catch (e) {
+          console.log("Error deleting Love", e);
+          return { ok: false };
+        }
+      }
+      console.log("Error Loving this post", e);
+      return { ok: false };
     }
   }
+
   async getComment(commentId: number) {
     try {
       const comment = await prisma.comment.findUniqueOrThrow({
         where: { id: commentId },
       });
+      return { ok: true, comment: comment, autherId: comment.authorId };
+    } catch (e: unknown) {
+      return { ok: false, error: e };
+    }
+  }
+  async deleteComment(commentId: number) {
+    try {
+      const comment = await prisma.comment.delete({ where: { id: commentId } });
+      if (!comment) return { ok: false };
       return { ok: true, comment: comment };
     } catch (e: unknown) {
       return { ok: false, error: e };

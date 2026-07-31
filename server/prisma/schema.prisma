@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
+  id       Int        @id @default(autoincrement())
+  email    String     @unique
   username String
   password String
-  role     Role      @default(Member)
+  role     Role       @default(Member)
   comments Comment[]
   posts    Post[]
+  loves    PostLove[]
 }
 
 enum Role {
@@ -23,23 +24,34 @@ enum Role {
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   title     String
-  content   String    @db.Text
-  published Boolean   @default(false)
-  viewCount Int       @default(0)
-  createdAt DateTime  @default(now())
+  loves     PostLove[]
+  content   String     @db.Text
+  published Boolean    @default(false)
+  viewCount Int
+  createdAt DateTime   @default(now())
   comments  Comment[]
-  author    User      @relation(fields: [authorId], references: [id])
+  author    User       @relation(fields: [authorId], references: [id])
   authorId  Int
 }
 
 model Comment {
   id       Int      @id @default(autoincrement())
   post     Post     @relation(fields: [postId], references: [id])
-  postId   Int
+  postId   Int      @default(0)
   postedAt DateTime @default(now())
   content  String
   author   User     @relation(fields: [authorId], references: [id])
   authorId Int
+}
+
+model PostLove {
+  id       Int  @id @default(autoincrement())
+  postId   Int
+  authorId Int
+  post     Post @relation(fields: [postId], references: [id])
+  author   User @relation(fields: [authorId], references: [id])
+
+  @@unique([postId, authorId])
 }
