@@ -29,7 +29,7 @@ model Post {
   loves     PostLove[]
   content   String     @db.Text
   published Boolean    @default(false)
-  viewCount Int
+  viewCount Int        @default(0)
   createdAt DateTime   @default(now())
   comments  Comment[]
   author    User       @relation(fields: [authorId], references: [id])

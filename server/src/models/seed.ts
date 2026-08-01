@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import bcrypt from "bcryptjs";
+
 dotenv.config();
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString, max: 1 });
@@ -39,6 +40,15 @@ async function main() {
       email: "marcus.v@builder.dev",
       username: "Marcus Vance",
       role: Role.Member,
+      password: await bcrypt.hash("12345", 12),
+    },
+  });
+
+  const admin1 = await prismaSeedClient.user.create({
+    data: {
+      email: "ghimireshriyash@gmail.com",
+      username: "Shriyash Ghimire",
+      role: Role.Admin,
       password: await bcrypt.hash("12345", 12),
     },
   });
