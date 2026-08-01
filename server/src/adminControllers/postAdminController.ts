@@ -1,16 +1,25 @@
-import {
-  type Request,
-  type Response,
-  type NextFunction,
-  response,
-} from "express";
+import { type Request, type Response, type NextFunction } from "express";
 import queries from "../models/queries";
 import _ from "lodash";
-import adminRoutes from "../adminRoutes/rootAdminRouter";
 import adminQueries from "../models/adminQueries";
 import { AppError } from "../ultility/error";
 
+// get's all posts from db
+const getAdminPostsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const response = await adminQueries.getPostsForAdmin();
+  if (!response.ok)
+    return next(new AppError("Error fetching Posts form the database.", 500));
+
+  return res.status(200).json({ posts: response.posts });
+};
+
+// get's one post
 const getAdminPost = async (req: Request, res: Response) => {
+  //ensure and validate the incoming query
   const { postId } = req.params;
   const intPostId = _.toInteger(postId);
   const response = await queries.getPost(intPostId);
@@ -24,7 +33,7 @@ const createPostController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  //make cure to validate the incoming payload later
+  //make sure to validate the incoming payload later
   const { title, content, published } = req.body;
   const { user } = req;
 
@@ -42,4 +51,4 @@ const createPostController = async (
     newPost: response.newPost,
   });
 };
-export { getAdminPost, createPostController };
+export { getAdminPost, createPostController, getAdminPostsController };

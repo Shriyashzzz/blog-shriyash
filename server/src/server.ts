@@ -10,7 +10,8 @@ import postRouter from "./routes/postRouter";
 import commentRouter from "./routes/commentsRouters";
 import { errorHandler } from "./ultility/error";
 import cors from "cors";
-import adminRoutes from "./adminRoutes/rootAdminRouter";
+import postAdminRouter from "./adminRoutes/postAdminRouter";
+import commentAdminRouter from "./adminRoutes/commentAdminRouter";
 
 const app = express();
 app.use(passport.initialize());
@@ -28,8 +29,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
-app.use("/api/admin", adminRoutes);
-
+app.use("/api/admin", postAdminRouter);
+app.use("api/admin/comment", commentAdminRouter);
 app.use(errorHandler);
 
 app.listen(config.port, () => {

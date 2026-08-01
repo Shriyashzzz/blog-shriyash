@@ -45,6 +45,16 @@ class AdminQueries {
       return { ok: false };
     }
   }
+
+  async deleteComment(commentId: number) {
+    try {
+      const comment = await prisma.comment.delete({ where: { id: commentId } });
+      return { ok: true };
+    } catch (e) {
+      console.log(e);
+      return { ok: false };
+    }
+  }
 }
 
 const adminQueries = new AdminQueries();
