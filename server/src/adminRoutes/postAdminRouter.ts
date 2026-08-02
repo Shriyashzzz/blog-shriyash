@@ -1,7 +1,10 @@
 import { Router } from "express";
 import checkIfUserAdmin from "../middlewares/checkAdmin";
 import passport from "passport";
-import { getAdminPostsController } from "../adminControllers/postAdminController";
+import {
+  getAdminPostsController,
+  updatePost,
+} from "../adminControllers/postAdminController";
 
 import {
   createPostController,
@@ -18,7 +21,7 @@ postAdminRouter.get(
 );
 
 postAdminRouter.get(
-  "/post/:postId",
+  "/getpost/:postId",
   passport.authenticate("jwt", { session: false }),
   checkIfUserAdmin,
   getAdminPost,
@@ -31,6 +34,10 @@ postAdminRouter.post(
   createPostController,
 );
 
-postAdminRouter.post("/post", passport.authenticate("jwt", { session: false }));
+postAdminRouter.patch(
+  "/update/:postId",
+  passport.authenticate("jwt", { session: false }, checkIfUserAdmin),
+  updatePost,
+);
 
 export default postAdminRouter;

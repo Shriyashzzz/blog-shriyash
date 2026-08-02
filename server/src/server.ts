@@ -29,7 +29,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
-app.use("/api/admin", postAdminRouter);
+app.use("/api/admin/posts", postAdminRouter);
 app.use("api/admin/comment", commentAdminRouter);
 app.use(errorHandler);
 

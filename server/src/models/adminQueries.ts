@@ -4,6 +4,17 @@ import { prisma } from "../config/prisma";
 interface PostsResponse {
   ok: boolean;
   posts?: Post[];
+  error?: unknown;
+}
+interface UpdatePost {
+  title?: string;
+  content?: string;
+  published?: boolean;
+}
+
+interface QueryResponse {
+  ok: boolean;
+  error?: unknown;
 }
 
 class AdminQueries {
@@ -20,7 +31,7 @@ class AdminQueries {
       });
       return { ok: true, posts: posts };
     } catch (e) {
-      return { ok: false };
+      return { ok: false, error: e };
     }
   }
 
@@ -42,7 +53,7 @@ class AdminQueries {
       return { ok: true, newPost: newPost };
     } catch (e: unknown) {
       console.log(e);
-      return { ok: false };
+      return { ok: false, error: e };
     }
   }
 
@@ -53,6 +64,42 @@ class AdminQueries {
     } catch (e) {
       console.log(e);
       return { ok: false };
+    }
+  }
+
+  async updatePost(
+    updatePayload: UpdatePost,
+    postId: number,
+    authorId: number,
+  ): Promise<QueryResponse> {
+    try {
+      if (updatePayload.content) {
+        const postContent = await prisma.post.update({
+          where: { id: postId, authorId: authorId },
+          data: {
+            content: updatePayload.content,
+          },
+        });
+      }
+      if (updatePayload.title) {
+        const postTitle = await prisma.post.update({
+          where: { id: postId, authorId: authorId },
+          data: {
+            title: updatePayload.title,
+          },
+        });
+      }
+      if (updatePayload.published) {
+        const postPublished = await prisma.post.update({
+          where: { id: postId, authorId: authorId },
+          data: {
+            published: updatePayload.published,
+          },
+        });
+      }
+      return { ok: true };
+    } catch (e: unknown) {
+      return { ok: false, error: e };
     }
   }
 }

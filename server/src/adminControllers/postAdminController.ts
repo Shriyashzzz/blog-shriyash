@@ -4,6 +4,12 @@ import _ from "lodash";
 import adminQueries from "../models/adminQueries";
 import { AppError } from "../ultility/error";
 
+interface UpdatePost {
+  title?: string;
+  content?: string;
+  published?: boolean;
+}
+
 // get's all posts from db
 const getAdminPostsController = async (
   req: Request,
@@ -51,4 +57,37 @@ const createPostController = async (
     newPost: response.newPost,
   });
 };
-export { getAdminPost, createPostController, getAdminPostsController };
+
+const updatePost = async (req: Request, res: Response, next: NextFunction) => {
+  //validatae the incoming payload later
+  // send there is nothing to change if all undefined
+  const { postId } = req.params;
+  if (typeof postId !== "string")
+    return next(
+      new AppError("Incoming post Id stirng is not a valid type", 400),
+    );
+  const intPostId = _.parseInt(postId);
+  const { title, content, published } = req.body;
+  const updatePayload: UpdatePost = {
+    title: title,
+    content: content,
+    published: published,
+  };
+
+  const response = await adminQueries.updatePost(
+    updatePayload,
+    intPostId,
+    req.user!.id,
+  );
+
+  if (!response.ok)
+    return next(new AppError("Unable to update the post ", 500));
+
+  return res.status(200).json({ message: "Successfully updated the post" });
+};
+export {
+  getAdminPost,
+  createPostController,
+  getAdminPostsController,
+  updatePost,
+};
