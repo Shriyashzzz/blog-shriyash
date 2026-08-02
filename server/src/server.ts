@@ -30,7 +30,7 @@ app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
 app.use("/api/admin/posts", postAdminRouter);
-app.use("api/admin/comment", commentAdminRouter);
+app.use("/api/admin/comment", commentAdminRouter);
 app.use(errorHandler);
 
 app.listen(config.port, () => {
