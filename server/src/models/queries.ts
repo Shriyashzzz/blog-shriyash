@@ -82,6 +82,10 @@ class Queries {
     authorId: number,
   ): Promise<CommentPost> {
     try {
+      const post = await prisma.post.findUniqueOrThrow({
+        where: { id: postid },
+      });
+      if (!post.published) return { ok: false };
       const comment = await prisma.comment.create({
         data: { postId: postid, content: commentContent, authorId: authorId },
       });
