@@ -119,6 +119,7 @@ class AdminQueries {
             content: updatePayload.content,
           },
         });
+        return { ok: true };
       }
       if (updatePayload.title) {
         const postTitle = await prisma.post.update({
@@ -127,17 +128,22 @@ class AdminQueries {
             title: updatePayload.title,
           },
         });
+        return { ok: true };
       }
-      if (updatePayload.published) {
+      if (typeof updatePayload.published !== "undefined") {
+        //checking against undefined becasue this is an boolean property
         const postPublished = await prisma.post.update({
           where: { id: postId, authorId: authorId },
           data: {
             published: updatePayload.published,
           },
         });
+
+        return { ok: true };
       }
-      return { ok: true };
+      return { ok: false };
     } catch (e: unknown) {
+      console.log(e);
       return { ok: false, error: e };
     }
   }
