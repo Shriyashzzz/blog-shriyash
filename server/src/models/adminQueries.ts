@@ -27,6 +27,14 @@ class AdminQueries {
               loves: true,
             },
           },
+          comments: {
+            select: {
+              id: true,
+              content: true,
+              postedAt: true,
+              authorId: true,
+            },
+          },
         },
       });
       return { ok: true, posts: posts };
@@ -63,6 +71,37 @@ class AdminQueries {
       return { ok: true };
     } catch (e) {
       console.log(e);
+      return { ok: false };
+    }
+  }
+
+  async getPost(postId: number) {
+    try {
+      const post = await prisma.post.findUniqueOrThrow({
+        where: { id: postId },
+        include: {
+          _count: {
+            select: {
+              loves: true,
+            },
+          },
+          author: {
+            select: { id: false, username: true, email: true }, // making sure password is not fetched
+          },
+          comments: {
+            select: {
+              id: true,
+              postId: false,
+              postedAt: true,
+              content: true,
+              author: { select: { id: true, username: true, email: true } },
+            },
+          },
+        },
+      });
+
+      return { ok: true, post: post };
+    } catch (e) {
       return { ok: false };
     }
   }

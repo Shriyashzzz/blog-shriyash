@@ -18,14 +18,16 @@ async function main() {
   await prismaSeedClient.user.deleteMany();
 
   // seed users
+
   const admin = await prismaSeedClient.user.create({
     data: {
-      email: "admin@devlog.com",
-      username: "Alex Rivera",
+      email: "ghimireshriyash@gmail.com",
+      username: "Shriyash Ghimire",
       role: Role.Admin,
       password: await bcrypt.hash("12345", 12),
     },
   });
+
   const member1 = await prismaSeedClient.user.create({
     data: {
       email: " ",
@@ -40,15 +42,6 @@ async function main() {
       email: "marcus.v@builder.dev",
       username: "Marcus Vance",
       role: Role.Member,
-      password: await bcrypt.hash("12345", 12),
-    },
-  });
-
-  const admin1 = await prismaSeedClient.user.create({
-    data: {
-      email: "ghimireshriyash@gmail.com",
-      username: "Shriyash Ghimire",
-      role: Role.Admin,
       password: await bcrypt.hash("12345", 12),
     },
   });
@@ -94,7 +87,7 @@ Building responsive user interfaces is fast and predictable when using utility-f
 Check out the official documentation on [TailwindCSS Docs](https://tailwindcss.com) for more tips!`,
       published: true,
       viewCount: 95,
-      authorId: member1.id,
+      authorId: admin.id,
     },
   });
 

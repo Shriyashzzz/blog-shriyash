@@ -27,10 +27,10 @@ const getAdminPostsController = async (
 const getAdminPost = async (req: Request, res: Response) => {
   //ensure and validate the incoming query
   const { postId } = req.params;
+  console.log(postId);
   const intPostId = _.toInteger(postId);
-  const response = await queries.getPost(intPostId);
-  if (!response.found)
-    return res.status(404).json({ message: "Post Not Found!" });
+  const response = await adminQueries.getPost(intPostId);
+  if (!response.ok) return res.status(404).json({ message: "Post Not Found!" });
   return res.status(200).json({ message: "Post Found", post: response.post });
 };
 

@@ -36,7 +36,8 @@ postAdminRouter.post(
 
 postAdminRouter.patch(
   "/update/:postId",
-  passport.authenticate("jwt", { session: false }, checkIfUserAdmin),
+  passport.authenticate("jwt", { session: false }),
+  checkIfUserAdmin,
   updatePost,
 );
 
