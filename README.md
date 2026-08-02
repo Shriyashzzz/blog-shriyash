@@ -1,6 +1,6 @@
 # blog-shriyash
 
-A full-stack blog application with a REST API backend (Node.js/Express/TypeScript/Prisma) and two frontends — one for readers (`client-User`) and one for admins (`client-Admin`).
+A full-stack blog application with a REST API backend (Node.js/Express/TypeScript/Prisma) and two frontends. One for readers (`client-User`) and one for admins (`client-Admin`).
 
 ## Tech Stack
 
