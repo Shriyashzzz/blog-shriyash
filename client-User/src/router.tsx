@@ -1,11 +1,15 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App";
 import { AllPostContainer } from "./components/AllPostContainer";
+import { LoginPage } from "./Pages/Login";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{ index: true, element: <AllPostContainer /> }],
+    children: [
+      { index: true, element: <AllPostContainer /> },
+      { path: "/login", element: <LoginPage /> },
+    ],
   },
 ]);
