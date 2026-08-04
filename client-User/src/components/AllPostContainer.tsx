@@ -1,10 +1,10 @@
 import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useEffect } from "react";
-import Markdown from "react-markdown";
-import remarkGm from "remark-gfm";
+import { PreviewPost } from "./PreviewPost";
+import { Spinner } from "@radix-ui/themes";
 
-interface Post {
+export interface Post {
   authorId: number;
   content: string;
   createdAt: string;
@@ -31,24 +31,17 @@ export function AllPostContainer() {
     return <>Error Occurred</>;
   }
   if (loading || posts.length == 0) {
-    return <>Loading</>;
+    return (
+      <div className="flex h-dvh justify-center pt-5">
+        <Spinner size="3" />
+      </div>
+    );
   }
 
   return (
     <section className="m-5 grid h-full auto-rows-fr grid-cols-1 gap-4">
       {posts.map((post) => {
-        return (
-          <article className="flex h-full flex-col justify-around bg-gray-100 p-2 dark:bg-gray-500">
-            <div>
-              <h1 className="cursor-pointer font-bold text-green-700 dark:text-green-500">
-                {post.title}
-              </h1>
-            </div>
-            <p className="line-clamp-2 max-w-[1600px] truncate">
-              <Markdown remarkPlugins={[remarkGm]}>{post.content}</Markdown>
-            </p>
-          </article>
-        );
+        return <PreviewPost key={post.id} post={post} />;
       })}
     </section>
   );

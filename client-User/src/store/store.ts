@@ -7,6 +7,6 @@ const store = configureStore({
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = { theme: { value: "light" | "dark" } };
 export type AppDispatch = typeof store.dispatch;
 export { store };

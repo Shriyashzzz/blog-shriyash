@@ -1,11 +1,17 @@
 import { Header } from "./components/Header";
 import { MainContent } from "./components/MainContent";
+import { RootState } from "./store/store.ts";
+import { Theme } from "@radix-ui/themes";
+import { useSelector } from "react-redux";
 
 function App() {
+  const theme = useSelector((state: RootState) => state.theme.value);
   return (
     <>
-      <Header />
-      <MainContent />
+      <Theme appearance={theme}>
+        <Header />
+        <MainContent />
+      </Theme>
     </>
   );
 }
