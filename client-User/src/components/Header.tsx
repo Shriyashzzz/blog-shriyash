@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 import { Switch } from "@radix-ui/themes";
 import { switchTheme } from "../store/themeSlice";
 import { MoonIcon } from "@radix-ui/react-icons";
-
+import { SunIcon } from "@radix-ui/react-icons";
 export function Header() {
   const theme = useSelector((state: RootState) => state.theme.value);
   const dispatch = useDispatch();
@@ -16,14 +16,16 @@ export function Header() {
           &lt;Shriyash Uncompiled / &gt;
         </p>
       </div>
-      <div className="flex flex-row items-center gap-3">
-        <Switch
-          size="3"
-          checked={theme === "dark"}
-          onCheckedChange={() => dispatch(switchTheme())}
-        />
-        <MoonIcon className="size-6" />
-      </div>
+      <button
+        onClick={() => dispatch(switchTheme())}
+        className="flex cursor-pointer flex-row items-center gap-3 transition duration-300 ease-in-out hover:-translate-y-0.5"
+      >
+        {theme === "light" ? (
+          <MoonIcon className="size-6" />
+        ) : (
+          <SunIcon className="size-6" />
+        )}
+      </button>
     </header>
   );
 }
