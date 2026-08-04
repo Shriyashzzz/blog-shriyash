@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { isAuth, isNotAuth } from "../store/authSlice";
 import { RootState } from "../store/store";
 import { useSelector } from "react-redux";
+import { Link } from "react-router";
+
 interface UserRequestBody {
   email: string;
   password: string;
@@ -86,11 +88,6 @@ export function LoginPage() {
               <label htmlFor="password" className="block text-sm/6 font-medium">
                 Password
               </label>
-              <div className="text-sm">
-                <a href="#" className="font-semibold hover:text-green-600">
-                  Forgot password?
-                </a>
-              </div>
             </div>
             <div className="mt-2">
               <input
@@ -114,8 +111,17 @@ export function LoginPage() {
             </button>
           </div>
         </Form>
-        <div className="flex items-center justify-center pt-3">
+        <div className="flex flex-col items-center justify-center gap-2 pt-3">
           <p className="text-red-500">{invalidMesasge}</p>
+          <div className="text-sm">
+            <Link
+              to="/signup"
+              viewTransition={true}
+              className="font-semibold hover:text-green-600"
+            >
+              Sign Up?
+            </Link>
+          </div>
         </div>
       </div>
     </div>
