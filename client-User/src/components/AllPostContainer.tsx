@@ -35,15 +35,17 @@ export function AllPostContainer() {
   }
 
   return (
-    <section className="m-5 grid auto-rows-fr grid-cols-1 gap-4">
+    <section className="m-5 grid h-full auto-rows-fr grid-cols-1 gap-4">
       {posts.map((post) => {
         return (
-          <article className="flex h-full flex-col bg-gray-100 p-2 dark:bg-gray-500">
+          <article className="flex h-full flex-col justify-around bg-gray-100 p-2 dark:bg-gray-500">
             <div>
-              <h1 className="font-bold">{post.title}</h1>
+              <h1 className="cursor-pointer font-bold text-green-700 dark:text-green-500">
+                {post.title}
+              </h1>
             </div>
-            <p className="line-clamp-3 truncate">
-              <Markdown>{post.content}</Markdown>
+            <p className="line-clamp-2 max-w-[1600px] truncate">
+              <Markdown remarkPlugins={[remarkGm]}>{post.content}</Markdown>
             </p>
           </article>
         );
