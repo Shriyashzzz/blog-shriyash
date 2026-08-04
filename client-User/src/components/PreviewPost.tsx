@@ -6,7 +6,7 @@ interface PreviewPostProps {
   post: Post;
 }
 
-export function PreviewPost({ post }) {
+export function PreviewPost({ post }: PreviewPostProps) {
   return (
     <article className="flex h-full min-h-28 flex-col justify-around bg-gray-100 p-2 dark:bg-gray-500">
       <div>

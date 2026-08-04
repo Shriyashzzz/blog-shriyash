@@ -1,5 +1,5 @@
 import { Header } from "./components/Header";
-import { MainContent } from "./components/MainContent";
+import { MainContent } from "./Pages/MainContent.tsx";
 import { RootState } from "./store/store.ts";
 import { Theme } from "@radix-ui/themes";
 import { useSelector } from "react-redux";
