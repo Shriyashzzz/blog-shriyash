@@ -58,7 +58,9 @@ class Queries {
               postId: false,
               postedAt: true,
               content: true,
-              author: { select: { id: true, username: true, email: true } },
+              author: {
+                select: { id: true, username: true, email: true, role: true },
+              },
             },
           },
         },
