@@ -13,10 +13,10 @@ A full-stack blog application with a REST API backend (Node.js/Express/TypeScrip
 
 ```
 blog-shriyash/
-├── client-Admin/     # Admin frontend
-├── client-User/      # User-facing frontend
-└── server/           # Express API
-    ├── prisma/        # Prisma schema & migrations
+├── client-Admin/
+├── client-User/
+└── server/
+    ├── prisma/
     └── src/
         ├── adminControllers/
         ├── adminRoutes/
@@ -75,11 +75,12 @@ All authenticated routes use `passport.authenticate("jwt")` and expect the JWT t
 
 ### Auth — `/api/auth`
 
-| Method | Route              | Auth      | Description                                                       |
-| ------ | ------------------ | --------- | ----------------------------------------------------------------- |
-| POST   | `/api/auth/signup` | No        | Register a new user. Body: `username, email, password, cpassword` |
-| POST   | `/api/auth/login`  | No        | Log in. Body: `email, password`. Sets `auth_token` cookie         |
-| DELETE | `/api/auth/logout` | Yes (JWT) | Log out, clears `auth_token` cookie                               |
+| Method | Route              | Auth           | Description                                                       |
+| ------ | ------------------ | -------------- | ----------------------------------------------------------------- |
+| POST   | `/api/auth/signup` | No             | Register a new user. Body: `username, email, password, cpassword` |
+| POST   | `/api/auth/login`  | No             | Log in. Body: `email, password`. Sets `auth_token` cookie         |
+| DELETE | `/api/auth/logout` | Yes (JWT)      | Log out, clears `auth_token` cookie                               |
+| GET    | `/api/auth/me`     | Yes (JWT) / No | responds with 200 if valid jwt cookie sent with the request.      |
 
 ### Posts — `/api/post`
 
