@@ -24,22 +24,23 @@ enum Role {
 }
 
 model Post {
-  id        Int        @id @default(autoincrement())
-  title     String
-  loves     PostLove[]
-  content   String     @db.Text
-  published Boolean    @default(false)
-  viewCount Int        @default(0)
-  createdAt DateTime   @default(now())
-  comments  Comment[]
-  author    User       @relation(fields: [authorId], references: [id])
-  authorId  Int
+  id             Int            @id @default(autoincrement())
+  title          String
+  loves          PostLove[]
+  content        String         @db.Text
+  published      Boolean        @default(false)
+  viewCount      Int            @default(0)
+  createdAt      DateTime       @default(now())
+  comments       Comment[]
+  author         User           @relation(fields: [authorId], references: [id])
+  authorId       Int
+  postCategories PostCategory[]
 }
 
 model Comment {
   id       Int      @id @default(autoincrement())
   post     Post     @relation(fields: [postId], references: [id])
-  postId   Int      @default(0)
+  postId   Int
   postedAt DateTime @default(now())
   content  String
   author   User     @relation(fields: [authorId], references: [id])
@@ -54,4 +55,23 @@ model PostLove {
   author   User @relation(fields: [authorId], references: [id])
 
   @@unique([postId, authorId])
+}
+
+model PostCategory {
+  id       Int      @id @default(autoincrement())
+  postId   Int
+  post     Post     @relation(fields: [postId], references: [id])
+  category Category
+
+  @@unique([postId, category])
+}
+
+enum Category {
+  WebDev
+  Lifestyle
+  GeneralTech
+  Tutorials
+  Security
+  Gaming
+  Entertainment
 }

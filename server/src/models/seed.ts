@@ -1,4 +1,4 @@
-import { Role } from "../../generated/prisma/enums";
+import { Category, Role } from "../../generated/prisma/enums";
 import { PrismaClient } from "../../generated/prisma/client";
 import dotenv from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -69,6 +69,7 @@ CREATE INDEX idx_users_email ON "User"("email");
       published: true,
       viewCount: 310,
       authorId: admin.id,
+      category: [Category.WebDev, Category.WebDev],
     },
   });
 
