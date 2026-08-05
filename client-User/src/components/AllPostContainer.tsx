@@ -2,7 +2,7 @@ import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useEffect } from "react";
 import { PreviewPost } from "./PreviewPost";
-import { useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import { MySpinner } from "./MySpinner";
 
 export interface Post {
@@ -21,7 +21,6 @@ interface PostsResponse {
 
 export function AllPostContainer() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const navigate = useNavigate();
   const { data, loading, error } = useFetch<PostsResponse>("/api/");
   useEffect(() => {
     if (data) {
@@ -29,12 +28,14 @@ export function AllPostContainer() {
     }
   }, [data]);
   if (error) {
-    navigate("/errorpage", {
-      state: {
+    <Navigate
+      to="/errorpage"
+      state={{
         title: "OPPS WE GOT THE ERROR: 500",
         message: "Could not fetch the Posts",
-      },
-    });
+      }}
+      replace
+    />;
     return null;
   }
   if (loading || posts.length == 0) {

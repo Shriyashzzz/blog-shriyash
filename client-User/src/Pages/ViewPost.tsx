@@ -3,7 +3,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import { MySpinner } from "../components/MySpinner";
 
 export interface Post {
@@ -21,7 +21,6 @@ interface PostResponse {
 }
 
 export function ViewPost() {
-  const navigate = useNavigate();
   const { postId } = useParams();
   const [post, setPost] = useState<Post>();
   const { data, loading, error } = useFetch<PostResponse>(
@@ -32,12 +31,14 @@ export function ViewPost() {
   }, [data]);
 
   if (error) {
-    navigate("/errorpage", {
-      state: {
+    <Navigate
+      to="/errorpage"
+      state={{
         title: "OPPS WE GOT THE ERROR: 500",
-        message: "Could not fetch the Posts",
-      },
-    });
+        message: "Could not fetch the Post",
+      }}
+      replace //stops the user from hitting "back" and landing on a broken/errored page
+    />;
     return null;
   }
   if (loading || !post) {
