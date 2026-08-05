@@ -1,16 +1,25 @@
 import Markdown from "react-markdown";
 import remarkGm from "remark-gfm";
 import { Post } from "./AllPostContainer";
+import { Link, useNavigate } from "react-router";
 
 interface PreviewPostProps {
   post: Post;
 }
 
 export function PreviewPost({ post }: PreviewPostProps) {
+  const navigate = useNavigate();
+  const navToViewPost = (): void => {
+    navigate(`/viewPost/${post.id}`);
+  };
+
   return (
-    <article className="flex h-full min-h-28 flex-col justify-around bg-gray-100 p-2 dark:bg-gray-500">
+    <article
+      onClick={() => navToViewPost()}
+      className="flex h-full min-h-28 cursor-pointer flex-col justify-around bg-gray-100 p-2 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl dark:bg-gray-500 dark:hover:shadow-green-950"
+    >
       <div>
-        <h1 className="cursor-pointer font-bold text-green-700 hover:text-blue-500 dark:text-green-500 dark:hover:text-blue-900">
+        <h1 className="cursor-pointer font-bold text-green-700 dark:text-green-500">
           {post.title}
         </h1>
       </div>

@@ -4,7 +4,6 @@ const checkIfAuthenticated = async () => {
   const response = await fetch("/api/auth/me", {
     credentials: "include",
   });
-  console.log(response);
   if (!response.ok) return false;
   return true;
 };

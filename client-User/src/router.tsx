@@ -4,6 +4,7 @@ import { AllPostContainer } from "./components/AllPostContainer";
 import { LoginPage } from "./Pages/Login";
 import { SignUp } from "./Pages/SignUp";
 import ErrorPage from "./Pages/Error";
+import { ViewPost } from "./Pages/ViewPost";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/signup", element: <SignUp /> },
       { path: "/errorpage", element: <ErrorPage /> },
+      { path: "/viewPost/:postId", element: <ViewPost /> },
     ],
   },
 ]);
