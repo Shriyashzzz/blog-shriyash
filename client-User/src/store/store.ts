@@ -13,5 +13,6 @@ export type RootState = {
   theme: { value: "light" | "dark" };
   auth: { value: boolean };
 };
+
 export type AppDispatch = typeof store.dispatch;
 export { store };

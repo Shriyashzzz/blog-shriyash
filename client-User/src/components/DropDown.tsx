@@ -1,8 +1,30 @@
 import { DropdownMenu } from "radix-ui";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { useDispatch } from "react-redux";
+import { isNotAuth } from "../store/authSlice";
+import { useNavigate } from "react-router";
 
 export const DropDown = () => {
-  const handleLogout = () => {};
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        credentials: "include",
+        method: "DELETE",
+      });
+      const data = await response.json();
+      if (response.ok) return dispatch(isNotAuth());
+      navigate("/errorpage", {
+        state: { title: "Opps!", message: data.message },
+      });
+    } catch (e: unknown) {
+      navigate("/errorpage", {
+        state: { title: "Opps!", message: "Something Went Wrong " },
+      });
+    }
+  };
 
   return (
     <DropdownMenu.Root modal={false}>
@@ -22,7 +44,7 @@ export const DropDown = () => {
         >
           <DropdownMenu.Item
             onClick={handleLogout}
-            onSelect={handleLogout}
+
             className="group relative flex h-[25px] cursor-pointer items-center rounded-[3px] pr-[5px] pl-[25px] text-[13px] leading-none outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:text-gray-400 data-[highlighted]:bg-green-600 data-[highlighted]:text-white"
           >
             Log Out
