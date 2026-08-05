@@ -1,5 +1,5 @@
 import type { Author } from "../Pages/ViewPost";
-import { Avatar } from "@radix-ui/themes";
+import { Avatar, Button } from "@radix-ui/themes";
 import { initialExtract } from "../utils/initialExtractor";
 import { normalizeDate } from "../utils/normalizeDate";
 import Markdown from "react-markdown";
@@ -18,15 +18,15 @@ interface CommentProp {
 
 export function ViewComments({ comments }: CommentProp) {
   if (comments.length == 0) {
-    return <div>No comments</div>;
+    return <></>;
   }
+
   return (
     <section className="mt-4 flex w-full max-w-4xl flex-col">
       {comments.map((cmt) => {
-        console.log(cmt);
         return (
           <article
-            key={cmt.id}
+            key={`${cmt.id}${cmt.author}`}
             className="flex flex-row gap-4 bg-gray-100 p-2 dark:bg-gray-800"
           >
             <Avatar
@@ -40,9 +40,13 @@ export function ViewComments({ comments }: CommentProp) {
             />
 
             <div className="flex w-full flex-col gap-1">
-              <p className="font-black text-blue-600">
-                {cmt.author.role == "Admin" ? "Author" : cmt.author.username}
-              </p>
+              <div>
+                <p className="font-black text-blue-600">
+                  {cmt.author.role == "Admin" ? "Author" : cmt.author.username}
+                </p>
+                <Button>Delete</Button>
+              </div>
+
               <p className="text-xs font-medium text-amber-600">
                 {normalizeDate(cmt.postedAt)}
               </p>

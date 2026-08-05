@@ -18,7 +18,9 @@ export function LoginPage() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.auth.value);
+  const auth = useSelector(
+    (state: RootState) => state.auth.value.isAuthenticated,
+  );
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -37,15 +39,13 @@ export function LoginPage() {
       },
       body: JSON.stringify(userReqBody),
     });
-
-    console.log(response);
+    const data = await response.json();
     if (!response.ok) {
       if (auth) dispatch(isNotAuth());
-      const data = await response.json();
       setInvalidMessage(data.message);
     } else {
       if (!auth) {
-        dispatch(isAuth());
+        dispatch(isAuth(data.user));
       }
       navigate("/", { viewTransition: true });
     }

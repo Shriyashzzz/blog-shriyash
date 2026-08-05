@@ -10,7 +10,9 @@ import { DropDown } from "./DropDown";
 export function Header() {
   const theme = useSelector((state: RootState) => state.theme.value || "light");
   const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.auth.value);
+  const auth = useSelector(
+    (state: RootState) => state.auth.value.isAuthenticated,
+  );
   return (
     <header className="flex w-full flex-row items-center justify-between border-b-2 border-green-800 px-6 py-2">
       <NavLink

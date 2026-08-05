@@ -9,6 +9,7 @@ import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
 import { AuthorCard } from "../components/AuthorCard";
 import { Comment, ViewComments } from "../components/ViewComment";
+import { AddComment } from "../components/AddComment";
 
 export interface Author {
   username: string;
@@ -33,13 +34,19 @@ interface PostResponse {
 }
 
 export function ViewPost() {
-  const { postId } = useParams();
+  const { postid } = useParams();
   const [post, setPost] = useState<Post>();
   const { data, loading, error } = useFetch<PostResponse>(
-    `/api/post/${postId}`,
+    `/api/post/${postid}`,
   );
+
+  const [comments, setComments] = useState<Comment[]>([]);
+
   useEffect(() => {
-    if (data) setPost(data.post);
+    if (data) {
+      setPost(data.post);
+      setComments(data.post.comments);
+    }
   }, [data]);
 
   if (error) {
@@ -71,7 +78,8 @@ export function ViewPost() {
           <AuthorCard />
         </section>
       </div>
-      <ViewComments comments={post.comments} />
+      <AddComment postId={post.id} setComments={setComments} />
+      <ViewComments comments={comments} />
     </>
   );
 }

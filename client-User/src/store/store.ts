@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { themeSlice } from "./themeSlice";
-import { authSlice } from "./authSlice";
+import { authSlice, authStateType } from "./authSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +11,7 @@ const store = configureStore({
 
 export type RootState = {
   theme: { value: "light" | "dark" };
-  auth: { value: boolean };
+  auth: { value: authStateType };
 };
 
 export type AppDispatch = typeof store.dispatch;

@@ -1,10 +1,6 @@
 import { Form, useNavigate } from "react-router";
 import blogLogo from "../assets/icons/terminal.svg";
 import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { isAuth, isNotAuth } from "../store/authSlice";
-import { RootState } from "../store/store";
-import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
@@ -31,9 +27,6 @@ export function SignUp() {
   const passRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
   const cPassRef = useRef<HTMLInputElement>(null);
-
-  const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.auth.value);
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();

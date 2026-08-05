@@ -48,7 +48,14 @@ const loginController = [
         tokenPayload,
         tokenOptions,
       );
-      if (response) return res.status(200).json({ message: "User logged in!" });
+      const resUserObj = {
+        email: user.email,
+        username: user.username,
+      };
+      if (response)
+        return res
+          .status(200)
+          .json({ message: "User logged in!", user: resUserObj });
       return res.sendStatus(501);
     } catch (e) {
       console.error(e);

@@ -50,7 +50,7 @@ class Queries {
             },
           },
           author: {
-            select: { id: false, username: true, email: true }, // making sure password is not fetched
+            select: { id: true, username: true, email: true }, // making sure password is not fetched
           },
           comments: {
             select: {
@@ -152,6 +152,11 @@ class Queries {
     try {
       const comments = await prisma.comment.findMany({
         where: { postId: postId },
+        include: {
+          author: {
+            select: { id: true, username: true, email: true, role: true }, // making sure password is not fetched
+          },
+        },
       });
       return { ok: true, comments: comments };
     } catch (e) {

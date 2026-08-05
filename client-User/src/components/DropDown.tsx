@@ -14,14 +14,19 @@ export const DropDown = () => {
         credentials: "include",
         method: "DELETE",
       });
-      const data = await response.json();
-      if (response.ok) return dispatch(isNotAuth());
+
+      if (response.ok) {
+        dispatch(isNotAuth());
+        return;
+      }
+
+      const data = await response.json().catch(() => null);
       navigate("/errorpage", {
-        state: { title: "Opps!", message: data.message },
+        state: { title: "Oops!", message: data?.message ?? "Logout failed" },
       });
     } catch (e: unknown) {
       navigate("/errorpage", {
-        state: { title: "Opps!", message: "Something Went Wrong " },
+        state: { title: "Oops!", message: "Something went wrong" },
       });
     }
   };

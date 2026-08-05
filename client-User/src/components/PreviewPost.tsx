@@ -10,7 +10,7 @@ interface PreviewPostProps {
 export function PreviewPost({ post }: PreviewPostProps) {
   const navigate = useNavigate();
   const navToViewPost = (): void => {
-    navigate(`/viewPost/${post.id}`);
+    navigate(`/viewpost/${post.id}`);
   };
 
   return (
