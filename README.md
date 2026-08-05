@@ -75,12 +75,12 @@ All authenticated routes use `passport.authenticate("jwt")` and expect the JWT t
 
 ### Auth — `/api/auth`
 
-| Method | Route              | Auth           | Description                                                       |
-| ------ | ------------------ | -------------- | ----------------------------------------------------------------- |
-| POST   | `/api/auth/signup` | No             | Register a new user. Body: `username, email, password, cpassword` |
-| POST   | `/api/auth/login`  | No             | Log in. Body: `email, password`. Sets `auth_token` cookie         |
-| DELETE | `/api/auth/logout` | Yes (JWT)      | Log out, clears `auth_token` cookie                               |
-| GET    | `/api/auth/me`     | Yes (JWT) / No | responds with 200 if valid jwt cookie sent with the request.      |
+| Method | Route              | Auth           | Description                                                                                            |
+| ------ | ------------------ | -------------- | ------------------------------------------------------------------------------------------------------ |
+| POST   | `/api/auth/signup` | No             | Register a new user. Body: `username, email, password, cpassword`                                      |
+| POST   | `/api/auth/login`  | No             | Log in. Body: `email, password`. Sets `auth_token` cookie, returns user payload on successful response |
+| DELETE | `/api/auth/logout` | Yes (JWT)      | Log out, clears `auth_token` cookie                                                                    |
+| GET    | `/api/auth/me`     | Yes (JWT) / No | responds with 200 if valid jwt cookie sent with the request.                                           |
 
 ### Posts — `/api/post`
 
@@ -91,10 +91,10 @@ All authenticated routes use `passport.authenticate("jwt")` and expect the JWT t
 
 ### Comments — `/api/comment`
 
-| Method | Route                             | Auth      | Description                                                |
-| ------ | --------------------------------- | --------- | ---------------------------------------------------------- |
-| POST   | `/api/comment/newComment/:postId` | Yes (JWT) | Add a comment to a post. Body: `commentContent`            |
-| DELETE | `/api/comment/:commentId`         | Yes (JWT) | Delete a comment (only the comment's author can delete it) |
+| Method | Route                             | Auth      | Description                                                                                                  |
+| ------ | --------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------ |
+| POST   | `/api/comment/newComment/:postId` | Yes (JWT) | Add a comment to a post. Body: `commentContent`, returns all comments for the {postId} on success            |
+| DELETE | `/api/comment/:commentId`         | Yes (JWT) | Delete a comment (only the comment's author can delete it), returns all comments for the {postId} on success |
 
 ### Admin — Posts — `/api/admin/posts`
 

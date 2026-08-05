@@ -127,7 +127,23 @@ class Queries {
       return { ok: false };
     }
   }
-
+  async checkIfLoved(postId: number, authorId: number) {
+    try {
+      const isLoveCheck = await prisma.postLove.findUnique({
+        where: {
+          postId_authorId: {
+            postId: postId,
+            authorId: authorId,
+          },
+        },
+      });
+      if (!isLoveCheck) return { ok: false };
+      return { ok: true };
+    } catch (e) {
+      console.log(e);
+      return { ok: false };
+    }
+  }
   async getComment(commentId: number) {
     try {
       const comment = await prisma.comment.findUniqueOrThrow({

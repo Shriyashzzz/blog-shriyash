@@ -7,13 +7,15 @@ import { useRef } from "react";
 import { useNavigate } from "react-router";
 import type { Dispatch, SetStateAction } from "react";
 import { Comment } from "./ViewComment";
+import { Ref } from "react";
 
 interface PropData {
   postId: number;
   setComments: Dispatch<SetStateAction<Comment[]>>;
+  commentBoxRef: Ref<HTMLDivElement>;
 }
 
-export function AddComment({ postId, setComments }: PropData) {
+export function AddComment({ postId, setComments, commentBoxRef }: PropData) {
   const auth = useSelector((state: RootState) => state.auth.value);
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
@@ -51,7 +53,10 @@ export function AddComment({ postId, setComments }: PropData) {
 
   return (
     <>
-      <div className="mt-4 flex w-full max-w-4xl flex-col gap-1">
+      <div
+        className="mt-4 flex w-full max-w-4xl flex-col gap-1"
+        ref={commentBoxRef}
+      >
         <TextArea
           onClick={handleCommentBoxClick}
           ref={commentRef}

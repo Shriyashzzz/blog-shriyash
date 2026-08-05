@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { getPost, loveUnlovePost } from "../controllers/postController";
+import {
+  checkIfLoved,
+  getPost,
+  loveUnlovePost,
+} from "../controllers/postController";
 import passport from "passport";
 
 const postRouter = Router({ mergeParams: true });
@@ -9,6 +13,12 @@ postRouter.post(
   "/:postId/love",
   passport.authenticate("jwt", { session: false }),
   loveUnlovePost,
+);
+
+postRouter.get(
+  "/checklove/:postId",
+  passport.authenticate("jwt", { session: false }),
+  checkIfLoved,
 );
 
 export default postRouter;

@@ -45,12 +45,41 @@ const loveUnlovePost = async (
     if (response.loved)
       return res
         .status(200)
-        .json({ loved: response.loved, message: "Post has been Loved" });
+        .json({ isLoved: response.loved, message: "Post has been Loved" });
 
     return res
       .status(200)
-      .json({ loved: response.loved, message: "Post has been unloved" });
+      .json({ isLoved: response.loved, message: "Post has been unloved" });
   }
 };
+const checkIfLoved = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.user)
+    return next(
+      new AppError("User not authenticated to use this feature", 401),
+    );
+  const { postId } = req.params;
+  if (!postId || typeof postId !== "string")
+    return next(
+      new AppError(
+        "Suitable post Id / postId param has not been sent with the request.",
+        404,
+      ),
+    );
+  const intPostId = _.parseInt(postId);
+  const response = await queries.checkIfLoved(intPostId, req.user.id);
+  if (!response.ok)
+    return res.status(200).json({
+      message: "Post is not liked by the signed in user",
+      isLoved: false,
+    });
+  return res.status(200).json({
+    message: "Post has been like by the signed in user",
+    isLoved: true,
+  });
+};
 
-export { getPost, loveUnlovePost };
+export { getPost, loveUnlovePost, checkIfLoved };

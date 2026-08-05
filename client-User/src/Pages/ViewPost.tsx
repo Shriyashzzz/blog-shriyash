@@ -10,7 +10,10 @@ import "highlight.js/styles/github-dark.css";
 import { AuthorCard } from "../components/AuthorCard";
 import { Comment, ViewComments } from "../components/ViewComment";
 import { AddComment } from "../components/AddComment";
-
+import { PostInteractToolBox } from "../components/PostInteractToolBox";
+import { useRef } from "react";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
+import { IconButton } from "@radix-ui/themes";
 export interface Author {
   id: number;
   username: string;
@@ -35,6 +38,8 @@ interface PostResponse {
 }
 
 export function ViewPost() {
+  const commentBoxRef = useRef<HTMLDivElement>(null);
+
   const { postid } = useParams();
   const [post, setPost] = useState<Post>();
   const { data, loading, error } = useFetch<PostResponse>(
@@ -66,21 +71,31 @@ export function ViewPost() {
     return <MySpinner />;
   }
   return (
-    <>
-      <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 prose-pre:overflow-x-auto mx-auto flex w-full max-w-4xl flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
-        <h1 className="w-full text-green-700">{post.title}</h1>
-        <section>
-          <Markdown
-            rehypePlugins={[rehypeHighlight]}
-            remarkPlugins={[remarkGfm]}
-          >
-            {post.content}
-          </Markdown>
-          <AuthorCard />
-        </section>
-      </div>
-      <AddComment postId={post.id} setComments={setComments} />
-      <ViewComments comments={comments} setComments={setComments} />
-    </>
+    <div className="flex gap-5">
+      <PostInteractToolBox commentBoxRef={commentBoxRef} post={post} />
+      <section>
+        <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 prose-pre:overflow-x-auto mx-auto flex w-full max-w-4xl flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
+          <h1 className="w-full text-green-700">{post.title}</h1>
+          <div className="flex items-center gap-2">
+            <HeartFilledIcon /> {post._count.loves}
+          </div>
+          <section>
+            <Markdown
+              rehypePlugins={[rehypeHighlight]}
+              remarkPlugins={[remarkGfm]}
+            >
+              {post.content}
+            </Markdown>
+            <AuthorCard />
+          </section>
+        </div>
+        <AddComment
+          postId={post.id}
+          setComments={setComments}
+          commentBoxRef={commentBoxRef}
+        />
+        <ViewComments comments={comments} setComments={setComments} />
+      </section>
+    </div>
   );
 }
