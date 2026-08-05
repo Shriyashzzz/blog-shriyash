@@ -55,7 +55,7 @@ class Queries {
           comments: {
             select: {
               id: true,
-              postId: false,
+              postId: true,
               postedAt: true,
               content: true,
               author: {

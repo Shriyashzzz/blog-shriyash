@@ -65,7 +65,6 @@ export function ViewPost() {
   if (loading || !post) {
     return <MySpinner />;
   }
-  console.log(comments);
   return (
     <>
       <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 prose-pre:overflow-x-auto mx-auto flex w-full max-w-4xl flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
@@ -81,7 +80,7 @@ export function ViewPost() {
         </section>
       </div>
       <AddComment postId={post.id} setComments={setComments} />
-      <ViewComments comments={comments} />
+      <ViewComments comments={comments} setComments={setComments} />
     </>
   );
 }

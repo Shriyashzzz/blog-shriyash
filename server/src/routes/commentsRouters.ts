@@ -14,7 +14,7 @@ commentRouter.post(
 );
 
 commentRouter.delete(
-  "/:commentId",
+  "/:postId/:commentId",
   passport.authenticate("jwt", { session: false }),
   deleteComment,
 );

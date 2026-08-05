@@ -6,23 +6,41 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { TrashIcon } from "@radix-ui/react-icons";
+import { SetStateAction, Dispatch } from "react";
 
 export interface Comment {
   author: Author;
   content: string;
   id: number;
   postedAt: string;
+  postId: number;
 }
 
 interface CommentProp {
   comments: Comment[];
+  setComments: Dispatch<SetStateAction<Comment[]>>;
 }
 
-export function ViewComments({ comments }: CommentProp) {
+type DeleteResponse = { message: string; comments: Comment[] };
+
+export function ViewComments({ comments, setComments }: CommentProp) {
   const authState = useSelector((state: RootState) => state.auth.value);
   if (comments.length == 0) {
     return <></>;
   }
+
+  const onDeleteComment = async (commentId: number, postId: number) => {
+    if (!authState.isAuthenticated) return;
+
+    const response = await fetch(`/api/comment/${postId}/${commentId}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) return;
+    const data: DeleteResponse = await response.json();
+    setComments(data.comments);
+    return;
+  };
 
   return (
     <section className="mt-4 flex w-full max-w-4xl flex-col">
@@ -43,13 +61,19 @@ export function ViewComments({ comments }: CommentProp) {
             />
 
             <div className="flex w-full flex-col gap-1">
-              <div>
+              <div className="flex flex-row justify-between">
                 <p className="font-black text-blue-600">
                   {cmt.author.role == "Admin" ? "Author" : cmt.author.username}
                 </p>
 
                 {authState.user && cmt.author.id === authState.user.id && (
-                  <Button>Delete</Button>
+                  <Button
+                    color="gray"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => onDeleteComment(cmt.id, cmt.postId)}
+                  >
+                    <TrashIcon scale={4} />
+                  </Button>
                 )}
               </div>
 

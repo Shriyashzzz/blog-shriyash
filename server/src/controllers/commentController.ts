@@ -41,13 +41,14 @@ const newCommentController = [
 
 const deleteComment = [
   async (
-    req: Request<{ commentId: string }>,
+    req: Request<{ commentId: string; postId: string }>,
     res: Response,
     next: NextFunction,
   ) => {
-    const { commentId } = req.params;
-    if (!commentId) return next(new AppError("No comment Id ", 400));
+    const { commentId, postId } = req.params;
+    if (!commentId || !postId) return next(new AppError("No comment Id ", 400));
     const intCommentId = _.parseInt(commentId);
+    const intPostId = _.parseInt(postId);
     const preOwnerCheck = await queries.getComment(intCommentId);
     if (!preOwnerCheck.ok)
       return next(new AppError("Could not delete the message", 400));
@@ -57,7 +58,10 @@ const deleteComment = [
     if (!response.ok && response.error) return next(response.error);
     if (!response.ok)
       return res.status(404).json({ message: "comment not found" });
-    return res.status(200).json({ message: "comment successfully deleted" });
+    return res.status(200).json({
+      message: "comment successfully deleted",
+      comments: (await queries.getPostComments(intPostId)).comments,
+    });
   },
 ];
 
