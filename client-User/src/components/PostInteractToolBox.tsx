@@ -11,6 +11,7 @@ import { RootState } from "../store/store";
 import { Post } from "./AllPostContainer";
 import { Navigate } from "react-router";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 interface PostInteractParams {
   commentBoxRef: RefObject<HTMLDivElement | null>;
@@ -22,12 +23,15 @@ export function PostInteractToolBox({
   post,
 }: PostInteractParams) {
   const theme = useSelector((state: RootState) => state.theme.value);
+  const auth = useSelector(
+    (state: RootState) => state.auth.value.isAuthenticated,
+  );
+  const navigate = useNavigate();
   const [lovesPost, setLovesPost] = useState<boolean | null>(null);
   useEffect(() => {
     const getIfUserLoves = async () => {
       try {
         const response = await fetch(`/api/post/checklove/${post.id}`);
-        console.log(response);
         if (!response.ok)
           return (
             <Navigate
@@ -61,14 +65,11 @@ export function PostInteractToolBox({
     getIfUserLoves();
   }, [lovesPost]);
 
-  const onCommentIntent = () => {
-    if (!commentBoxRef || !commentBoxRef.current) return;
-
-    commentBoxRef.current.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
   const loveCurrentPost = async () => {
+    if (!auth) {
+      navigate("/login", { viewTransition: true });
+    }
+
     try {
       const response = await fetch(`/api/post/${post.id}/love`, {
         method: "POST",
@@ -98,6 +99,14 @@ export function PostInteractToolBox({
         />
       );
     }
+  };
+
+  const onCommentIntent = () => {
+    if (!commentBoxRef || !commentBoxRef.current) return;
+
+    commentBoxRef.current.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   return (

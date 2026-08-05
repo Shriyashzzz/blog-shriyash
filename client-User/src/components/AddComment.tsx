@@ -16,7 +16,9 @@ interface PropData {
 }
 
 export function AddComment({ postId, setComments, commentBoxRef }: PropData) {
-  const auth = useSelector((state: RootState) => state.auth.value);
+  const auth = useSelector(
+    (state: RootState) => state.auth.value.isAuthenticated,
+  );
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
   const handleCommentBoxClick = (): void => {
