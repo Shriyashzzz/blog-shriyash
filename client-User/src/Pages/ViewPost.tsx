@@ -32,12 +32,13 @@ export function ViewPost() {
   }, [data]);
 
   if (error) {
-    return navigate("/errorpage", {
+    navigate("/errorpage", {
       state: {
         title: "OPPS WE GOT THE ERROR: 500",
         message: "Could not fetch the Posts",
       },
     });
+    return null;
   }
   if (loading || !post) {
     return <MySpinner />;
