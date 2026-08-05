@@ -7,9 +7,16 @@ import { Navigate } from "react-router";
 import { MySpinner } from "../components/MySpinner";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
+import { AuthorCard } from "../components/AuthorCard";
+
+interface Author {
+  username: string;
+  email: string;
+}
 
 export interface Post {
   authorId: number;
+  author: Author;
   content: string;
   createdAt: string;
   id: number;
@@ -33,26 +40,30 @@ export function ViewPost() {
   }, [data]);
 
   if (error) {
-    <Navigate
-      to="/errorpage"
-      state={{
-        title: "OPPS WE GOT THE ERROR: 500",
-        message: "Could not fetch the Post",
-      }}
-      replace //stops the user from hitting "back" and landing on a broken/errored page
-    />;
-    return null;
+    return (
+      <Navigate
+        to="/errorpage"
+        state={{
+          title: "OPPS WE GOT THE ERROR: 500",
+          message: "Could not fetch the Post",
+        }}
+        replace //stops the user from hitting "back" and landing on a broken/errored page
+      />
+    );
   }
   if (loading || !post) {
     return <MySpinner />;
   }
   console.log(post);
   return (
-    <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-60 prose-pre:overflow-x-auto mx-auto flex w-full max-w-4xl flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
+    <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 prose-pre:overflow-x-auto mx-auto flex w-full max-w-4xl flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
       <h1 className="w-full text-green-700">{post.title}</h1>
-      <Markdown rehypePlugins={[rehypeHighlight]} remarkPlugins={[remarkGfm]}>
-        {post.content}
-      </Markdown>
+      <section>
+        <Markdown rehypePlugins={[rehypeHighlight]} remarkPlugins={[remarkGfm]}>
+          {post.content}
+        </Markdown>
+        <AuthorCard />
+      </section>
     </div>
   );
 }

@@ -28,15 +28,16 @@ export function AllPostContainer() {
     }
   }, [data]);
   if (error) {
-    <Navigate
-      to="/errorpage"
-      state={{
-        title: "OPPS WE GOT THE ERROR: 500",
-        message: "Could not fetch the Posts",
-      }}
-      replace
-    />;
-    return null;
+    return (
+      <Navigate
+        to="/errorpage"
+        state={{
+          title: "OPPS WE GOT THE ERROR: 500",
+          message: "Could not fetch the Posts",
+        }}
+        replace //stops the user from hitting "back" and landing on a broken/errored pages
+      />
+    );
   }
   if (loading || posts.length == 0) {
     return <MySpinner />;
