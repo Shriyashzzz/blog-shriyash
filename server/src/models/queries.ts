@@ -50,7 +50,7 @@ class Queries {
             },
           },
           author: {
-            select: { id: true, username: true, email: true }, // making sure password is not fetched
+            select: { id: true, username: true, email: true, role: true }, // making sure password is not fetched
           },
           comments: {
             select: {

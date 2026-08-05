@@ -4,6 +4,8 @@ import { initialExtract } from "../utils/initialExtractor";
 import { normalizeDate } from "../utils/normalizeDate";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 export interface Comment {
   author: Author;
@@ -17,6 +19,7 @@ interface CommentProp {
 }
 
 export function ViewComments({ comments }: CommentProp) {
+  const authState = useSelector((state: RootState) => state.auth.value);
   if (comments.length == 0) {
     return <></>;
   }
@@ -44,7 +47,10 @@ export function ViewComments({ comments }: CommentProp) {
                 <p className="font-black text-blue-600">
                   {cmt.author.role == "Admin" ? "Author" : cmt.author.username}
                 </p>
-                <Button>Delete</Button>
+
+                {authState.user && cmt.author.id === authState.user.id && (
+                  <Button>Delete</Button>
+                )}
               </div>
 
               <p className="text-xs font-medium text-amber-600">

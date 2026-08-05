@@ -49,8 +49,9 @@ const loginController = [
         tokenOptions,
       );
       const resUserObj = {
-        email: user.email,
+        id: user.id,
         username: user.username,
+        role: user.role,
       };
       if (response)
         return res

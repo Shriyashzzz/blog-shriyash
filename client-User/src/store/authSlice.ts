@@ -11,8 +11,9 @@ const checkIfAuthenticated = async () => {
 };
 
 interface User {
-  email: string;
+  id: number;
   username: string;
+  role: "Member" | "Admin";
 }
 
 export interface authStateType {
