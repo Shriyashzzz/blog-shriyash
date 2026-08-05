@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 @import "tailwindcss/preflight.css" layer(base);
+@plugin "@tailwindcss/typography";
+
 @font-face {
   font-family: "Nabla";
   src: url("./assets/fonts/Nabla-Regular.woff2") format("woff2");

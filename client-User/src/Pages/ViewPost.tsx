@@ -44,6 +44,11 @@ export function ViewPost() {
   if (loading || !post) {
     return <MySpinner />;
   }
-
-  return <>yo</>;
+  console.log(post);
+  return (
+    <div className="prose dark:prose-invert flex h-dvh min-w-4/5 flex-col bg-gray-200 p-4 dark:bg-gray-900 dark:text-white">
+      <h1 className="max-w-200">{post.title}</h1>
+      <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
+    </div>
+  );
 }
