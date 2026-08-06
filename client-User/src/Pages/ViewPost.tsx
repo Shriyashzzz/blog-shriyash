@@ -45,13 +45,14 @@ export function ViewPost() {
   const { data, loading, error } = useFetch<PostResponse>(
     `/api/post/${postid}`,
   );
-
+  const [postLoveNum, setPostLoveNum] = useState<number | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     if (data) {
       setPost(data.post);
       setComments(data.post.comments);
+      setPostLoveNum(data.post._count.loves);
     }
   }, [data]);
 
@@ -72,12 +73,16 @@ export function ViewPost() {
   }
   return (
     <div className="flex w-full max-w-4xl flex-col gap-5 sm:flex-row">
-      <PostInteractToolBox commentBoxRef={commentBoxRef} post={post} />
+      <PostInteractToolBox
+        commentBoxRef={commentBoxRef}
+        post={post}
+        setPostLoveNum={setPostLoveNum}
+      />
       <section className="min-w-0">
         <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
           <h1 className="w-full text-green-700">{post.title}</h1>
           <div className="flex items-center gap-2">
-            <HeartFilledIcon /> {post._count.loves}
+            <HeartFilledIcon /> {postLoveNum}
           </div>
           <section>
             <Markdown

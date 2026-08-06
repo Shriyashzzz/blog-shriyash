@@ -6,7 +6,7 @@ import {
   ChatBubbleIcon,
 } from "@radix-ui/react-icons";
 import { useSelector } from "react-redux";
-import { RefObject, useEffect } from "react";
+import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
 import { RootState } from "../store/store";
 import { Post } from "./AllPostContainer";
 import { Navigate } from "react-router";
@@ -16,11 +16,13 @@ import { useNavigate } from "react-router";
 interface PostInteractParams {
   commentBoxRef: RefObject<HTMLDivElement | null>;
   post: Post;
+  setPostLoveNum: Dispatch<SetStateAction<number | null>>;
 }
 
 export function PostInteractToolBox({
   commentBoxRef,
   post,
+  setPostLoveNum,
 }: PostInteractParams) {
   const theme = useSelector((state: RootState) => state.theme.value);
   const auth = useSelector(
@@ -86,6 +88,11 @@ export function PostInteractToolBox({
         );
       }
       const data = await response.json();
+      if (data.isLoved) {
+        setPostLoveNum((state): number => (state || 0) + 1);
+      } else {
+        setPostLoveNum((state): number => (state || 1) - 1);
+      }
       setLovesPost(data.isLoved);
     } catch (e: unknown) {
       //nav to error page
