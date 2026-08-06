@@ -26,7 +26,7 @@ export const authSlice = createSlice({
   initialState: { value: await checkIfAuthenticated() },
   reducers: {
     isAuth: (state, action) => {
-      state.value = { isAuthenticated: true, user: action.payload.user };
+      state.value = { isAuthenticated: true, user: action.payload };
     },
     isNotAuth: (state) => {
       state.value = { isAuthenticated: false };

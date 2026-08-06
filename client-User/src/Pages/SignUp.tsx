@@ -179,7 +179,8 @@ export function SignUp() {
       </section>
       <div className="group relative flex h-fit flex-col items-center justify-center">
         <p className="flex cursor-pointer flex-row items-center justify-center gap-1 text-red-500">
-          {invalidMessage} <QuestionMarkCircledIcon color="green" />
+          {invalidMessage}{" "}
+          {invalidMessage && <QuestionMarkCircledIcon color="green" />}
         </p>
         {errors && errors.length > 0 && (
           <ul className="absolute bottom-full mb-2 hidden min-w-xl rounded bg-blue-400 p-4 text-white group-hover:block">

@@ -11,7 +11,7 @@ import { Avatar } from "@radix-ui/themes";
 export const DropDown = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.auth.value.user);
+  const auth = useSelector((state: RootState) => state.auth.value);
   const handleLogout = async () => {
     try {
       const response = await fetch("/api/auth/logout", {
@@ -39,7 +39,7 @@ export const DropDown = () => {
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
         <button
-          className="inline-flex size-8.75 cursor-pointer items-center justify-center rounded-full text-black shadow-[0_2px_10px] shadow-black/20 outline-none hover:bg-gray-100 focus:shadow-[0_0_0_2px] focus:shadow-black dark:hover:bg-gray-700"
+          className="dark:hover:bg-gray-7 00 inline-flex size-8.75 cursor-pointer items-center justify-center rounded-full text-black shadow-[0_2px_10px] shadow-black/20 outline-none hover:bg-gray-100 focus:shadow-[0_0_0_2px] focus:shadow-black"
           aria-label="Options"
         >
           <Avatar
@@ -47,11 +47,11 @@ export const DropDown = () => {
             radius="full"
             className="border *:border-gray-300"
             src={
-              user!.role == "Admin"
+              auth.user && auth.user.role == "Admin"
                 ? "https://scontent-sjc6-1.xx.fbcdn.net/v/t39.30808-6/684262166_26612009511790748_2315032028178435336_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=r-iOFVaVBREQ7kNvwFSiHTI&_nc_oc=AdpxCQ2Llo91ug6hX1E0jvPx8aewLeH0Tlu3LnDlkU9xTrydym602IztwBsgqyalqvJ8onM8GYXlHsFyhm6jXfE6&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&_nc_gid=_tntilGb5NTS23LVOdpo8g&_nc_ss=7b2a8&oh=00_AQG1oDZtmr36czaM4cRjECG2Ezr0wgNiTBQJ8W8uSMkSqw&oe=6A78F759"
-                : undefined
+                : "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHlwZTJiNTc1cHBzejdpZGU2NWtpZ2xnM2hoM3JhdjdkczRkdDFmNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QxZEtFE02ofY00gJ71/giphy.gif"
             }
-            fallback={initialExtract(user!.username)}
+            fallback={(auth.user && initialExtract(auth.user.username)) || "Hi"}
           />
         </button>
       </DropdownMenu.Trigger>

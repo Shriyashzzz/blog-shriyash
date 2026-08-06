@@ -40,15 +40,14 @@ export function LoginPage() {
       body: JSON.stringify(userReqBody),
     });
     const data = await response.json();
+    console.log(data);
     if (!response.ok) {
       if (auth) dispatch(isNotAuth());
       setInvalidMessage(data.message);
-    } else {
-      if (!auth) {
-        dispatch(isAuth(data.user));
-      }
-      navigate("/", { viewTransition: true });
+      return;
     }
+    dispatch(isAuth(data.user));
+    await navigate("/");
   };
 
   return (
