@@ -110,7 +110,7 @@ export function PostInteractToolBox({
   };
 
   return (
-    <div className="mt-5 flex flex-col gap-3">
+    <div className="sm: mt-4 flex flex-row justify-end gap-3 pr-0 sm:ml-2 sm:flex-col sm:justify-start sm:pr-0">
       <Tooltip content="love">
         <IconButton
           onClick={loveCurrentPost}

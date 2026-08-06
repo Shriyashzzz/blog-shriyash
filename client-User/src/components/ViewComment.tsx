@@ -43,12 +43,12 @@ export function ViewComments({ comments, setComments }: CommentProp) {
   };
 
   return (
-    <section className="mt-4 flex w-full max-w-4xl flex-col">
+    <section className="mt-4 flex h-fit w-full max-w-4xl flex-col">
       {comments.map((cmt) => {
         return (
           <article
             key={`${cmt.id}${cmt.author}`}
-            className="flex flex-row gap-4 bg-gray-100 p-2 dark:bg-gray-800"
+            className="flex h-fit flex-row gap-4 bg-gray-100 p-2 dark:bg-gray-800"
           >
             <Avatar
               size="3"

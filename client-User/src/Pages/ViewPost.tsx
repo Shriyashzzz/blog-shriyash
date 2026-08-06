@@ -71,10 +71,10 @@ export function ViewPost() {
     return <MySpinner />;
   }
   return (
-    <div className="flex gap-5">
+    <div className="flex w-full max-w-4xl flex-col gap-5 sm:flex-row">
       <PostInteractToolBox commentBoxRef={commentBoxRef} post={post} />
-      <section>
-        <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 prose-pre:overflow-x-auto mx-auto flex w-full max-w-4xl flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
+      <section className="min-w-0">
+        <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
           <h1 className="w-full text-green-700">{post.title}</h1>
           <div className="flex items-center gap-2">
             <HeartFilledIcon /> {post._count.loves}
@@ -86,7 +86,9 @@ export function ViewPost() {
             >
               {post.content}
             </Markdown>
-            <AuthorCard />
+            <div>
+              <AuthorCard />
+            </div>
           </section>
         </div>
         <AddComment
