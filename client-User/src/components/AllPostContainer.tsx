@@ -51,7 +51,7 @@ export function AllPostContainer() {
         <ToolBar def={"Home"} />
       </div>
 
-      <section className="mt-5 grid h-full auto-rows-fr grid-cols-1 gap-4">
+      <section className="mt-5 grid h-full auto-rows-fr grid-cols-1 gap-4 max-sm:w-full">
         {posts.map((post) => {
           return <PreviewPost key={post.id} post={post} />;
         })}

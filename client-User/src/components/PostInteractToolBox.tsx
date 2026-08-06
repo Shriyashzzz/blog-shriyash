@@ -33,7 +33,9 @@ export function PostInteractToolBox({
   useEffect(() => {
     const getIfUserLoves = async () => {
       try {
-        const response = await fetch(`/api/post/checklove/${post.id}`);
+        const response = await fetch(`/api/post/checklove/${post.id}`, {
+          credentials: "include",
+        });
         if (!response.ok)
           return (
             <Navigate
@@ -75,6 +77,7 @@ export function PostInteractToolBox({
     try {
       const response = await fetch(`/api/post/${post.id}/love`, {
         method: "POST",
+        credentials: "include",
       });
       if (!response.ok) {
         return (

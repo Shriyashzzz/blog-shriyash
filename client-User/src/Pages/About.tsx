@@ -5,15 +5,15 @@ import { Em } from "@radix-ui/themes";
 export function About() {
   return (
     <div>
-      <div className="m-4 flex w-full justify-center">
+      <div className="mb-4 flex w-full justify-center">
         <ToolBar def={"About"} />
       </div>
 
-      <section className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-4/5 max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white">
+      <section className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-4/5 max-w-full flex-col bg-gray-200 p-4 leading-relaxed max-sm:w-full sm:p-6 dark:bg-gray-900 dark:text-white">
         <h1>Who writes these blogs ?</h1>
         <div>
           Hi, I'm Shriyash, a full-stack developer, and this is my blog platform{" "}
-          <span className="text-green-400">
+          <span className="text-green-800">
             <Em>&lt;Shriyash Uncompiled / &gt;</Em>.
           </span>
           <AuthorCard />
