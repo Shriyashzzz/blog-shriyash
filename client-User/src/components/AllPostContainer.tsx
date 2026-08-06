@@ -5,6 +5,8 @@ import { PreviewPost } from "./PreviewPost";
 import { Navigate } from "react-router";
 import { MySpinner } from "./MySpinner";
 
+import { ToolBar } from "./ToolBar";
+
 export interface Post {
   authorId: number;
   content: string;
@@ -44,10 +46,16 @@ export function AllPostContainer() {
   }
 
   return (
-    <section className="m-5 grid h-full auto-rows-fr grid-cols-1 gap-4">
-      {posts.map((post) => {
-        return <PreviewPost key={post.id} post={post} />;
-      })}
-    </section>
+    <>
+      <div className="flex flex-row items-center gap-2">
+        <ToolBar def={"Home"} />
+      </div>
+
+      <section className="mt-5 grid h-full auto-rows-fr grid-cols-1 gap-4">
+        {posts.map((post) => {
+          return <PreviewPost key={post.id} post={post} />;
+        })}
+      </section>
+    </>
   );
 }

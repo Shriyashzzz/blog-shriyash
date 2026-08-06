@@ -79,7 +79,7 @@ export function ViewPost() {
         setPostLoveNum={setPostLoveNum}
       />
       <section className="min-w-0">
-        <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 sm:p-6 dark:bg-gray-900 dark:text-white">
+        <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white">
           <h1 className="w-full text-green-700">{post.title}</h1>
           <div className="flex items-center gap-2">
             <HeartFilledIcon /> {postLoveNum}
