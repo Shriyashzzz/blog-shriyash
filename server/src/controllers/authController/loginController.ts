@@ -34,7 +34,7 @@ const loginController = [
         .json({ message: "Either Email or Password field is empty" });
     const user = await prisma.user.findUnique({ where: { email: email } });
     if (!user)
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid email or password" });
     const isValidPass = await bcrypt.compare(password, user.password);
     if (!isValidPass)
       return res.status(401).json({ message: "Invalid email or password" });

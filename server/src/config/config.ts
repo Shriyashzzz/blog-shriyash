@@ -21,7 +21,7 @@ if (!process.env.DATABASE_URL) {
   );
 }
 const config: Config = {
-  port: Number(process.env.PORT),
+  port: Number(process.env.PORT || 3000),
   nodeEnv: process.env.ENV || "DEV",
   DATABASE_URL: process.env.DATABASE_URL,
   JWT_SECRET: process.env.JWT_SECRET,

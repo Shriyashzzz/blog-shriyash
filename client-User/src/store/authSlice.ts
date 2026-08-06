@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import isAuthenticated from "../../../server/src/controllers/authController/isAuthenticated";
 
 const checkIfAuthenticated = async () => {
   const response = await fetch("/api/auth/me", {

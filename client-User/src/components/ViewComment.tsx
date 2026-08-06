@@ -35,6 +35,7 @@ export function ViewComments({ comments, setComments }: CommentProp) {
 
     const response = await fetch(`/api/comment/${postId}/${commentId}`, {
       method: "DELETE",
+      credentials: "include",
     });
     if (!response.ok) return;
     const data: DeleteResponse = await response.json();

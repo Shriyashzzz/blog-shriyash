@@ -12,7 +12,7 @@ A full-stack blog application with a REST API backend (Node.js/Express/TypeScrip
 
 ## Acknowledgements
 
-- **react-markdown** To Parse Markdown to html Elements
+- **react-markdown** To Parse Markdown to HTML Elements
 - **remark-gfm** Plugin used with react-markdown to parse autolink literals, footnotes, strikethrough, tables, tasklists
 - **rehype-highlight** Plugin to apply syntax highlighting to code with lowlight.
 
