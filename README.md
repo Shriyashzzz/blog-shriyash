@@ -4,10 +4,17 @@ A full-stack blog application with a REST API backend (Node.js/Express/TypeScrip
 
 ## Tech Stack
 
-- **Backend:** Express 5, TypeScript, Prisma ORM, PostgreSQL
+- **Frontend** React, Redux, Typescript, Tailwind, React-Router, Radix-UI, Tailwind Typography
+- **Backend:** Express 5, TypeScript, Prisma ORM, PostgreSQL, Supabase
 - **Auth:** Passport (JWT strategy), JWT cookies, bcryptjs password hashing
 - **Validation:** express-validator
 - **Frontends:** `client-User` (public blog, interactive post management), `client-Admin` (adminm side post/ user comments management)
+
+## Acknowledgements
+
+- **react-markdown** To Parse Markdown to html Elements
+- **remark-gfm** Plugin used with react-markdown to parse autolink literals, footnotes, strikethrough, tables, tasklists
+- **rehype-highlight** Plugin to apply syntax highlighting to code with lowlight.
 
 ## Project Structure
 
@@ -60,6 +67,7 @@ npm run dev      # starts the dev server (tsx watch)
 - **Post** — `id, title, content, published, viewCount, createdAt, authorId`
 - **Comment** — `id, postId, content, postedAt, authorId`
 - **PostLove** — like/love relation between a `User` and a `Post`
+- **PostCategory** Categories and post relation between Post & enum Category
 
 ## API Routes
 
