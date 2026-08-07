@@ -19,7 +19,8 @@ const newCommentController = [
       return res.status(400).json({ errors: errors.array() });
     const { commentContent, postId } = matchedData(req);
     const intPostId = _.toInteger(postId);
-    if (!req.user) return res.status(401).json("Error: User not logged in!");
+    if (!req.user)
+      return res.status(401).json({ message: "Error: User not logged in!" });
     const response = await queries.addnewComment(
       intPostId,
       commentContent,
