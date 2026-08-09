@@ -2,7 +2,7 @@ import { Card, Flex, Box, Avatar, Text } from "@radix-ui/themes";
 
 export function AuthorCard() {
   return (
-    <>
+    <div>
       <p className="font-[Nabla] text-amber-600 sm:text-xl">
         Author: Shriyash Ghimire
       </p>
@@ -31,6 +31,6 @@ export function AuthorCard() {
           </Card>
         </Box>
       </a>
-    </>
+    </div>
   );
 }

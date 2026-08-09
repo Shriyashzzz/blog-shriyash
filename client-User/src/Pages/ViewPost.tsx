@@ -15,6 +15,7 @@ import { useRef } from "react";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { iso8061DateParser } from "../utils/ISO8061DateParser";
+import { LovePost } from "../components/LovePost";
 
 export interface Author {
   id: number;
@@ -98,8 +99,14 @@ export function ViewPost() {
             >
               {post.content}
             </Markdown>
-            <div>
-              <AuthorCard />
+            <div className="flex flex-row items-center justify-between">
+              <AuthorCard />{" "}
+              <LovePost
+                post={post}
+                setPostLoveNum={setPostLoveNum}
+                size="4"
+                color="orange"
+              />
             </div>
           </section>
         </div>
