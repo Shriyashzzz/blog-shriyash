@@ -12,5 +12,11 @@ export const titileQueryController = async (
     return next(new AppError("Error: Invalid query search ", 400));
   const decodedSearchTitle = decodeURI(q);
   const response = await queries.getSearchTitle(decodedSearchTitle);
-  console.log(response.posts);
+  if (response.ok)
+    return res.status(200).json({
+      message: "Successfully fetched resembeling posts",
+      posts: response.posts,
+    });
+
+  return res.status(500).json({ message: "Unable to fetch posts" });
 };

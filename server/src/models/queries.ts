@@ -196,6 +196,7 @@ class Queries {
 
   async getSearchTitle(searchQuery: string): Promise<PostTitleQueryResponse> {
     const blogs = await prisma.post.findMany({
+      take: 5,
       where: {
         title: {
           contains: searchQuery,

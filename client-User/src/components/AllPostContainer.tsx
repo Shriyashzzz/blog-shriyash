@@ -5,7 +5,7 @@ import { PreviewPost } from "./PreviewPost";
 import { Navigate } from "react-router";
 import { MySpinner } from "./MySpinner";
 import { ToolBar } from "./ToolBar";
-import { SearchPost } from "./SearchPost";
+import { SearchPost } from "./SearchComponents/SearchPost";
 
 export interface Post {
   authorId: number;
@@ -47,12 +47,12 @@ export function AllPostContainer() {
 
   return (
     <>
-      <div className="flex w-3/5 flex-col items-center gap-2">
+      <div className="flex w-full flex-col items-center gap-2 sm:w-3/5">
         <ToolBar def={"Home"} />
         <SearchPost
           className="w-full"
           placeholder="Search content..."
-          variant="surface"
+          variant="classic"
         />
       </div>
 
