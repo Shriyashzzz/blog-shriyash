@@ -13,7 +13,9 @@ import { AddComment } from "../components/AddComment";
 import { PostInteractToolBox } from "../components/PostInteractToolBox";
 import { useRef } from "react";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
-import { IconButton } from "@radix-ui/themes";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { iso8061DateParser } from "../utils/ISO8061DateParser";
+
 export interface Author {
   id: number;
   username: string;
@@ -81,8 +83,13 @@ export function ViewPost() {
       <section className="min-w-0">
         <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white">
           <h1 className="w-full text-green-700">{post.title}</h1>
-          <div className="flex items-center gap-2">
-            <HeartFilledIcon /> {postLoveNum}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <HeartFilledIcon color="green" /> {postLoveNum}
+            </div>
+            <div className="flex items-center gap-2">
+              <CalendarIcon color="green" /> {iso8061DateParser(post.createdAt)}
+            </div>
           </div>
           <section>
             <Markdown
