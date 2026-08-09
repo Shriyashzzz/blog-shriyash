@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import { AppError } from "../../ultility/error";
+import queries from "../../models/queries";
 
-export const titileQueryController = (
+export const titileQueryController = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -10,5 +11,6 @@ export const titileQueryController = (
   if (!(typeof q == "string"))
     return next(new AppError("Error: Invalid query search ", 400));
   const decodedSearchTitle = decodeURI(q);
-  console.log(decodedSearchTitle);
+  const response = await queries.getSearchTitle(decodedSearchTitle);
+  console.log(response.posts);
 };

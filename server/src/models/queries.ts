@@ -1,5 +1,5 @@
 import { prisma } from "../config/prisma";
-import type { Comment } from "../../generated/prisma/client";
+import type { Comment, Post } from "../../generated/prisma/client";
 import { Prisma } from "../../generated/prisma/client";
 interface CommentPost {
   ok: boolean;
@@ -10,6 +10,19 @@ interface PostLove {
   ok: boolean;
   loved?: boolean;
 }
+
+interface PostTitleQueryResponse {
+  ok: boolean;
+  posts?: Array<{
+    id: number;
+    title: string;
+    createdAt: Date;
+    author: {
+      username: string;
+    };
+  }>;
+}
+
 class Queries {
   async getPublishedPosts() {
     try {
@@ -179,6 +192,30 @@ class Queries {
       console.error(e);
       return { ok: false };
     }
+  }
+
+  async getSearchTitle(searchQuery: string): Promise<PostTitleQueryResponse> {
+    const blogs = await prisma.post.findMany({
+      where: {
+        title: {
+          contains: searchQuery,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        createdAt: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+    if (!blogs) return { ok: false };
+
+    return { ok: true, posts: blogs };
   }
 }
 
