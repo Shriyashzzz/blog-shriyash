@@ -15,8 +15,11 @@
   "type": "module",
   "main": "server.js ",
   "scripts": {
+    "dev-client-user": "cd client-User && npm run dev",
+    "dev-client-admin": "cd client-Admin && npm run dev",
+    "dev-server": "cd server && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "echo \" set up dev run time on the global packg.json\" && exit 1"
+    "dev": "concurrently \"npm run dev-client-user\" \"npm run dev-client-admin\" \" npm run dev-server \""
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
