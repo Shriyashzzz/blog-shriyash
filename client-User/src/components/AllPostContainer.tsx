@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { PreviewPost } from "./PreviewPost";
 import { Navigate } from "react-router";
 import { MySpinner } from "./MySpinner";
-
 import { ToolBar } from "./ToolBar";
+import { SearchPost } from "./SearchPost";
 
 export interface Post {
   authorId: number;
@@ -47,8 +47,13 @@ export function AllPostContainer() {
 
   return (
     <>
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex w-3/5 flex-col items-center gap-2">
         <ToolBar def={"Home"} />
+        <SearchPost
+          className="w-full"
+          placeholder="Search content..."
+          variant="surface"
+        />
       </div>
 
       <section className="mt-5 grid h-full auto-rows-fr grid-cols-1 gap-4 max-sm:w-full">

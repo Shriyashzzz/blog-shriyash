@@ -1,7 +1,7 @@
 import Markdown from "react-markdown";
 import remarkGm from "remark-gfm";
 import { Post } from "./AllPostContainer";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 interface PreviewPostProps {
   post: Post;

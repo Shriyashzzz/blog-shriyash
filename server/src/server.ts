@@ -12,6 +12,7 @@ import { errorHandler } from "./ultility/error";
 import cors from "cors";
 import postAdminRouter from "./adminRoutes/postAdminRouter";
 import commentAdminRouter from "./adminRoutes/commentAdminRouter";
+import { searchRouter } from "./routes/searchRouter";
 
 const app = express();
 app.use(passport.initialize());
@@ -24,13 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/", homeRouter);
+app.use("/api", homeRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
 app.use("/api/admin/posts", postAdminRouter);
 app.use("/api/admin/comment", commentAdminRouter);
+app.use("/api/search", searchRouter);
 app.use(errorHandler);
 
 app.listen(config.port, () => {
