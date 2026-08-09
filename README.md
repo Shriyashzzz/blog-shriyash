@@ -104,11 +104,17 @@
         | POST   | `/api/comment/newComment/:postId` | Yes (JWT) | Add a comment to a post. Body: `commentContent`, returns all comments for the {postId} on success            |
         | DELETE | `/api/comment/:commentId`         | Yes (JWT) | Delete a comment (only the comment's author can delete it), returns all comments for the {postId} on success |
 
+        ### Search - `/api/search`
+
+        | Method | Route                              |  Post      | Description                                                                   |
+        | ------ | ---------------------------------- | ------------------------------------------------------------- |
+       | GET    | `/api/search/posts/blogtitle/:q`   | Searches blog posts by title. `:q` is a URL-encoded search string; returns all modified `Post[]` whose `title` contains a case-insensitive match for `q` (equivalent to a `LIKE %q%` match). |
+
         ### Admin — Posts — `/api/admin/posts`
 
         All routes require JWT auth **and** an `Admin` role (`checkIfUserAdmin` middleware).
 
-        | Method | Route                              | Description                                                   |
+        | Method | Route                              |  Post      | Description                                                   |
         | ------ | ---------------------------------- | ------------------------------------------------------------- |
         | GET    | `/api/admin/posts/`                | Get all posts (published + unpublished)                       |
         | GET    | `/api/admin/posts/getpost/:postId` | Get a single post (regardless of published status)            |
