@@ -56,7 +56,11 @@ const loginController = [
       if (response)
         return res
           .status(200)
-          .json({ message: "User logged in!", user: resUserObj });
+          .json({
+            message: "User logged in!",
+            user: resUserObj,
+            isAdmin: user.role === "Admin",
+          });
       return res.sendStatus(501);
     } catch (e) {
       console.error(e);

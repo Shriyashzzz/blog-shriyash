@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@radix-ui/themes": "^3.3.0",
+    "@reduxjs/toolkit": "^2.12.0",
+    "@tailwindcss/vite": "^4.3.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-redux": "^9.3.0",
     "react-router": "^8.3.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2"

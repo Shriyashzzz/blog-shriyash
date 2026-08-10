@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const checkIfAuthenticated = async () => {
   const response = await fetch("/api/auth/me", {
