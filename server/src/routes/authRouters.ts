@@ -5,6 +5,7 @@ import passport from "passport";
 import signUpController from "../controllers/authController/signUpController";
 import isAuthenticated from "../controllers/authController/isAuthenticated";
 import { isAdminAuth } from "../controllers/authController/isAdminAuth";
+import adminLoginController from "../adminControllers/adminLogInController";
 
 const authRouter = Router();
 authRouter.post("/login", loginController);
@@ -21,6 +22,8 @@ authRouter.get(
   passport.authenticate("jwt", { session: false }),
   isAuthenticated,
 );
+
+authRouter.post("/admin/login", adminLoginController);
 authRouter.get(
   "/me/admin",
   passport.authenticate("jwt", { session: false }),

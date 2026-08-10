@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteCommentAdmin } from "../adminControllers/adminCommentController";
+import { deleteCommentAdmin } from "../adminControllers/auth/adminCommentController";
 import checkIfUserAdmin from "../middlewares/checkAdmin";
 
 const commentAdminRouter = Router({ mergeParams: true });
