@@ -12,7 +12,7 @@ import { Ref } from "react";
 interface PropData {
   postId: number;
   setComments: Dispatch<SetStateAction<Comment[]>>;
-  commentBoxRef: Ref<HTMLDivElement>;
+  commentBoxRef: Ref<HTMLDivElement | undefined>;
 }
 
 export function AddComment({ postId, setComments, commentBoxRef }: PropData) {
@@ -55,10 +55,7 @@ export function AddComment({ postId, setComments, commentBoxRef }: PropData) {
 
   return (
     <>
-      <div
-        className="mt-4 flex w-full max-w-4xl flex-col gap-1"
-        ref={commentBoxRef}
-      >
+      <div className="mt-4 flex w-full max-w-4xl flex-col gap-1">
         <TextArea
           onClick={handleCommentBoxClick}
           ref={commentRef}

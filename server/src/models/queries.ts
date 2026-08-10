@@ -180,6 +180,9 @@ class Queries {
   async getPostComments(postId: number): Promise<CommentPost> {
     try {
       const comments = await prisma.comment.findMany({
+        orderBy: {
+          postedAt: "desc",
+        },
         where: { postId: postId },
         include: {
           author: {

@@ -6,7 +6,7 @@ import { Header } from "./components/Header";
 
 function App() {
   return (
-    <Theme appearance="light">
+    <Theme appearance="dark">
       <Header />
       <main className="w-full h-full">
         <Outlet />

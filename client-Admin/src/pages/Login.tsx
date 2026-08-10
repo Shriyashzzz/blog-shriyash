@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { Form } from "react-router";
 import blogLogo from "../assets/terminal.svg";
+import { isAuth } from "../store/authSlice";
 
 interface AdminRequestBody {
   email: string;
@@ -44,12 +45,15 @@ export function LoginPage() {
       },
       body: JSON.stringify(adminReqBody),
     });
-
+    // if invalid login
     if (!response.ok) {
       setInvalidMessage("Invalid email or username");
       return;
     }
+    // if valid login
     const data = await response.json();
+    dispatch(isAuth(data.user));
+    return;
   };
 
   return (

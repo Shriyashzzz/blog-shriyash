@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useEffect } from "react";
 import { NavLink } from "react-router";
-import { isAuth } from "../store/authSlice";
+import { isAuth, isNotAuth } from "../store/authSlice";
 import { UserType } from "../vite.env";
+import { Button } from "@radix-ui/themes";
+import { useNavigate } from "react-router";
 
 interface CheckAuthResposne {
   message: string;
@@ -14,7 +16,7 @@ interface CheckAuthResposne {
 export function Header() {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth.value);
-  console.log(auth.isAuthenticated);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getInitialAuthState = async () => {
@@ -32,6 +34,34 @@ export function Header() {
     getInitialAuthState();
   }, []);
 
+  const logOutAdmin = async () => {
+    if (!auth) return;
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        navigate("/error", {
+          state: {
+            title: "Error",
+            message: "Unable to Log out, bad server response ",
+          },
+        });
+        return;
+      }
+      dispatch(isNotAuth());
+      navigate("/login", { viewTransition: true });
+    } catch (e) {
+      navigate("/error", {
+        state: {
+          title: "CLient-Admin Error",
+          message: "Unable to Log out, bad client-admin error",
+        },
+      });
+      return;
+    }
+  };
+
   return (
     <header className="flex w-full flex-row items-center justify-between border-b-2 border-green-800 px-6 py-2">
       <NavLink
@@ -41,7 +71,8 @@ export function Header() {
       >
         <img src={terminal} alt="blog logo" className="size-10" />
         <p className="m-0 p-0 font-[Nabla] text-sm text-green-600 sm:text-xl">
-          &lt;Shriyash Uncompiled / &gt;
+          &lt;Shriyash Uncompiled / &gt;{" "}
+          <em className="text-sm dark:text-gray-400 ">admin</em>
         </p>
       </NavLink>
 
@@ -49,13 +80,16 @@ export function Header() {
         {auth && !auth.isAuthenticated && (
           <ul>
             <NavLink className="cursor-pointer" to="/login">
-              <p className="font-bold text-green-800 dark:text-green-600">
-                Log In
-              </p>
+              <Button color="green"> Log in</Button>
             </NavLink>
           </ul>
         )}
-        {auth && <p>Log out</p>}
+        {auth && auth.isAuthenticated && (
+          <Button color="green" onClick={logOutAdmin}>
+            {" "}
+            Log Out
+          </Button>
+        )}
       </div>
     </header>
   );
