@@ -13,9 +13,11 @@ const prismaSeedClient = new PrismaClient({ adapter });
 
 async function main() {
   // Clear the database for seeding
-  await prismaSeedClient.comment.deleteMany();
+  await prismaSeedClient.postLove.deleteMany();
   await prismaSeedClient.post.deleteMany();
+  await prismaSeedClient.comment.deleteMany();
   await prismaSeedClient.user.deleteMany();
+  await prismaSeedClient.postCategory.deleteMany();
 
   // 1. Seed Users (All posts remain authored exclusively by Admin)
   const admin = await prismaSeedClient.user.create({
@@ -23,7 +25,7 @@ async function main() {
       email: "ghimireshriyash@gmail.com",
       username: "Shriyash Ghimire",
       role: Role.Admin,
-      password: await bcrypt.hash("12345", 12),
+      password: await bcrypt.hash("V!nland$aga69420", 12),
     },
   });
 

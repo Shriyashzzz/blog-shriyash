@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
@@ -12,15 +12,15 @@ interface AdminRequestBody {
 
 export function LoginPage() {
   const auth = useSelector((state: RootState) => state.auth.value);
+  const dispatch = useDispatch();
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const [invalidMessage, setInvalidMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("go");
     if (auth.isAuthenticated) {
-      navigate("/home", { viewTransition: true });
+      navigate("/", { viewTransition: true });
       return;
     }
   }, [auth]);
@@ -35,7 +35,7 @@ export function LoginPage() {
       password: passRef.current.value,
     };
 
-    const response = await fetch("/api/auth/login", {
+    const response = await fetch("/api/auth/admin/login", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -44,12 +44,12 @@ export function LoginPage() {
       },
       body: JSON.stringify(adminReqBody),
     });
+
     if (!response.ok) {
       setInvalidMessage("Invalid email or username");
       return;
     }
     const data = await response.json();
-    console.log(data);
   };
 
   return (
