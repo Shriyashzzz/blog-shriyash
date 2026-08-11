@@ -43,7 +43,7 @@ const adminLoginController = [
         buildAuthCookieAndToken(user);
       const response = await setTokenCookie(
         res,
-        "amin_auth_token",
+        "admin_auth_token",
         cookieOptions,
         tokenPayload,
         tokenOptions,
