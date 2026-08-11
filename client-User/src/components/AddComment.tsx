@@ -30,7 +30,9 @@ export function AddComment({
   };
 
   const handleOnSubmit = async () => {
-    if (!commentBoxRef.current) return;
+    if (!commentBoxRef.current || commentBoxRef.current.value.length <= 1)
+      return;
+
     const commentPayload = {
       commentContent: commentBoxRef.current.value,
     };
