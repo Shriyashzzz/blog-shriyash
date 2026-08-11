@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { SetStateAction, Dispatch } from "react";
+import { Ref } from "react";
 
 export interface Comment {
   author: Author;
@@ -20,11 +21,16 @@ export interface Comment {
 interface CommentProp {
   comments: Comment[];
   setComments: Dispatch<SetStateAction<Comment[]>>;
+  viewCommentRef: Ref<HTMLElement>;
 }
 
 type DeleteResponse = { message: string; comments: Comment[] };
 
-export function ViewComments({ comments, setComments }: CommentProp) {
+export function ViewComments({
+  comments,
+  setComments,
+  viewCommentRef,
+}: CommentProp) {
   const authState = useSelector((state: RootState) => state.auth.value);
   if (comments.length == 0) {
     return <></>;
@@ -45,11 +51,12 @@ export function ViewComments({ comments, setComments }: CommentProp) {
 
   return (
     <section className="mt-4 flex h-fit w-full max-w-4xl flex-col">
-      {comments.map((cmt) => {
+      {comments.map((cmt, indx) => {
         return (
           <article
             key={`${cmt.id}${cmt.author}`}
             className="flex h-fit flex-row gap-4 bg-gray-100 p-2 dark:bg-gray-800"
+            ref={indx === 0 ? viewCommentRef : undefined}
           >
             <Avatar
               size="3"

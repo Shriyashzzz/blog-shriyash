@@ -8,7 +8,7 @@ import { Post } from "./AllPostContainer";
 import { LovePost } from "./LovePost";
 
 interface PostInteractParams {
-  commentBoxRef: RefObject<HTMLDivElement | null>;
+  commentBoxRef: RefObject<HTMLTextAreaElement | null>;
   post: Post;
   setPostLoveNum: Dispatch<SetStateAction<number | null>>;
 }
@@ -25,6 +25,8 @@ export function PostInteractToolBox({
     commentBoxRef.current.scrollIntoView({
       behavior: "smooth",
     });
+    commentBoxRef.current.focus();
+    return;
   };
 
   return (

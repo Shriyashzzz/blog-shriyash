@@ -41,13 +41,15 @@ interface PostResponse {
 }
 
 export function ViewPost() {
-  const commentBoxRef = useRef<HTMLDivElement>(null);
-
+  const commentBoxRef = useRef<HTMLTextAreaElement | null>(null);
+  const viewCommentRef = useRef<HTMLElement | null>(null);
   const { postid } = useParams();
   const [post, setPost] = useState<Post>();
   const { data, loading, error } = useFetch<PostResponse>(
     `/api/post/${postid}`,
   );
+  const [commentAddedTrigger, setCommentAddedTrigger] = useState(0);
+
   const [postLoveNum, setPostLoveNum] = useState<number | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 
@@ -58,6 +60,13 @@ export function ViewPost() {
       setPostLoveNum(data.post._count.loves);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (commentAddedTrigger > 0) {
+      console.log("hi");
+      viewCommentRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [commentAddedTrigger]);
 
   if (error) {
     return (
@@ -114,8 +123,13 @@ export function ViewPost() {
           postId={post.id}
           setComments={setComments}
           commentBoxRef={commentBoxRef}
+          onCommentAdded={() => setCommentAddedTrigger((n) => n + 1)}
         />
-        <ViewComments comments={comments} setComments={setComments} />
+        <ViewComments
+          viewCommentRef={viewCommentRef}
+          comments={comments}
+          setComments={setComments}
+        />
       </section>
     </div>
   );
