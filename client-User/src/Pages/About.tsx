@@ -12,15 +12,21 @@ export function About() {
       <section className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-4/5 max-w-full flex-col bg-gray-200 p-4 leading-relaxed max-sm:w-full sm:p-6 dark:bg-gray-900 dark:text-white">
         <h1>Who writes these blogs ?</h1>
         <div>
-          Hi, I'm Shriyash, a full-stack developer, and this is my blog platform{" "}
+          <p>
+            Hi, I'm Shriyash, a full-stack developer, and this is my blog
+            platform{" "}
+          </p>
           <span className="text-green-800">
             <Em>&lt;Shriyash Uncompiled / &gt;</Em>.
           </span>
           <AuthorCard />
-          <br /> As the name suggests, this is my platform to uncompile and
-          share my thoughts, ideas, knowledge, experiments, life events, and the
-          occasional tomfoolery. Cooking, code, and everything in between -
-          mostly tech stuff, but not solely tech stuff.
+          <br />
+          <p>
+            As the name suggests, this is my platform to uncompile and share my
+            thoughts, ideas, knowledge, experiments, life events, and the
+            occasional tomfoolery. Cooking, code, and everything in between -
+            mostly tech stuff, but not solely tech stuff.
+          </p>
         </div>
 
         <p>
