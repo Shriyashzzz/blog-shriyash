@@ -1,5 +1,12 @@
 import { Box, Container } from "@radix-ui/themes";
-
+import {
+  CalendarIcon,
+  EyeOpenIcon,
+  CheckCircledIcon,
+  CrossCircledIcon,
+} from "@radix-ui/react-icons";
+import { dateParser } from "../util/dateParse";
+import { PostItemButton } from "./PostItemButtons";
 interface Props {
   post: Post;
 }
@@ -10,9 +17,31 @@ export function PostItem({ post }: Props) {
       style={{
         background: "var(--gray-a2)",
         borderRadius: "var(--radius-3)",
+        height: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <Container size="1" className="w-full h-full"></Container>
+      <section className="p-6 justify-between ">
+        <div className="flex justify-center gap-4 flex-col">
+          <h1>{post.title}</h1>
+          <span className="flex items-center gap-2">
+            <CalendarIcon /> {dateParser(post.createdAt)}
+          </span>
+          <span className="flex items-center gap-2">
+            <EyeOpenIcon /> {post.viewCount}
+          </span>
+          <span className="flex items-center gap-2">
+            published:{" "}
+            {post.published ? <CheckCircledIcon /> : <CrossCircledIcon />}
+          </span>
+        </div>
+      </section>
+      {/* buttons */}
+      <div className="p-5">
+        <PostItemButton post={post} />
+      </div>
     </Box>
   );
 }
