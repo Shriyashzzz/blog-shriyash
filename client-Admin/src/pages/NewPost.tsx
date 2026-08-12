@@ -1,12 +1,31 @@
-import { MDXEditor } from "@mdxeditor/editor";
+import {
+  MDXEditor,
+  listsPlugin,
+  quotePlugin,
+  thematicBreakPlugin,
+  imagePlugin,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  linkDialogPlugin,
+  CodeToggle,
+  InsertImage,
+  InsertCodeBlock,
+  InsertAdmonition,
+  InsertThematicBreak,
+  ListsToggle,
+  CreateLink,
+} from "@mdxeditor/editor";
 import { headingsPlugin } from "@mdxeditor/editor";
 import { useRef } from "react";
 import type { MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
-import { Button } from "@radix-ui/themes";
 
 export function NewPost() {
   const markdownRef = useRef<MDXEditorMethods>(null);
+  const markdown = `
+   
+    `;
 
   return (
     <div className=" h-full w-4/5 p-5 gap-5 flex flex-col">
@@ -20,10 +39,31 @@ export function NewPost() {
       </div>
 
       <MDXEditor
-        className="bg-gray-800 h-full text-2xl"
+        className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white"
         ref={markdownRef}
-        markdown={""}
-        plugins={[headingsPlugin()]}
+        markdown={markdown}
+        plugins={[
+          headingsPlugin(),
+          listsPlugin(),
+          quotePlugin(),
+          imagePlugin(),
+          linkDialogPlugin(),
+          thematicBreakPlugin(),
+          toolbarPlugin({
+            toolbarClassName: "toolbar",
+            toolbarContents: () => (
+              <>
+                <UndoRedo />
+                <BoldItalicUnderlineToggles />
+                <CodeToggle />
+                <InsertImage />
+                <InsertThematicBreak />
+                <ListsToggle />
+                <CreateLink />
+              </>
+            ),
+          }),
+        ]}
         onChange={() => console.log(markdownRef.current?.getMarkdown())}
       />
     </div>
