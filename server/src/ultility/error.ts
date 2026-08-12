@@ -25,7 +25,7 @@ function errorHandler(
   const statusCode = err.statusCode || 500;
   console.error(err);
   res.status(statusCode).json({
-    error: err.isIntentional ? err.message : "Something went wrong",
+    message: err.isIntentional ? err.message : "Something went wrong",
   });
 }
 

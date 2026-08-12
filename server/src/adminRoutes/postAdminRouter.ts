@@ -11,7 +11,7 @@ import {
   getAdminPost,
 } from "../adminControllers/postAdminController";
 
-const postAdminRouter = Router();
+const postAdminRouter = Router({ mergeParams: true });
 
 postAdminRouter.get(
   "/",

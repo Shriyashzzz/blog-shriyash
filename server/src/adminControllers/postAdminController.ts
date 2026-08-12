@@ -67,19 +67,17 @@ const updatePost = async (req: Request, res: Response, next: NextFunction) => {
       new AppError("Incoming post Id stirng is not a valid type", 400),
     );
   const intPostId = _.parseInt(postId);
-  const { title, content, published } = req.body;
-  const updatePayload: UpdatePost = {
-    title: title,
-    content: content,
-    published: published,
-  };
 
+  const updatePayload: UpdatePost = {
+    title: req.body.title,
+    content: req.body.content,
+    published: req.body.published,
+  };
   const response = await adminQueries.updatePost(
     updatePayload,
     intPostId,
     req.user!.id,
   );
-
   if (!response.ok)
     return next(new AppError("Unable to update the post ", 500));
 
