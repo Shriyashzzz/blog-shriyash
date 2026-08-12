@@ -3,11 +3,13 @@ import App from "./App";
 import { LoginPage } from "./pages/Login";
 import { Home } from "./pages/Home";
 import ErrorPage from "./pages/Error";
+import { NewPost } from "./pages/NewPost";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
       {
@@ -18,6 +20,7 @@ export const router = createBrowserRouter([
         element: <ErrorPage />,
         path: "/error",
       },
+      { element: <NewPost />, path: "/new" },
     ],
   },
 ]);
