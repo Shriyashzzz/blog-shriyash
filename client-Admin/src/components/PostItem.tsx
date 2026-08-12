@@ -25,15 +25,15 @@ export function PostItem({ post }: Props) {
     >
       <section className="p-6 justify-between ">
         <div className="flex justify-center gap-4 flex-col">
-          <h1>{post.title}</h1>
-          <span className="flex items-center gap-2">
+          <h1 className="font-extrabold">{post.title}</h1>
+          <span className="flex items-center gap-2 ">
             <CalendarIcon /> {dateParser(post.createdAt)}
           </span>
           <span className="flex items-center gap-2">
             <EyeOpenIcon /> {post.viewCount}
           </span>
           <span className="flex items-center gap-2">
-            published:{" "}
+            Published:{" "}
             {post.published ? <CheckCircledIcon /> : <CrossCircledIcon />}
           </span>
         </div>

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import useFetch from "../hooks/useFetch";
 import { PostItem } from "../components/PostItem";
 import { Grid } from "@radix-ui/themes";
+import { MenuBar } from "../components/MenuBar";
 export function Home() {
   const auth = useSelector((state: RootState) => state.auth.value);
   const navigate = useNavigate();
@@ -31,15 +32,20 @@ export function Home() {
   console.log(data);
   if (data && data.posts)
     return (
-      <Grid
-        columns="repeat(auto-fit, minmax(250px, 350px))"
-        gap="3"
-        className="h-full w-4/5  p-5"
-      >
-        {data.posts &&
-          data.posts.map((post) => {
-            return <PostItem post={post} key={post.id} />;
-          })}
-      </Grid>
+      <section className="h-full w-4/5 p-5  justify-center gap-5">
+        <MenuBar />
+
+        <Grid
+          columns="repeat(auto-fit, minmax(250px, 350px))"
+          gap="3"
+          className="h-full w-full"
+          justify={"center"}
+        >
+          {data.posts &&
+            data.posts.map((post) => {
+              return <PostItem post={post} key={post.id} />;
+            })}
+        </Grid>
+      </section>
     );
 }
