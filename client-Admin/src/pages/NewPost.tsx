@@ -10,14 +10,17 @@ import {
   linkDialogPlugin,
   CodeToggle,
   InsertImage,
-  InsertCodeBlock,
-  InsertAdmonition,
   InsertThematicBreak,
   ListsToggle,
   CreateLink,
+  InsertCodeBlock,
+  codeBlockPlugin,
+  codeMirrorPlugin,
+  ConditionalContents,
+  ChangeCodeMirrorLanguage,
 } from "@mdxeditor/editor";
 import { headingsPlugin } from "@mdxeditor/editor";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import type { MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 
@@ -49,6 +52,14 @@ export function NewPost() {
           imagePlugin(),
           linkDialogPlugin(),
           thematicBreakPlugin(),
+          codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
+          codeMirrorPlugin({
+            codeBlockLanguages: {
+              js: "JavaScript",
+              css: "CSS",
+              tsx: "TypeScript",
+            },
+          }),
           toolbarPlugin({
             toolbarClassName: "toolbar",
             toolbarContents: () => (
@@ -60,6 +71,21 @@ export function NewPost() {
                 <InsertThematicBreak />
                 <ListsToggle />
                 <CreateLink />
+                <ConditionalContents
+                  options={[
+                    {
+                      when: (editor) => editor?.editorType === "codeblock",
+                      contents: () => <ChangeCodeMirrorLanguage />,
+                    },
+                    {
+                      fallback: () => (
+                        <>
+                          <InsertCodeBlock />
+                        </>
+                      ),
+                    },
+                  ]}
+                />
               </>
             ),
           }),

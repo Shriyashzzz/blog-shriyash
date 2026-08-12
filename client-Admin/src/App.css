@@ -15,3 +15,7 @@
 .mdxeditor li {
   display: list-item;
 }
+
+.mdxeditor button > span {
+  color: black;
+}
