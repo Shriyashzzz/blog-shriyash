@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 import { useEffect } from "react";
 import { NavLink } from "react-router";
 import { isAuth, isNotAuth } from "../store/authSlice";
-import { UserType } from "../vite.env";
+import { UserType } from "../vite-env";
 import { Button } from "@radix-ui/themes";
 import { useNavigate } from "react-router";
 

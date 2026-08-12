@@ -3,7 +3,7 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 export function LoginPageCallOut() {
   return (
-    <div className="p-4">
+    <div className="p-4 flex justify-between">
       <Callout.Root>
         <Callout.Icon>
           <InfoCircledIcon />
