@@ -21,7 +21,7 @@ export function LoginPage() {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      navigate("/", { viewTransition: true });
+      navigate("/");
       return;
     }
   }, [auth]);

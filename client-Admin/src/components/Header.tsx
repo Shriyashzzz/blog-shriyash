@@ -27,7 +27,6 @@ export function Header() {
 
       if (!response.ok) return;
       const data: CheckAuthResposne = await response.json();
-      console.log(data);
       dispatch(isAuth(data.user));
     };
 
