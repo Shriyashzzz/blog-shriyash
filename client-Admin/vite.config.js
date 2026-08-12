@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: env.SERVER_ADDRESS,
+          target: env.VITE_SERVER_ADDRESS,
           changeOrigin: true,
         },
       },

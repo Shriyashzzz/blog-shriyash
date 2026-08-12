@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Form } from "react-router";
 import blogLogo from "../assets/terminal.svg";
 import { isAuth } from "../store/authSlice";
-
+import { LoginPageCallOut } from "../components/LoginPageCallout";
 interface AdminRequestBody {
   email: string;
   password: string;
@@ -68,8 +68,8 @@ export function LoginPage() {
           Sign in to your account
         </h2>
       </div>
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <LoginPageCallOut />
+      <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
         <Form onSubmit={(e) => formOnSubmit(e)} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm/6 font-medium">
