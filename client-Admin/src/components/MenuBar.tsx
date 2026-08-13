@@ -13,7 +13,7 @@ export function MenuBar() {
     <Container justifySelf={"center"} className="w-full mb-5">
       {" "}
       <div className="flex w-full justify-center items-center gap-2">
-        <p>What's on your mind today?</p>
+        <p className="font-extrabold text-xl ">What's on your mind today?</p>
         <Button onClick={onNewPost} color="red" style={{ cursor: "pointer" }}>
           {" "}
           New Post <Pencil2Icon />

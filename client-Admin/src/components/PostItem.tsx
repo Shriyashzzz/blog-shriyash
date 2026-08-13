@@ -17,14 +17,14 @@ export function PostItem({ post }: Props) {
       style={{
         background: "var(--gray-a2)",
         borderRadius: "var(--radius-3)",
-        height: "auto",
+        minWidth: "0",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
     >
       <section className="p-6 justify-between ">
-        <div className="flex justify-center gap-4 flex-col">
+        <div className="flex justify-center gap-4 flex-col min-w-0">
           <h1 className="font-extrabold">{post.title}</h1>
           <span className="flex items-center gap-2 ">
             <CalendarIcon /> {dateParser(post.createdAt)}

@@ -46,7 +46,11 @@ export function PostItemButton({ post }: Props) {
 
   return (
     <div className="flex  items-center justify-between ">
-      <Button color="red" style={{ cursor: "pointer" }}>
+      <Button
+        color="red"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate(`/edit/${post.id}`)}
+      >
         Edit Post
         <ArrowRightIcon />
       </Button>
