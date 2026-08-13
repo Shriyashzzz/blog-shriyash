@@ -18,6 +18,7 @@ import {
   codeMirrorPlugin,
   ConditionalContents,
   ChangeCodeMirrorLanguage,
+  BlockTypeSelect,
 } from "@mdxeditor/editor";
 import { headingsPlugin } from "@mdxeditor/editor";
 import { useRef, useEffect } from "react";
@@ -65,12 +66,15 @@ export function NewPost() {
             toolbarContents: () => (
               <>
                 <UndoRedo />
+                <BlockTypeSelect />
                 <BoldItalicUnderlineToggles />
+
                 <CodeToggle />
-                <InsertImage />
+
                 <InsertThematicBreak />
                 <ListsToggle />
                 <CreateLink />
+                <InsertImage />
                 <ConditionalContents
                   options={[
                     {

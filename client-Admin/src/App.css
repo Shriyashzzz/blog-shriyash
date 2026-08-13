@@ -19,3 +19,27 @@
 .mdxeditor button > span {
   color: black;
 }
+
+.mdxeditor h1 {
+  @apply text-4xl font-bold;
+}
+
+.mdxeditor h2 {
+  @apply text-3xl font-bold;
+}
+
+.mdxeditor h3 {
+  @apply text-2xl font-bold;
+}
+
+.mdxeditor h4 {
+  @apply text-xl font-bold;
+}
+
+.mdxeditor h5 {
+  @apply font-bold;
+}
+
+.mdxeditor h6 {
+  @apply text-xs font-bold;
+}
