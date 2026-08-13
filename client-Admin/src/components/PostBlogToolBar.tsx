@@ -31,6 +31,7 @@ export function PostBlogToolBar({ markdownRef, title }: Props) {
         return;
       }
       const data = await response.json();
+      console.log(data);
       navigate("/error", {
         viewTransition: true,
         state: { title: "Error: 500", message: data.message },

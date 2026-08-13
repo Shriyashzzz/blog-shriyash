@@ -76,7 +76,6 @@ const getAdminPost = [
 ];
 
 const createPostController = [
-  ...postIdValidator,
   ...newPostPayloadValidator,
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

@@ -9,7 +9,7 @@ interface Props {
 export function TitleTextField({ setTitle, title }: Props) {
   return (
     <TextField.Root
-      value={title || ""}
+      value={title && title}
       placeholder="Title"
       style={{
         fontSize: "2rem",
