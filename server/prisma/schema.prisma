@@ -32,18 +32,18 @@ model Post {
   viewCount      Int            @default(0)
   createdAt      DateTime       @default(now())
   comments       Comment[]
-  author         User           @relation(fields: [authorId], references: [id])
+  author         User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId       Int
   postCategories PostCategory[]
 }
 
 model Comment {
   id       Int      @id @default(autoincrement())
-  post     Post     @relation(fields: [postId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   Int
   postedAt DateTime @default(now())
   content  String
-  author   User     @relation(fields: [authorId], references: [id])
+  author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
 }
 
@@ -51,8 +51,8 @@ model PostLove {
   id       Int  @id @default(autoincrement())
   postId   Int
   authorId Int
-  post     Post @relation(fields: [postId], references: [id])
-  author   User @relation(fields: [authorId], references: [id])
+  post     Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@unique([postId, authorId])
 }
@@ -60,7 +60,7 @@ model PostLove {
 model PostCategory {
   id       Int      @id @default(autoincrement())
   postId   Int
-  post     Post     @relation(fields: [postId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   category Category
 
   @@unique([postId, category])

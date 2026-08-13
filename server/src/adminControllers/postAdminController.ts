@@ -135,12 +135,13 @@ const deletePost = [
     if (!errors.isEmpty())
       return next(new AppError(JSON.stringify(errors), 400));
     const { postId } = matchedData(req);
+    const intPostId = parseInt(postId);
     const { user } = req;
     if (!user || !(user.role == Role.Admin))
       return next(
         new AppError("You sneaky, Only admins are allowed in here!", 401),
       );
-    const response = await adminQueries.deletePost(postId, user.id);
+    const response = await adminQueries.deletePost(intPostId, user.id);
     if (response.ok)
       return res.status(200).json({
         message: "Success: deleted the post",
