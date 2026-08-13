@@ -2,6 +2,7 @@ import { Router } from "express";
 import checkIfUserAdmin from "../middlewares/checkAdmin";
 import passport from "passport";
 import {
+  deletePost,
   getAdminPostsController,
   updatePost,
 } from "../adminControllers/postAdminController";
@@ -32,6 +33,13 @@ postAdminRouter.post(
   passport.authenticate("jwt", { session: false }),
   checkIfUserAdmin,
   createPostController,
+);
+
+postAdminRouter.delete(
+  "/delete/:postId",
+  passport.authenticate("jwt", { session: false }),
+  checkIfUserAdmin,
+  deletePost,
 );
 
 postAdminRouter.patch(

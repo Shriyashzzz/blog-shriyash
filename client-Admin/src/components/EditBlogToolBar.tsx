@@ -1,5 +1,5 @@
 import { MDXEditorMethods } from "@mdxeditor/editor";
-import { Dispatch, SetStateAction, useState } from "react";
+import { SetStateAction, useState } from "react";
 import { Button, Flex, Switch, Text } from "@radix-ui/themes";
 import { AlertDialog } from "radix-ui";
 import { useNavigate } from "react-router";
@@ -13,6 +13,9 @@ interface Props {
 export function EditBlogToolBar({ markdownRef, title, post }: Props) {
   const navigate = useNavigate();
   const [publishState, setPublishState] = useState<boolean>(post.published);
+
+  const deleteBlog = async () => {};
+
   const addNewBlog = async () => {
     try {
       if (!title || !markdownRef) return;
@@ -51,24 +54,64 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
   const deletePost = async () => {};
 
   return (
-    <section className="flex items-center m-4 gap-4 justify-end">
-      <Flex gap={"2"}>
-        <Text size="2" className="text-gray-300">
-          {publishState ? "Publish" : "Draft"}
-        </Text>
-        <Switch
-          style={{ cursor: "pointer" }}
-          checked={publishState}
-          onCheckedChange={() => setPublishState(!publishState)}
-          color="red"
-        />
-      </Flex>
+    <section className="flex items-center m-4 gap-4 justify-between">
+      <AlertDialog.Root>
+        <AlertDialog.Trigger asChild>
+          <Button color="red" style={{ cursor: "pointer" }}>
+            Delete
+          </Button>
+        </AlertDialog.Trigger>
 
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay className="fixed inset-0 bg-black/50 z-40" />
+          <AlertDialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90vw] max-w-112.5 bg-gray-900 p-6 rounded-lg shadow-xl">
+            <AlertDialog.Title className="text-white text-lg font-semibold">
+              {publishState ? "Delete Post" : "Delete Draft"}
+            </AlertDialog.Title>
+            <AlertDialog.Description className="text-gray-400 mt-2">
+              There is no backup? Are you sure you want to delete this{" "}
+              {publishState ? "post" : "draft"}?
+            </AlertDialog.Description>
+            <div className="flex gap-3 items-center justify-end mt-4 h-full w-full">
+              <AlertDialog.Cancel asChild>
+                <Button style={{ cursor: "pointer" }} variant="soft">
+                  Cancel
+                </Button>
+              </AlertDialog.Cancel>
+              <AlertDialog.Action asChild>
+                <Button
+                  variant="classic"
+                  style={{ cursor: "pointer", padding: "5px" }}
+                  color="red"
+                  onClick={deletePost}
+                >
+                  Delete
+                </Button>
+              </AlertDialog.Action>
+            </div>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
       <div className="flex items-center gap-3">
+        <Flex gap={"2"}>
+          <Text size="2" className="text-gray-300">
+            {publishState ? "Publish" : "Draft"}
+          </Text>
+          <Switch
+            style={{ cursor: "pointer" }}
+            checked={publishState}
+            onCheckedChange={() => setPublishState(!publishState)}
+            color="red"
+          />
+        </Flex>
         <p>Ready?</p>
         <AlertDialog.Root>
           <AlertDialog.Trigger asChild>
-            <Button color="red" style={{ cursor: "pointer" }}>
+            <Button
+              color="green"
+              style={{ cursor: "pointer", padding: "5px" }}
+              className="w-full"
+            >
               Update
             </Button>
           </AlertDialog.Trigger>
@@ -92,8 +135,7 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
                 <AlertDialog.Action asChild>
                   <Button
                     variant="classic"
-                    style={{ cursor: "pointer" }}
-                    className="w-full"
+                    style={{ cursor: "pointer", padding: "5px" }}
                     color="green"
                     onClick={addNewBlog}
                   >

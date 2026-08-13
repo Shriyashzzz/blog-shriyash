@@ -1,3 +1,4 @@
+import { error } from "node:console";
 import type { Post } from "../../generated/prisma/client";
 import { prisma } from "../config/prisma";
 
@@ -139,6 +140,18 @@ class AdminQueries {
       }
       return { ok: true };
     } catch (e: unknown) {
+      console.log(e);
+      return { ok: false, error: e };
+    }
+  }
+
+  async deletePost(postId: number, authorId: number) {
+    try {
+      const deletedPost = await prisma.post.delete({
+        where: { id: postId, authorId: authorId },
+      });
+      return { ok: true, deletedPost: deletedPost };
+    } catch (e) {
       console.log(e);
       return { ok: false, error: e };
     }

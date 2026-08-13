@@ -3,6 +3,7 @@ import _ from "lodash";
 import { validationResult, matchedData, body, param } from "express-validator";
 import adminQueries from "../models/adminQueries";
 import { AppError } from "../ultility/error";
+import { Role } from "../../generated/prisma/enums";
 
 interface UpdatePost {
   title?: string;
@@ -126,9 +127,33 @@ const updatePost = [
     return res.status(200).json({ message: "Successfully updated the post" });
   },
 ];
+
+const deletePost = [
+  ...postIdValidator,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return next(new AppError(JSON.stringify(errors), 400));
+    const { postId } = matchedData(req);
+    const { user } = req;
+    if (!user || !(user.role == Role.Admin))
+      return next(
+        new AppError("You sneaky, Only admins are allowed in here!", 401),
+      );
+    const response = await adminQueries.deletePost(postId, user.id);
+    if (response.ok)
+      return res.status(200).json({
+        message: "Success: deleted the post",
+        deletedPost: response.deletedPost,
+      });
+    return res.status(500).json({ message: "Failed to delete the post" });
+  },
+];
+
 export {
   getAdminPost,
   createPostController,
   getAdminPostsController,
   updatePost,
+  deletePost,
 };

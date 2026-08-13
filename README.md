@@ -120,6 +120,7 @@ All routes require JWT auth **and** an `Admin` role (`checkIfUserAdmin` middlewa
 | GET    | `/api/admin/posts/getpost/:postId` | Get a single post (regardless of published status)            |
 | POST   | `/api/admin/posts/newpost`         | Create a new post. Body: `title, content, published`          |
 | PATCH  | `/api/admin/posts/update/:postId`  | Update a post's `title`, `content`, and/or `published` status |
+| DELETE | `/api/admin/posts/delete/:postId`  | Delete the post/draft                                         |
 
 ### Admin — Comments — `api/admin/comment`
 

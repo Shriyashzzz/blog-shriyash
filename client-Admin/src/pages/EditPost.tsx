@@ -86,7 +86,7 @@ export function EditPost() {
     }
   }, [data]);
   if (!post) {
-    return <Spinner />;
+    return <Spinner className="mt-10" />;
   }
   return (
     <div className="w-full  sm:w-4/5 flex flex-col gap-2">
