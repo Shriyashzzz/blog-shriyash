@@ -62,11 +62,11 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
       </Flex>
 
       <div className="flex items-center gap-3">
-        <p>Update?</p>
+        <p>Ready?</p>
         <AlertDialog.Root>
           <AlertDialog.Trigger asChild>
             <Button color="red" style={{ cursor: "pointer" }}>
-              Post
+              Update
             </Button>
           </AlertDialog.Trigger>
 
@@ -77,7 +77,7 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
                 Update post
               </AlertDialog.Title>
               <AlertDialog.Description className="text-gray-400 mt-2">
-                This update is permanent, are you sure?
+                There is no Rollback? Are you sure?
               </AlertDialog.Description>
 
               <div className="flex gap-3 items-center justify-end mt-4 h-full w-full">
