@@ -53,7 +53,7 @@ const createPostController = async (
   if (!response.ok)
     return next(new AppError("Unable to create a new Post", 500));
   return res.status(200).json({
-    message: "Successfuly created a anew Post",
+    message: "Successfuly created a new Post",
     newPost: response.newPost,
   });
 };
