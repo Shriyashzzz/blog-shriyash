@@ -34,7 +34,6 @@ export function Home() {
     return (
       <section className="sm:w-4/5 w-full p-5 flex flex-col gap-5">
         <MenuBar />
-
         <Grid
           columns="repeat(auto-fit, minmax(250px, 350px))"
           rows="repeat(auto-fill, minmax(250px, 350px))"

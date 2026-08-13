@@ -101,6 +101,7 @@ const createPostController = [
 ];
 
 const updatePost = [
+  ...postIdValidator,
   ...updatePostPayloadValidator,
   async (req: Request, res: Response, next: NextFunction) => {
     //validatae the incoming payload later
