@@ -36,14 +36,14 @@ export function NewPost() {
       <div className="flex gap-5 bg-gray-900 p-3  ">
         <textarea
           placeholder="Title"
-          className=" w-full  text-green-700 text-3xl p-2 font-extrabold"
+          className=" w-full placeholder:text-white  dark:bg-gray-900 text-3xl p-2 0 font-extrabold"
           name="Title"
           id="postTitle"
         ></textarea>
       </div>
 
       <MDXEditor
-        className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white"
+        className="prose h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white"
         ref={markdownRef}
         markdown={markdown}
         plugins={[
