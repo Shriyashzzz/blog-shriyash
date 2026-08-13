@@ -2,6 +2,8 @@ import Markdown from "react-markdown";
 import remarkGm from "remark-gfm";
 import { Post } from "./AllPostContainer";
 import { useNavigate } from "react-router";
+import rehypeSanitize from "rehype-sanitize";
+import rehypeRaw from "rehype-raw";
 
 interface PreviewPostProps {
   post: Post;
@@ -24,7 +26,12 @@ export function PreviewPost({ post }: PreviewPostProps) {
         </h1>
       </div>
       <div className="line-clamp-2 max-w-[1600px] truncate">
-        <Markdown remarkPlugins={[remarkGm]}>{post.content}</Markdown>
+        <Markdown
+          remarkPlugins={[remarkGm]}
+          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+        >
+          {post.content}
+        </Markdown>
       </div>
     </article>
   );

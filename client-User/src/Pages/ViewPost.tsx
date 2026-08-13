@@ -16,6 +16,8 @@ import { HeartFilledIcon } from "@radix-ui/react-icons";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { iso8061DateParser } from "../utils/ISO8061DateParser";
 import { LovePost } from "../components/LovePost";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 export interface Author {
   id: number;
@@ -42,7 +44,7 @@ interface PostResponse {
 
 export function ViewPost() {
   const commentBoxRef = useRef<HTMLTextAreaElement | null>(null);
-  const viewCommentRef = useRef<HTMLElement | null>(null);
+  const viewCommentRef: React.RefObject<HTMLElement | null> = useRef(null);
   const { postid } = useParams();
   const [post, setPost] = useState<Post>();
   const { data, loading, error } = useFetch<PostResponse>(
@@ -84,15 +86,15 @@ export function ViewPost() {
     return <MySpinner />;
   }
   return (
-    <div className="flex w-full max-w-4xl flex-col gap-5 sm:flex-row">
+    <div className="flex w-3/5 flex-col gap-5 sm:flex-row">
       <PostInteractToolBox
         commentBoxRef={commentBoxRef}
         post={post}
         setPostLoveNum={setPostLoveNum}
       />
-      <section className="min-w-0">
-        <div className="prose prose-headings:text-green-700 dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white">
-          <h1 className="w-full text-green-700">{post.title}</h1>
+      <section className="w-full min-w-0">
+        <div className="prose prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white">
+          <h1 className="w-full">{post.title}</h1>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <HeartFilledIcon color="green" /> {postLoveNum}
@@ -103,7 +105,7 @@ export function ViewPost() {
           </div>
           <section>
             <Markdown
-              rehypePlugins={[rehypeHighlight]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw, rehypeSanitize]}
               remarkPlugins={[remarkGfm]}
             >
               {post.content}

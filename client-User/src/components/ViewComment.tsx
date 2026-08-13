@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { SetStateAction, Dispatch } from "react";
-import { Ref } from "react";
 
 export interface Comment {
   author: Author;
@@ -21,7 +20,7 @@ export interface Comment {
 interface CommentProp {
   comments: Comment[];
   setComments: Dispatch<SetStateAction<Comment[]>>;
-  viewCommentRef: Ref<HTMLElement>;
+  viewCommentRef: React.RefObject<HTMLElement | null>;
 }
 
 type DeleteResponse = { message: string; comments: Comment[] };
@@ -50,7 +49,7 @@ export function ViewComments({
   };
 
   return (
-    <section className="mt-4 flex h-fit w-full max-w-4xl flex-col">
+    <section className="mt-4 flex h-fit w-full flex-col">
       {comments.map((cmt, indx) => {
         return (
           <article
