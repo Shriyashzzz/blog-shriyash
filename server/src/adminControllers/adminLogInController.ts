@@ -1,8 +1,8 @@
 import type { NextFunction, Response, Request } from "express";
-import { prisma } from "../config/prisma";
+import { prisma } from "../config/prisma.js";
 import bcrypt from "bcryptjs";
-import { setTokenCookie } from "../ultility/cookie";
-import { buildAuthCookieAndToken } from "../ultility/cookie";
+import { setTokenCookie } from "../ultility/cookie.js";
+import { buildAuthCookieAndToken } from "../ultility/cookie.js";
 import { validationResult, matchedData, body } from "express-validator";
 
 const loginValidator = [

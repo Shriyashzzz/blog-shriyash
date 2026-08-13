@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
-import queries from "../models/queries";
+import queries from "../models/queries.js";
 import _ from "lodash";
-import { AppError } from "../ultility/error";
+import { AppError } from "../ultility/error.js";
 
 const getPost = async (req: Request, res: Response) => {
   const { postId } = req.params;

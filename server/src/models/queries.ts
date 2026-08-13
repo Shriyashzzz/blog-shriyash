@@ -1,6 +1,6 @@
-import { prisma } from "../config/prisma";
-import type { Comment, Post } from "../../generated/prisma/client";
-import { Prisma } from "../../generated/prisma/client";
+import { prisma } from "../config/prisma.js";
+import type { Comment, Post } from "../generated/prisma/client.js";
+import { Prisma } from "../generated/prisma/client.js";
 interface CommentPost {
   ok: boolean;
   comments?: Array<Comment>;

@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   deleteComment,
   newCommentController,
-} from "../controllers/commentController";
+} from "../controllers/commentController.js";
 import passport from "passport";
 
 const commentRouter = Router({ mergeParams: true });

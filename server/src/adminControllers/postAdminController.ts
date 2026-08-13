@@ -1,9 +1,9 @@
 import { type Request, type Response, type NextFunction } from "express";
 import _ from "lodash";
 import { validationResult, matchedData, body, param } from "express-validator";
-import adminQueries from "../models/adminQueries";
-import { AppError } from "../ultility/error";
-import { Role } from "../../generated/prisma/enums";
+import adminQueries from "../models/adminQueries.js";
+import { AppError } from "../ultility/error.js";
+import { Role } from "../generated/prisma/enums.js";
 
 interface UpdatePost {
   title?: string;

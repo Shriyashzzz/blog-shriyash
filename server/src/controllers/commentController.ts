@@ -1,8 +1,8 @@
 import { type Request, type Response, type NextFunction } from "express";
-import queries from "../models/queries";
+import queries from "../models/queries.js";
 import _ from "lodash";
 import { validationResult, matchedData, body, param } from "express-validator";
-import { AppError } from "../ultility/error";
+import { AppError } from "../ultility/error.js";
 
 const newCommentValidator = [
   body("commentContent")

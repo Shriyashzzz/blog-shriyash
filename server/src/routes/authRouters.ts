@@ -1,11 +1,11 @@
 import { Router } from "express";
-import loginController from "../controllers/authController/loginController";
-import logOutController from "../controllers/authController/logoutController";
+import loginController from "../controllers/authController/loginController.js";
+import logOutController from "../controllers/authController/logoutController.js";
 import passport from "passport";
-import signUpController from "../controllers/authController/signUpController";
-import isAuthenticated from "../controllers/authController/isAuthenticated";
-import { isAdminAuth } from "../controllers/authController/isAdminAuth";
-import adminLoginController from "../adminControllers/adminLogInController";
+import signUpController from "../controllers/authController/signUpController.js";
+import isAuthenticated from "../controllers/authController/isAuthenticated.js";
+import { isAdminAuth } from "../controllers/authController/isAdminAuth.js";
+import adminLoginController from "../adminControllers/adminLogInController.js";
 
 const authRouter = Router();
 authRouter.post("/login", loginController);

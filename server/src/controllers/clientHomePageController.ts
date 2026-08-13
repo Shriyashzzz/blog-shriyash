@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import queries from "../models/queries";
+import queries from "../models/queries.js";
 
 const clientHomePageController = async (
   req: Request,

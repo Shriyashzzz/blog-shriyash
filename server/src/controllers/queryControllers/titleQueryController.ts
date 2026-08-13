@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { AppError } from "../../ultility/error";
-import queries from "../../models/queries";
+import { AppError } from "../../ultility/error.js";
+import queries from "../../models/queries.js";
 
 export const titileQueryController = async (
   req: Request,

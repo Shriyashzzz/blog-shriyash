@@ -1,16 +1,16 @@
 import { Router } from "express";
-import checkIfUserAdmin from "../middlewares/checkAdmin";
+import checkIfUserAdmin from "../middlewares/checkAdmin.js";
 import passport from "passport";
 import {
   deletePost,
   getAdminPostsController,
   updatePost,
-} from "../adminControllers/postAdminController";
+} from "../adminControllers/postAdminController.js";
 
 import {
   createPostController,
   getAdminPost,
-} from "../adminControllers/postAdminController";
+} from "../adminControllers/postAdminController.js";
 
 const postAdminRouter = Router({ mergeParams: true });
 

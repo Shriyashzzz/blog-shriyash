@@ -1,6 +1,5 @@
-import { error } from "node:console";
-import type { Post } from "../../generated/prisma/client";
-import { prisma } from "../config/prisma";
+import type { Post } from "../generated/prisma/client.js";
+import { prisma } from "../config/prisma.js";
 
 interface PostsResponse {
   ok: boolean;

@@ -1,7 +1,7 @@
 import type { Response, Request, NextFunction } from "express";
-import adminQueries from "../../models/adminQueries";
+import adminQueries from "../../models/adminQueries.js";
 import _ from "lodash";
-import { AppError } from "../../ultility/error";
+import { AppError } from "../../ultility/error.js";
 
 const deleteCommentAdmin = async (
   req: Request,

@@ -1,6 +1,5 @@
-import passport from "passport";
 import { type Response, type Request, type NextFunction } from "express";
-import { AppError } from "../ultility/error";
+import { AppError } from "../ultility/error.js";
 
 const checkIfUserAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (req.user && req.user.role == "Admin") {

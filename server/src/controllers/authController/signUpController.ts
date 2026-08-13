@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
-import authQueries from "../../models/authQueries";
+import authQueries from "../../models/authQueries.js";
 import bcrypt from "bcryptjs";
-import { setTokenCookie } from "../../ultility/cookie";
-import { buildAuthCookieAndToken } from "../../ultility/cookie";
+import { setTokenCookie } from "../../ultility/cookie.js";
+import { buildAuthCookieAndToken } from "../../ultility/cookie.js";
 import { validationResult, matchedData, body } from "express-validator";
 
 const signUpValidator = [

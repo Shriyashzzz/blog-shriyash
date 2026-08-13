@@ -1,5 +1,5 @@
-import { Category, Role } from "../../generated/prisma/enums";
-import { PrismaClient } from "../../generated/prisma/client";
+import { Category, Role } from "../generated/prisma/enums.js";
+import { PrismaClient } from "../generated/prisma/client.js";
 import dotenv from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";

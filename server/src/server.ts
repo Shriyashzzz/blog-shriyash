@@ -1,18 +1,17 @@
 import express from "express";
-import config from "./config/config";
-import { type Response, type Request } from "express";
-import homeRouter from "./routes/homeRouter";
+import config from "./config/config.js";
+import homeRouter from "./routes/homeRouter.js";
 import passport from "passport";
-import { jwtStrategy } from "./jwtAuth";
+import { jwtStrategy } from "./jwtAuth.js";
 import cookieParser from "cookie-parser";
-import authRouter from "./routes/authRouters";
-import postRouter from "./routes/postRouter";
-import commentRouter from "./routes/commentsRouters";
-import { errorHandler } from "./ultility/error";
+import authRouter from "./routes/authRouters.js";
+import postRouter from "./routes/postRouter.js";
+import commentRouter from "./routes/commentsRouters.js";
+import { errorHandler } from "./ultility/error.js";
 import cors from "cors";
-import postAdminRouter from "./adminRoutes/postAdminRouter";
-import commentAdminRouter from "./adminRoutes/commentAdminRouter";
-import { searchRouter } from "./routes/searchRouter";
+import postAdminRouter from "./adminRoutes/postAdminRouter.js";
+import commentAdminRouter from "./adminRoutes/commentAdminRouter.js";
+import { searchRouter } from "./routes/searchRouter.js";
 
 const app = express();
 app.use(passport.initialize());

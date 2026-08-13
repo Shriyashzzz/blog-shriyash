@@ -1,8 +1,8 @@
 import type { NextFunction, Response, Request } from "express";
-import { prisma } from "../../config/prisma";
+import { prisma } from "../../config/prisma.js";
 import bcrypt from "bcryptjs";
-import { setTokenCookie } from "../../ultility/cookie";
-import { buildAuthCookieAndToken } from "../../ultility/cookie";
+import { setTokenCookie } from "../../ultility/cookie.js";
+import { buildAuthCookieAndToken } from "../../ultility/cookie.js";
 import { validationResult, matchedData, body } from "express-validator";
 
 const loginValidator = [
@@ -54,13 +54,11 @@ const loginController = [
         role: user.role,
       };
       if (response)
-        return res
-          .status(200)
-          .json({
-            message: "User logged in!",
-            user: resUserObj,
-            isAdmin: user.role === "Admin",
-          });
+        return res.status(200).json({
+          message: "User logged in!",
+          user: resUserObj,
+          isAdmin: user.role === "Admin",
+        });
       return res.sendStatus(501);
     } catch (e) {
       console.error(e);

@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
-import config from "../../config/config";
-import { clearCookie } from "../../ultility/cookie";
+import config from "../../config/config.js";
+import { clearCookie } from "../../ultility/cookie.js";
 
 const logOutController = (req: Request, res: Response) => {
   const logInCookie = "auth_token";

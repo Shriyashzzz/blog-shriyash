@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { AppError } from "../../ultility/error";
+import { AppError } from "../../ultility/error.js";
 
 const isAdminAuth = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) next(new AppError("User is not authenticated", 401));

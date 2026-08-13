@@ -1,8 +1,8 @@
 // import { Strategy as JwtStrategy } from "passport-jwt";
 import { Strategy as JWTStrategy } from "passport-jwt";
-import config from "./config/config";
+import config from "./config/config.js";
 import { type Request } from "express";
-import type { Role } from "../generated/prisma/enums";
+import type { Role } from "./generated/prisma/enums.js";
 import type { DoneCallback } from "passport";
 import type { Algorithm } from "jsonwebtoken";
 

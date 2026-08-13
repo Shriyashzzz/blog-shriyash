@@ -1,7 +1,7 @@
 import type { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
-import config from "../config/config";
-import { Role } from "../../generated/prisma/enums";
+import config from "../config/config.js";
+import { Role } from "../generated/prisma/enums.js";
 
 interface CookieOption {
   httpOnly?: boolean;
