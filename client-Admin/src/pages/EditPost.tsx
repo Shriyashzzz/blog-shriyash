@@ -29,8 +29,7 @@ import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router";
 import { Spinner } from "@radix-ui/themes";
 import { EditBlogToolBar } from "../components/EditBlogToolBar";
-import { keymap, EditorView } from "@codemirror/view";
-import { toggleLineComment } from "@codemirror/commands";
+import { EditorView } from "@codemirror/view";
 
 const codeMirrorDarkTheme = EditorView.theme(
   {

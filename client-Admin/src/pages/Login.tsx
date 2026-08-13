@@ -57,13 +57,8 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 text-black lg:px-8 dark:text-amber-50">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          src={blogLogo}
-          alt="Shriyash Uncomiled!"
-          className="mx-auto h-10 w-auto"
-        />
+    <div className="flex min-h-full flex-col  px-6 py-12 text-black lg:px-8 dark:text-amber-50">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm  ">
         <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">
           Sign in to your account
         </h2>
