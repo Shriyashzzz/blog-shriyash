@@ -21,21 +21,21 @@ import {
   BlockTypeSelect,
 } from "@mdxeditor/editor";
 import { headingsPlugin } from "@mdxeditor/editor";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { TitleTextField } from "../components/TitleTextField";
-import { PostBlog } from "../components/PostBlog";
+import { PostBlogToolBar } from "../components/PostBlogToolBar";
 
 export function NewPost() {
   const markdownRef = useRef<MDXEditorMethods>(null);
   const titleRef = useRef<HTMLInputElement>(null);
-
+  const [title, setTitle] = useState<string>("");
   return (
-    <div className=" h-full w-full sm:w-4/5 p-5 gap-5 flex flex-col">
-      <PostBlog titleRef={titleRef} markdownRef={markdownRef} />
+    <div className="  w-full sm:w-4/5 p-5 gap-5 flex flex-col">
+      <PostBlogToolBar title={title} markdownRef={markdownRef} />
       <section className="flex gap-5 bg-gray-900 p-3  ">
-        <TitleTextField titleRef={titleRef} />
+        <TitleTextField setTitle={setTitle} />
       </section>
       <MDXEditor
         className="prose h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200  leading-relaxed  dark:bg-gray-900 dark:text-white"

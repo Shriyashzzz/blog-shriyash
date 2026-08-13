@@ -29,7 +29,6 @@ export function Home() {
     return;
   }
   if (loading) return <Spinner />;
-  console.log(data);
   if (data && data.posts)
     return (
       <section className="w-4/5 p-5 flex flex-col gap-5">

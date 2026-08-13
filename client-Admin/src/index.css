@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@plugin "@tailwindcss/typography";
+
+.mdxeditor button > span {
+  p {
+    color: black;
+  }
+  color: black;
+}
+@utility prose {
+  --tw-prose-quotes: var(--color-blue-600);
+  --tw-prose-quote-borders: var(--color-blue-400);
+}
