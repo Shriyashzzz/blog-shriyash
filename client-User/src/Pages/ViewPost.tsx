@@ -105,7 +105,7 @@ export function ViewPost() {
           </div>
           <section>
             <Markdown
-              rehypePlugins={[rehypeHighlight, rehypeRaw, rehypeSanitize]}
+              rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeHighlight]}
               remarkPlugins={[remarkGfm]}
             >
               {post.content}
