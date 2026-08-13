@@ -32,13 +32,13 @@ export function NewPost() {
   const titleRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className=" h-full w-4/5 p-5 gap-5 flex flex-col">
+    <div className=" h-full w-full sm:w-4/5 p-5 gap-5 flex flex-col">
       <PostBlog titleRef={titleRef} markdownRef={markdownRef} />
       <section className="flex gap-5 bg-gray-900 p-3  ">
         <TitleTextField titleRef={titleRef} />
       </section>
       <MDXEditor
-        className="prose h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white"
+        className="prose h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200  leading-relaxed  dark:bg-gray-900 dark:text-white"
         ref={markdownRef}
         markdown={""}
         plugins={[
@@ -87,7 +87,6 @@ export function NewPost() {
             ),
           }),
         ]}
-        onChange={(e) => console.log(markdownRef.current?.getMarkdown())}
       />
     </div>
   );
