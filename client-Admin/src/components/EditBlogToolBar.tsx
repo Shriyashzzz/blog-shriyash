@@ -14,7 +14,19 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
   const navigate = useNavigate();
   const [publishState, setPublishState] = useState<boolean>(post.published);
 
-  const deleteBlog = async () => {};
+  const deleteBlog = async () => {
+    const response = await fetch(`/api/admin/posts/delete/${post.id}`, {
+      credentials: "include",
+      method: "DELETE",
+    });
+    if (response.ok) {
+      navigate("/", { viewTransition: true });
+      return;
+    } else {
+      const data = await response.json();
+      navigate("/error", { state: { title: "Error", message: data.message } });
+    }
+  };
 
   const addNewBlog = async () => {
     try {
@@ -51,8 +63,6 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
     }
   };
 
-  const deletePost = async () => {};
-
   return (
     <section className="flex items-center m-4 gap-4 justify-between">
       <AlertDialog.Root>
@@ -83,7 +93,7 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
                   variant="classic"
                   style={{ cursor: "pointer", padding: "5px" }}
                   color="red"
-                  onClick={deletePost}
+                  onClick={deleteBlog}
                 >
                   Delete
                 </Button>
