@@ -21,31 +21,26 @@ import {
   BlockTypeSelect,
 } from "@mdxeditor/editor";
 import { headingsPlugin } from "@mdxeditor/editor";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import type { MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
+import { TitleTextField } from "../components/TitleTextField";
+import { PostBlog } from "../components/PostBlog";
 
 export function NewPost() {
   const markdownRef = useRef<MDXEditorMethods>(null);
-  const markdown = `
-   
-    `;
+  const titleRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className=" h-full w-4/5 p-5 gap-5 flex flex-col">
-      <div className="flex gap-5 bg-gray-900 p-3  ">
-        <textarea
-          placeholder="Title"
-          className=" w-full placeholder:text-white  dark:bg-gray-900 text-3xl p-2 0 font-extrabold"
-          name="Title"
-          id="postTitle"
-        ></textarea>
-      </div>
-
+      <PostBlog titleRef={titleRef} markdownRef={markdownRef} />
+      <section className="flex gap-5 bg-gray-900 p-3  ">
+        <TitleTextField titleRef={titleRef} />
+      </section>
       <MDXEditor
         className="prose h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200 p-4 leading-relaxed sm:p-6 dark:bg-gray-900 dark:text-white"
         ref={markdownRef}
-        markdown={markdown}
+        markdown={""}
         plugins={[
           headingsPlugin(),
           listsPlugin(),
@@ -68,9 +63,7 @@ export function NewPost() {
                 <UndoRedo />
                 <BlockTypeSelect />
                 <BoldItalicUnderlineToggles />
-
                 <CodeToggle />
-
                 <InsertThematicBreak />
                 <ListsToggle />
                 <CreateLink />
@@ -94,7 +87,7 @@ export function NewPost() {
             ),
           }),
         ]}
-        onChange={() => console.log(markdownRef.current?.getMarkdown())}
+        onChange={(e) => console.log(markdownRef.current?.getMarkdown())}
       />
     </div>
   );
