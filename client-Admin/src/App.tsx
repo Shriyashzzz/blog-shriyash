@@ -7,7 +7,7 @@ function App() {
   return (
     <Theme appearance="dark">
       <Header />
-      <main className="w-full min-h-dvh flex justify-center">
+      <main className="w-full min-h-screen pb-20 flex justify-center">
         <Outlet />
       </main>
     </Theme>

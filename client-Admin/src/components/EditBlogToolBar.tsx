@@ -47,6 +47,8 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
     }
   };
 
+  const deletePost = async () => {};
+
   return (
     <section className="flex items-center m-4 gap-4 justify-end">
       <Flex gap={"2"}>

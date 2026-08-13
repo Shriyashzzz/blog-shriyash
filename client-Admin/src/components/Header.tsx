@@ -69,7 +69,7 @@ export function Header() {
         className="flex flex-row items-center gap-2"
       >
         <img src={terminal} alt="blog logo" className="size-10" />
-        <p className="m-0 p-0 font-[Nabla] text-sm text-green-600 sm:text-xl">
+        <p className="m-0 p-0 font-[Nabla] text-sm  sm:text-xl text-green-600 sm:text-xl">
           &lt;Shriyash Uncompiled / &gt;{" "}
           <em className="text-sm dark:text-gray-400 ">admin</em>
         </p>

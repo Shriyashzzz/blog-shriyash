@@ -12,7 +12,7 @@ export function TitleTextField({ setTitle, title }: Props) {
       value={title && title}
       placeholder="Title"
       style={{
-        fontSize: "2rem",
+        fontSize: "1.5rem",
         height: "4rem",
         fontWeight: "bold",
       }}
