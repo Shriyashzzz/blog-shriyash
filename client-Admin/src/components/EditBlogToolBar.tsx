@@ -24,6 +24,7 @@ export function EditBlogToolBar({ markdownRef, title, post }: Props) {
 
       console.log(requestBody);
       const response = await fetch(`/api/admin/posts/update/${post.id}`, {
+        credentials: "include",
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),

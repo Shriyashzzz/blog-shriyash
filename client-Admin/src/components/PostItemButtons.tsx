@@ -18,6 +18,7 @@ export function PostItemButton({ post }: Props) {
       const reqBody = { published: !publish };
 
       const response = await fetch(`/api/admin/posts/update/${post.id}`, {
+        credentials: "include",
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

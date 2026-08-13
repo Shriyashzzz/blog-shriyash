@@ -22,6 +22,7 @@ export function PostBlogToolBar({ markdownRef, title }: Props) {
       };
 
       const response = await fetch("/api/admin/posts/newpost", {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),

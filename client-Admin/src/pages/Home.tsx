@@ -20,6 +20,7 @@ export function Home() {
 
   const { data, loading, error } = useFetch<{ posts: Array<Post> }>(
     "/api/admin/posts",
+    { credentials: "include" },
   );
 
   if (error) {

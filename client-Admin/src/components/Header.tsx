@@ -37,6 +37,7 @@ export function Header() {
     if (!auth) return;
     try {
       const response = await fetch("/api/auth/logout", {
+        credentials: "include",
         method: "DELETE",
       });
       if (!response.ok) {
