@@ -14,6 +14,7 @@ function App() {
     const checkAuth = async () => {
       const response = await fetch("/api/auth/me", {
         credentials: "include",
+        method: "GET",
       });
       if (response.ok) {
         const data = await response.json();
