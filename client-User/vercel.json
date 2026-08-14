@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api",
+      "destination": "https://api-blog.shriyash.dev/api"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://api-blog.shriyash.dev/api/:path*"
     },
