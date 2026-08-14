@@ -6,6 +6,7 @@ const clientHomePageController = async (
   res: Response,
   next: NextFunction,
 ) => {
+  console.log("hello");
   const publishedPosts = await queries.getPublishedPosts();
   if (!publishedPosts) next(new Error("Failed to query database"));
   res.json({ posts: publishedPosts });
