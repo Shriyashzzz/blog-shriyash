@@ -52,7 +52,7 @@ export function AllPostContainer() {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-2 sm:w-3/5">
+      <div className="flex w-full flex-col items-center gap-2 lg:w-4/5">
         <ToolBar def={"Home"} />
         <SearchPost
           className="w-full"
@@ -61,7 +61,7 @@ export function AllPostContainer() {
         />
       </div>
 
-      <section className="mt-5 grid h-full auto-rows-fr grid-cols-1 gap-4 max-sm:w-full">
+      <section className="mt-5 grid h-full w-full auto-rows-fr grid-cols-1 gap-4 lg:w-4/5">
         {posts.map((post) => {
           return <PreviewPost key={post.id} post={post} />;
         })}
