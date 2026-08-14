@@ -8,7 +8,13 @@ const newCommentValidator = [
   body("commentContent")
     .trim()
     .notEmpty()
-    .withMessage("Comment Cannot be empty!"),
+    .withMessage("Comment Cannot be empty!")
+    .custom(async (value) => {
+      if (value.length > 300) {
+        throw new Error("Error: Length exceeds 300 charachter");
+      }
+      return true;
+    }),
   param("postId").notEmpty().withMessage("PostId parameter not found"),
 ];
 const newCommentController = [
