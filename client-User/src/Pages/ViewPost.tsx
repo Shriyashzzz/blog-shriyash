@@ -119,7 +119,7 @@ export function ViewPost() {
                 post={post}
                 setPostLoveNum={setPostLoveNum}
                 size="4"
-                color="orange"
+                color="green"
               />
             </div>
           </section>
