@@ -75,7 +75,7 @@ export function AddComment({
           color={"grass"}
           placeholder={auth ? "Add Comment" : "Please sign in to comment "}
         />
-        <Button color="amber" variant="solid" onClick={handleOnSubmit}>
+        <Button color="green" variant="solid" onClick={handleOnSubmit}>
           {auth ? "Add Comment" : "Please sign in to comment "}
           <PaperPlaneIcon />
         </Button>

@@ -1,5 +1,5 @@
 import type { Author } from "../pages/ViewPost";
-import { Avatar, Button } from "@radix-ui/themes";
+import { Avatar, Button, Container } from "@radix-ui/themes";
 import { initialExtract } from "../utils/initialExtractor";
 import { normalizeDate } from "../utils/normalizeDate";
 import Markdown from "react-markdown";
@@ -9,6 +9,8 @@ import { RootState } from "../store/store";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { SetStateAction, Dispatch } from "react";
 import AurthorIcon from "../assets/icons/authorIcon.jpg";
+import { Callout } from "@radix-ui/themes";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 export interface Comment {
   author: Author;
@@ -33,7 +35,23 @@ export function ViewComments({
 }: CommentProp) {
   const authState = useSelector((state: RootState) => state.auth.value);
   if (comments.length == 0) {
-    return <></>;
+    return (
+      <Container
+        size="3"
+        width={"100%"}
+        height={"50px"}
+        className="mt-2 rounded-md bg-amber-400"
+      >
+        <div className="flex h-full items-center justify-center gap-4">
+          <InfoCircledIcon color="black" className="h-5 w-5" />{" "}
+          <p className="font-medium text-black">
+            {" "}
+            No Comments. You can be the first{" "}
+            {!authState.isAuthenticated && "Sign in!"}
+          </p>
+        </div>
+      </Container>
+    );
   }
 
   const onDeleteComment = async (commentId: number, postId: number) => {
@@ -72,15 +90,17 @@ export function ViewComments({
                   {cmt.author.role == "Admin" ? "Author" : cmt.author.username}
                 </p>
 
-                {authState.user && cmt.author.id === authState.user.id && (
-                  <Button
-                    color="gray"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => onDeleteComment(cmt.id, cmt.postId)}
-                  >
-                    <TrashIcon scale={4} />
-                  </Button>
-                )}
+                {authState.user &&
+                  (cmt.author.id === authState.user.id ||
+                    cmt.author.role == "Admin") && (
+                    <Button
+                      color="gray"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onDeleteComment(cmt.id, cmt.postId)}
+                    >
+                      <TrashIcon scale={4} />
+                    </Button>
+                  )}
               </div>
 
               <p className="text-xs font-medium text-amber-600">
