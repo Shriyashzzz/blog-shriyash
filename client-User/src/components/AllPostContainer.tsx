@@ -23,7 +23,10 @@ interface PostsResponse {
 
 export function AllPostContainer() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const { data, loading, error } = useFetch<PostsResponse>("/api/");
+  const { data, loading, error } = useFetch<PostsResponse>("/api/", {
+    method: "GET",
+    credentials: "include",
+  });
   useEffect(() => {
     if (data) {
       setPosts(data.posts);

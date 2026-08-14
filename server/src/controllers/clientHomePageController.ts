@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import queries from "../models/queries.js";
+import { AppError } from "../ultility/error.js";
 
 const clientHomePageController = async (
   req: Request,
@@ -8,7 +9,7 @@ const clientHomePageController = async (
 ) => {
   console.log("hello");
   const publishedPosts = await queries.getPublishedPosts();
-  if (!publishedPosts) next(new Error("Failed to query database"));
+  if (!publishedPosts) next(new AppError("Failed to query database", 500));
   res.json({ posts: publishedPosts });
 };
 

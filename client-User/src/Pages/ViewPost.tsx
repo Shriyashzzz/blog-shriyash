@@ -49,6 +49,10 @@ export function ViewPost() {
   const [post, setPost] = useState<Post>();
   const { data, loading, error } = useFetch<PostResponse>(
     `/api/post/${postid}`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
   );
   const [commentAddedTrigger, setCommentAddedTrigger] = useState(0);
 
