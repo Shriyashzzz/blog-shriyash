@@ -25,7 +25,7 @@ async function main() {
       email: "ghimireshriyash@gmail.com",
       username: "Shriyash Ghimire",
       role: Role.Admin,
-      password: await bcrypt.hash("V!nland$aga69420", 12),
+      password: await bcrypt.hash("12345", 12),
     },
   });
 
