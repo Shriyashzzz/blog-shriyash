@@ -1,16 +1,68 @@
-# React + Vite
+# client-User
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The public-facing frontend for ** &lt; Shriyash Uncompiled /> &gt;**.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Install & Run](#install--run)
+- [Folder Structure](#folder-structure)
+- [Environment Variables](#environment-variables-clientuserenv)
+- [Connecting to the API](#connecting-to-the-api)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Home feed of published posts
+- Full post view with Markdown rendering (headings, tables, code blocks with syntax highlighting, etc.)
+- Comment on posts (sign-in required)
+- Love/unlove posts (sign-in required)
+- Search posts by title
+- Signup / login / logout with JWT-based auth (via cookie)
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Redux (state management)
+- TypeScript
+- React Router
+- Tailwind CSS + Tailwind Typography
+- Radix UI
+- react-markdown + remark-gfm + rehype-raw + rehype-sanitize + rehype-highlight (safe Markdown rendering with syntax highlighting)
+
+## Install & Run
+
+```bash
+cd client-User
+npm install
+npm run dev
+```
+
+## Folder Structure
+
+```
+client-User/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── types/
+│   ├── utils/
+│   ├── assets/
+│   └── main.tsx
+│   └── router.tsx
+└── .env
+```
+
+## Environment Variables (`client-User/.env`)
+
+```
+VITE_API_URL=
+
+```
+
+Set this to the base URL of the server (e.g. `http://localhost:PORT/api`).
+
+## Connecting to the API
+
+This app talks to the `server` backend documented in the root [server README](../server/README.md). Authenticated requests rely on the `auth_token` cookie set at login/signup — make sure `CLIENT_USER_URL` in the server's `.env` matches this app's dev URL so CORS and cookies work correctly.

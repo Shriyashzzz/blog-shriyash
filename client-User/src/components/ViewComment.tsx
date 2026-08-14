@@ -1,4 +1,4 @@
-import type { Author } from "../Pages/ViewPost";
+import type { Author } from "../pages/ViewPost";
 import { Avatar, Button } from "@radix-ui/themes";
 import { initialExtract } from "../utils/initialExtractor";
 import { normalizeDate } from "../utils/normalizeDate";

@@ -1,24 +1,38 @@
 # blog-shriyash
 
-Personal full-stack blog webapp with a REST API backend (Node.js/Express/TypeScript/Prisma) and two frontends. One for readers (`client-User`) and one CMS for admins (`client-Admin`).
+A personal full-stack blog web app with a REST API backend (Node.js / Express / TypeScript / Prisma) and two frontends: one for readers (`client-User`) and one CMS for admins (`client-Admin`).
+
+![Home Page](./static/home-page-client.png)
+![View Post](./static/viewpost-client.png)
+![Comment Section](./static/viewComment-client.png)
+
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Acknowledgements](#acknowledgements)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Design Choices](#design-choices)
+- [Split Architecture](#split-architecture)
+- [License](#license)
 
 ## Tech Stack
 
-- **Frontend** React, Redux, Typescript, Tailwind, React-Router, Radix-UI, Tailwind Typography
+- **Frontend:** React, Redux, TypeScript, Tailwind, React Router, Radix UI, Tailwind Typography
 - **Backend:** Express 5, TypeScript, Prisma ORM, PostgreSQL, Supabase
 - **Auth:** Passport (JWT strategy), JWT cookies, bcryptjs password hashing
 - **Validation:** express-validator
-- **Frontends:** `client-User` (public blog, interactive post management), `client-Admin` (admin side post/ user comments management)
+- **Frontends:** `client-User` (public blog with interactive post management), `client-Admin` (admin-side post and comment management)
 
 ## Acknowledgements
 
-- **react-markdown** To Parse Markdown to HTML Elements
-- **remark-gfm** Plugin used with react-markdown to parse autolink literals, footnotes, strikethrough, tables, tasklists
-- **rehype-raw** To parse string to html
-- **rehype-sanitize** To Sanitize raw html
-- **rehype-highlight** Plugin to apply syntax highlighting to code with lowlight.
-- **mdxEditor** To convert normal strings into markdown for WYSIWYG Text Editor
-- **Tailwind-Typography** Disables preflight and impelemnts style for typography design for readable styles.
+- **react-markdown** — parses Markdown into HTML elements
+- **remark-gfm** — plugin for react-markdown that adds autolink literals, footnotes, strikethrough, tables, and task lists
+- **rehype-raw** — parses raw strings into HTML
+- **rehype-sanitize** — sanitizes raw HTML
+- **rehype-highlight** — applies syntax highlighting to code via lowlight
+- **MDXEditor** — powers the WYSIWYG text editor by converting plain strings into Markdown
+- **Tailwind Typography** — disables preflight and provides readable typography styles
 
 ## Project Structure
 
@@ -31,36 +45,58 @@ blog-shriyash/
 
 ## Getting Started
 
-```
+```bash
+npm install
 npm run dev
 ```
 
-runs all three decoupled application from the root folder 'blog-shriyash'
+This runs all three decoupled applications from the root `blog-shriyash` folder.
 
 ### Prerequisites
 
 - Node.js
-- PostgreSQL database. (either local or on cloud)
+- A PostgreSQL database (local or cloud)
 
-### Design Choices
+## ⚠️ CORS (dev builds)
 
-- Decided to use JWT instead of session-based auth (unlike my other project) to get hands-on experience with it. However, to ensure security, jwt is placed inside the cookie with (http: true, sameSite: "lax", & the expected algorithm is : ["HS256"], & secure to be true on PROD) to ensure cookies, are not exploited by bad users to steal data. This protects against XSS-based token theft while still preserving the horizontal scalability benefit JWTs offer over server-side sessions.
+> **CORS is enabled by default and will block cross-origin requests from your local frontends.** You need to disable/relax it for local development, or `client-User` and `client-Admin` won't be able to hit the API.
 
-- Differentiated token lifetime between members 7d and admins 2d, members use their token to login & fast expiring tokens would not be very friendly. Likewise admins have greater privilege and more detrimental to being stolen, hence 2d for an admin, i.e me, i dont mind reentering my password every two days.
+In `server.ts` (or wherever `cors()` is configured), make sure it allows your dev client URLs and credentials:
 
-- Used react-markdown to render the markdown content, instead of setInnerHtml, since react-markdown makes my life much easier by sanitizing the input by default.
+```ts
+import cors from "cors";
+
+app.use(
+  cors({
+    origin: [process.env.CLIENT_USER_URL!, process.env.CLIENT_ADMIN_URL!],
+    credentials: true, // required — the JWT is sent via an httpOnly cookie
+  }),
+);
+```
+
+- Set `CLIENT_USER_URL` and `CLIENT_ADMIN_URL` in `server/.env` to match your local dev ports (e.g. `http://localhost:5173`, `http://localhost:5174`).
+- `credentials: true` is required on **both** the server's `cors()` config and the frontend's fetch/axios calls (`credentials: "include"` / `withCredentials: true`), otherwise the `auth_token` cookie won't be sent or accepted.
+- **Do not** ship a wide-open `origin: "*"` config to production — lock it down to your actual deployed client URLs before deploying.
+
+## Design Choices
+
+- **JWT over sessions:** I chose JWT-based auth instead of session-based auth (unlike my other project) to get hands-on experience with it. To keep it secure, the JWT is stored in a cookie with `httpOnly: true`, `sameSite: "lax"`, an expected algorithm of `["HS256"]`, and `secure: true` in production. This protects against XSS-based token theft while preserving the horizontal scalability JWTs offer over server-side sessions.
+
+- **Different token lifetimes:** Members get a 7-day token, since frequent re-logins would be annoying for casual readers. Admins get a 2-day token — admin accounts (i.e., me) carry more privilege and are more costly if compromised, so I'm fine re-entering my password every two days.
+
+- **react-markdown over `dangerouslySetInnerHTML`:** react-markdown sanitizes input by default, which makes rendering user/markdown content much safer and simpler.
 
 ## Split Architecture
 
-- I decided to build two separate frontends, one for consuming content, and one for the content management ui to post my blogs, CMS Frontend is still in progress, however, it'll be an simple WYSIWYG setup using Markdown.
+- I built two separate frontends: one for consuming content, and one CMS for managing it. The CMS is still in progress but will be a simple WYSIWYG setup built on Markdown.
 
-- I know it can get very messy with an monorepo, which is why I took some time to ensure all my files are segregated nice and intuitively, For example, each sub-app has its own package.json, .env, and .gitignore, so if I ever wanted to split this into separate repos, the migration would be straightforward. Each part also runs in its own sandboxed environment, which keeps data and dependencies from leaking across apps.
+- Monorepos can get messy, so I made sure files are segregated cleanly — each sub-app has its own `package.json`, `.env`, and `.gitignore`. If I ever wanted to split this into separate repos, the migration would be straightforward. Each part also runs in its own sandboxed environment, which keeps data and dependencies from leaking across apps.
 
-- All the input from the client side is validated both in the ui side as well as on the server side, using express-validator, likewise anything that uploads to the database is going to be as parameterized queries to ensure no user input is seen as a code for my js to execute.
+- All client-side input is validated both in the UI and on the server (via express-validator). Anything written to the database goes through parameterized queries, so user input is never treated as executable code.
 
-- My CMS is pretty simple with a lot of components taken from my user front-end, something that was pretty challenging and fun to figure out was to figure out how to implement a WYSIWYG Text editor, I decided to use MdxEDitor library, I think that was a fantastic ibarary with bunch of customization available, you need a toolbar?, it's just a plugin away, you want undo redo button? same. Very simple to implement, however, one issue I did run into was with underline, if you don't know markdown, does not support underline, and since I did want to implement that on my app, i had to basically write a plugin to insert html `<u> </u> `, and get the post content from the database, parse the markdown to string, string to html, sanitize the html and apply the style.
+- The CMS reuses a lot of components from the user-facing frontend. The most interesting challenge was implementing a WYSIWYG text editor — I used the MDXEditor library, which turned out to be excellent and highly customizable (need a toolbar? It's a plugin away. Undo/redo? Same.). One snag: Markdown doesn't support underline natively, and I wanted that feature, so I had to write a small plugin to insert `<u></u>` tags manually. The flow ends up being: pull post content from the database → parse Markdown to a string → convert the string to HTML → sanitize the HTML → apply styles.
 
-- I learned so much, I have so much more to say, I'll see you on _&lt;Shriyash Uncompiled / &gt;_ for detailed deep dive into this.
+- I learned a lot building this — more than fits here. I'll go into a deeper dive on _&lt;Shriyash Uncompiled /&gt;_.
 
 ## License
 
