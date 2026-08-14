@@ -16,7 +16,25 @@ import { searchRouter } from "./routes/searchRouter.js";
 const app = express();
 app.use(passport.initialize());
 passport.use(jwtStrategy);
-const corsOpts = { origin: process.env.CLIENT_URL, credentials: true };
+const allowlist = [process.env.CLIENT_USER_URL, process.env.CLIENT_SERVER_URL];
+const corsOpts = {
+  origin: function (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+
+    if (allowlist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
 app.disable("x-powered-by");
 app.use(cors(corsOpts));
 app.set("trust proxy", true);
