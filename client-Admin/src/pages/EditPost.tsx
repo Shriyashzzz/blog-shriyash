@@ -20,13 +20,15 @@ import {
   ConditionalContents,
   ChangeCodeMirrorLanguage,
   BlockTypeSelect,
+  InsertTable,
+  tablePlugin,
+  linkPlugin,
 } from "@mdxeditor/editor";
 import { headingsPlugin, MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { TitleTextField } from "../components/TitleTextField";
 import { useEffect, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
-import { useNavigate } from "react-router";
 import { Spinner } from "@radix-ui/themes";
 import { EditBlogToolBar } from "../components/EditBlogToolBar";
 import { EditorView } from "@codemirror/view";
@@ -71,7 +73,6 @@ export function EditPost() {
   const { postId } = useParams();
   const markdownRef = useRef<MDXEditorMethods>(null);
   const [title, setTitle] = useState<string>("");
-  const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
   const { data, loading, error }: FetchResponse = useFetch(
     `/api/admin/posts/getpost/${postId}`,
@@ -99,10 +100,12 @@ export function EditPost() {
         ref={markdownRef}
         markdown={post.content}
         plugins={[
+          tablePlugin(),
           headingsPlugin(),
           listsPlugin(),
           quotePlugin(),
           imagePlugin(),
+          linkPlugin(),
           linkDialogPlugin(),
           thematicBreakPlugin(),
           codeBlockPlugin({ defaultCodeBlockLanguage: "tsx" }),
@@ -126,6 +129,7 @@ export function EditPost() {
                 <ListsToggle />
                 <CreateLink />
                 <InsertImage />
+                <InsertTable />
                 <ConditionalContents
                   options={[
                     {

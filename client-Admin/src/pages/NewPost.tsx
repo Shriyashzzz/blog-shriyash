@@ -19,6 +19,9 @@ import {
   ConditionalContents,
   ChangeCodeMirrorLanguage,
   BlockTypeSelect,
+  InsertTable,
+  tablePlugin,
+  linkPlugin,
 } from "@mdxeditor/editor";
 import { headingsPlugin } from "@mdxeditor/editor";
 import { useRef, useState } from "react";
@@ -29,7 +32,6 @@ import { PostBlogToolBar } from "../components/PostBlogToolBar";
 
 export function NewPost() {
   const markdownRef = useRef<MDXEditorMethods>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState<string>("");
   return (
     <div className="  w-full sm:w-4/5 p-5 gap-5 flex flex-col">
@@ -42,10 +44,12 @@ export function NewPost() {
         ref={markdownRef}
         markdown={""}
         plugins={[
+          tablePlugin(),
           headingsPlugin(),
           listsPlugin(),
           quotePlugin(),
           imagePlugin(),
+          linkPlugin(),
           linkDialogPlugin(),
           thematicBreakPlugin(),
           codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
@@ -68,6 +72,7 @@ export function NewPost() {
                 <ListsToggle />
                 <CreateLink />
                 <InsertImage />
+                <InsertTable />
                 <ConditionalContents
                   options={[
                     {
