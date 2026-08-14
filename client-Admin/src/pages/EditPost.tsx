@@ -23,6 +23,7 @@ import {
   InsertTable,
   tablePlugin,
   linkPlugin,
+  markdownShortcutPlugin,
 } from "@mdxeditor/editor";
 import { headingsPlugin, MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
@@ -106,6 +107,8 @@ export function EditPost() {
           quotePlugin(),
           imagePlugin(),
           linkPlugin(),
+          quotePlugin(),
+          markdownShortcutPlugin(),
           linkDialogPlugin(),
           thematicBreakPlugin(),
           codeBlockPlugin({ defaultCodeBlockLanguage: "tsx" }),

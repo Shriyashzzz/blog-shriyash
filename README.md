@@ -34,6 +34,7 @@ A personal full-stack blog web app with a REST API backend (Node.js / Express / 
 
 ## Acknowledgements
 
+-
 - **react-markdown** — parses Markdown into HTML elements
 - **remark-gfm** — plugin for react-markdown that adds autolink literals, footnotes, strikethrough, tables, and task lists
 - **rehype-raw** — parses raw strings into HTML
@@ -64,24 +65,6 @@ This runs all three decoupled applications from the root `blog-shriyash` folder.
 
 - Node.js
 - A PostgreSQL database (local or cloud)
-
-## ⚠️ CORS (dev builds)
-
-> **CORS is enabled by default and will block cross-origin requests from your local frontends.** You need to disable/relax it for local development, or `client-User` and `client-Admin` won't be able to hit the API.
-
-In `server.ts` (or wherever `cors()` is configured), make sure it allows your dev client URLs and credentials:
-
-```ts
-import cors from "cors";
-
-app.use(
-  cors({
-    origin: [process.env.CLIENT_USER_URL!, process.env.CLIENT_ADMIN_URL!],
-    credentials: true, // required — the JWT is sent via an httpOnly cookie
-  }),
-);
-```
-
 - Set `CLIENT_USER_URL` and `CLIENT_ADMIN_URL` in `server/.env` to match your local dev ports (e.g. `http://localhost:5173`, `http://localhost:5174`).
 - `credentials: true` is required on **both** the server's `cors()` config and the frontend's fetch/axios calls (`credentials: "include"` / `withCredentials: true`), otherwise the `auth_token` cookie won't be sent or accepted.
 - **Do not** ship a wide-open `origin: "*"` config to production — lock it down to your actual deployed client URLs before deploying.

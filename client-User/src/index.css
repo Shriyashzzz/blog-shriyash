@@ -10,3 +10,12 @@
   font-style: normal;
   font-display: swap;
 }
+
+@layer utilities {
+  .prose {
+    --tw-prose-hr: #696b6e; /* custom border color */
+  }
+  .prose .dark {
+    --tw-prose-hr: #e5e7eb; /* custom border color */
+  }
+}
