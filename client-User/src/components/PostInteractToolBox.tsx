@@ -30,7 +30,7 @@ export function PostInteractToolBox({
   };
 
   return (
-    <div className="sm: mt-4 flex flex-row justify-end gap-3 pr-0 sm:ml-2 sm:flex-col sm:justify-start sm:pr-0">
+    <div className="sm: mt-4 flex flex-row justify-end gap-3 pr-0 lg:ml-2 lg:flex-col lg:justify-start lg:pr-0">
       <LovePost
         post={post}
         setPostLoveNum={setPostLoveNum}

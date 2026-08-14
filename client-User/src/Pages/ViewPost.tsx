@@ -89,7 +89,7 @@ export function ViewPost() {
     return <MySpinner />;
   }
   return (
-    <div className="flex w-full flex-col gap-5 sm:w-4/5 sm:flex-row">
+    <div className="flex w-full flex-col gap-5 lg:w-4/5 lg:flex-row">
       <PostInteractToolBox
         commentBoxRef={commentBoxRef}
         post={post}
