@@ -69,8 +69,8 @@ export function ViewComments({
               fallback={initialExtract(cmt.author.username)}
             />
 
-            <div className="flex w-full flex-col gap-1">
-              <div className="flex flex-row justify-between">
+            <div className="flex w-full min-w-0 flex-col gap-1">
+              <div className="flex w-full flex-row justify-between">
                 <p className="font-black text-blue-600">
                   {cmt.author.role == "Admin" ? "Author" : cmt.author.username}
                 </p>

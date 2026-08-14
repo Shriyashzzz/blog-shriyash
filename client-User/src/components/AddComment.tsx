@@ -3,7 +3,7 @@ import { RootState } from "../store/store";
 import { TextArea } from "@radix-ui/themes";
 import { Button } from "@radix-ui/themes";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import { useRef } from "react";
+import { useState, SyntheticEvent } from "react";
 import { useNavigate } from "react-router";
 import type { Dispatch, RefObject, SetStateAction } from "react";
 import { Comment } from "./ViewComment";
@@ -24,17 +24,21 @@ export function AddComment({
   const auth = useSelector(
     (state: RootState) => state.auth.value.isAuthenticated,
   );
+  const [textValue, setTextValue] = useState<string>("");
   const navigate = useNavigate();
   const handleCommentBoxClick = (): void => {
     if (!auth) navigate("/login", { viewTransition: true });
   };
 
-  const handleOnSubmit = async () => {
-    if (!commentBoxRef.current || commentBoxRef.current.value.length <= 1)
-      return;
+  const onCOmmentChnage = (e: React.SyntheticEvent<{ value: string }>) => {
+    if (e.currentTarget.value.length > 300) return;
+    setTextValue(e.currentTarget.value);
+  };
 
+  const handleOnSubmit = async () => {
+    if (textValue.length <= 1) return;
     const commentPayload = {
-      commentContent: commentBoxRef.current.value,
+      commentContent: textValue,
     };
     try {
       const response = await fetch(`/api/comment/newComment/${postId}`, {
@@ -65,7 +69,8 @@ export function AddComment({
       <div className="mt-4 flex w-full flex-col gap-1">
         <TextArea
           onClick={handleCommentBoxClick}
-          ref={commentBoxRef}
+          value={textValue}
+          onChange={(e) => onCOmmentChnage(e)}
           color={"grass"}
           placeholder={auth ? "Add Comment" : "Please sign in to comment "}
         />
