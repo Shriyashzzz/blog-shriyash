@@ -68,6 +68,7 @@ export function AddComment({
     <>
       <div className="mt-4 flex w-full flex-col gap-1">
         <TextArea
+          ref={commentBoxRef}
           onClick={handleCommentBoxClick}
           value={textValue}
           onChange={(e) => onCOmmentChnage(e)}
