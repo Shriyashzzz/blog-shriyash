@@ -2,14 +2,6 @@
 
 A personal full-stack blog web app with a REST API backend (Node.js / Express / TypeScript / Prisma) and two frontends: one for readers (`client-User`) and one CMS for admins (`client-Admin`).
 
-![Home Page](./static/home-page-client.png)
-![View Post](./static/viewpost-client.png)
-![Comment Section](./static/viewComment-client.png)
-
-![Admin Home Page](./static/cms-home.png)
-![Admin Edit Page](./static/cms-edit.png)
-![Admin New Page](./static/cms-new.png)
-
 ## Table of Contents
 
 - [Tech Stack](#tech-stack)
@@ -19,6 +11,18 @@ A personal full-stack blog web app with a REST API backend (Node.js / Express / 
 - [Design Choices](#design-choices)
 - [Split Architecture](#split-architecture)
 - [License](#license)
+
+## Public Facing Front-End Preview
+
+![Home Page](./static/home-page-client.png)
+![View Post](./static/viewpost-client.png)
+![Comment Section](./static/viewComment-client.png)
+
+## Content Management System _Admin_ Front-End Preview
+
+![Admin Home Page](./static/cms-home.png)
+![Admin Edit Page](./static/cms-edit.png)
+![Admin New Page](./static/cms-new.png)
 
 ## Tech Stack
 
