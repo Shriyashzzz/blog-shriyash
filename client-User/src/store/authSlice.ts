@@ -1,13 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-const checkIfAuthenticated = async () => {
-  const response = await fetch("/api/auth/me", {
-    credentials: "include",
-  });
-  if (!response.ok) return { isAuthenticated: false };
-  const data = await response.json();
-  return { isAuthenticated: true, user: data.user };
-};
+import { createSlice } from "@reduxjs/toolkit";
+import isAuthenticated from "../../../server/src/controllers/authController/isAuthenticated";
 
 interface User {
   id: number;
@@ -22,13 +14,13 @@ export interface authStateType {
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: { value: await checkIfAuthenticated() },
+  initialState: { value: { isAuthenticated: false, user: null } },
   reducers: {
     isAuth: (state, action) => {
       state.value = { isAuthenticated: true, user: action.payload };
     },
     isNotAuth: (state) => {
-      state.value = { isAuthenticated: false };
+      state.value = { isAuthenticated: false, user: null };
     },
   },
 });

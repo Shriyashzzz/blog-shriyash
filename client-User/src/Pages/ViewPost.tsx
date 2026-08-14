@@ -65,7 +65,6 @@ export function ViewPost() {
 
   useEffect(() => {
     if (commentAddedTrigger > 0) {
-      console.log("hi");
       viewCommentRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [commentAddedTrigger]);
