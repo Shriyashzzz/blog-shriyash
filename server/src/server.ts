@@ -14,29 +14,34 @@ import commentAdminRouter from "./adminRoutes/commentAdminRouter.js";
 import { searchRouter } from "./routes/searchRouter.js";
 
 const app = express();
+
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
 app.use(passport.initialize());
 passport.use(jwtStrategy);
-const allowlist = [process.env.CLIENT_USER_URL, process.env.CLIENT_ADMIN_URL];
-const corsOpts = {
-  origin: function (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void,
-  ) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
 
-    if (allowlist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log("not allowed");
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  optionsSuccessStatus: 200,
-};
-app.disable("x-powered-by");
-app.use(cors(corsOpts));
-app.set("trust proxy", true);
+const allowedOrigins = [
+  process.env.CLIENT_USER_URL,
+  process.env.CLIENT_ADMIN_URL,
+].filter((url): url is string => Boolean(url) && url !== "");
+console.log(allowedOrigins);
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        console.warn(`[CORS Blocked]: ${origin}`);
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }),
+);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
