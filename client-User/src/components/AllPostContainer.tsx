@@ -27,12 +27,14 @@ export function AllPostContainer() {
     method: "GET",
     credentials: "include",
   });
+
   useEffect(() => {
-    if (data) {
+    if (data && data.posts) {
       setPosts(data.posts);
     }
   }, [data]);
   if (error) {
+    console.log(error);
     return (
       <Navigate
         to="/errorpage"
