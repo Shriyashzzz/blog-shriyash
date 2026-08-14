@@ -31,10 +31,8 @@ const corsOpts = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true,
   optionsSuccessStatus: 200,
 };
-
 app.disable("x-powered-by");
 app.use(cors(corsOpts));
 app.set("trust proxy", true);
