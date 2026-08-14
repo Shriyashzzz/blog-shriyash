@@ -6,6 +6,10 @@ A personal full-stack blog web app with a REST API backend (Node.js / Express / 
 ![View Post](./static/viewpost-client.png)
 ![Comment Section](./static/viewComment-client.png)
 
+![Admin Home Page](./static/cms-home.png)
+![Admin Edit Page](./static/cms-edit.png)
+![Admin New Page](./static/cms-new.png)
+
 ## Table of Contents
 
 - [Tech Stack](#tech-stack)
