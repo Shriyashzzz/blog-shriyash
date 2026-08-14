@@ -1,4 +1,4 @@
 node_modules
 .env
 /generated/prisma
-.env.docker.env.docker
+.env.docker
