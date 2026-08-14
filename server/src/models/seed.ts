@@ -19,31 +19,12 @@ async function main() {
   await prismaSeedClient.user.deleteMany();
   await prismaSeedClient.postCategory.deleteMany();
 
-  // 1. Seed Users (All posts remain authored exclusively by Admin)
   const admin = await prismaSeedClient.user.create({
     data: {
       email: "ghimireshriyash@gmail.com",
       username: "Shriyash Ghimire",
       role: Role.Admin,
-      password: await bcrypt.hash("12345", 12),
-    },
-  });
-
-  const member1 = await prismaSeedClient.user.create({
-    data: {
-      email: "sarah.chen@dev.io",
-      username: "Sarah Chen",
-      role: Role.Member,
-      password: await bcrypt.hash("12345", 12),
-    },
-  });
-
-  const member2 = await prismaSeedClient.user.create({
-    data: {
-      email: "marcus.v@builder.dev",
-      username: "Marcus Vance",
-      role: Role.Member,
-      password: await bcrypt.hash("12345", 12),
+      password: await bcrypt.hash("12345", 12), // dummy password
     },
   });
 
@@ -435,35 +416,6 @@ Align navigation elements cleanly along a horizontal single-axis row:
   });
 
   console.log("Created 6 posts");
-
-  // 3. Seed Comments
-  await prismaSeedClient.comment.createMany({
-    data: [
-      {
-        content:
-          "Great overview on **GIN** vs **B-Tree**! Would love a follow-up on partitioning.",
-        postId: post1.id,
-        authorId: member1.id,
-      },
-      {
-        content:
-          "Thanks! Adding a note about table partitioning for next week’s post.",
-        postId: post1.id,
-        authorId: admin.id,
-      },
-      {
-        content:
-          "The Docker multi-stage build example saved my deployment pipelines today. Thanks!",
-        postId: post5.id,
-        authorId: member2.id,
-      },
-      {
-        content: "Super useful HTTP table. Bookmarking this for quick access!",
-        postId: post4.id,
-        authorId: member1.id,
-      },
-    ],
-  });
 
   console.log("Seeding complete");
 }
