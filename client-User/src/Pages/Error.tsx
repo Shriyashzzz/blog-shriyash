@@ -28,7 +28,7 @@ export default function ErrorPage() {
     // Handle standard JavaScript/Render runtime errors
     message = error.message;
   } else if (location.state?.message) {
-    // fallback for navigate()-triggered errors (not caught by router error boundary)
+    // fallback for navigate()-triggered errors-not caught by router error boundary
     title = location.state.title ?? title;
     message = location.state.message;
   }
