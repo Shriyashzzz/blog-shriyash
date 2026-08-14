@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { SetStateAction, Dispatch } from "react";
+import AurthorIcon from "../assets/icons/authorIcon.jpg";
 
 export interface Comment {
   author: Author;
@@ -61,11 +62,7 @@ export function ViewComments({
               size="3"
               radius="full"
               className="mt-2 border border-gray-300"
-              src={
-                cmt.author.role == "Admin"
-                  ? "https://scontent-sjc6-1.xx.fbcdn.net/v/t39.30808-6/684262166_26612009511790748_2315032028178435336_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=r-iOFVaVBREQ7kNvwFSiHTI&_nc_oc=AdpxCQ2Llo91ug6hX1E0jvPx8aewLeH0Tlu3LnDlkU9xTrydym602IztwBsgqyalqvJ8onM8GYXlHsFyhm6jXfE6&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&_nc_gid=_tntilGb5NTS23LVOdpo8g&_nc_ss=7b2a8&oh=00_AQG1oDZtmr36czaM4cRjECG2Ezr0wgNiTBQJ8W8uSMkSqw&oe=6A78F759"
-                  : undefined
-              }
+              src={cmt.author.role == "Admin" ? AurthorIcon : undefined}
               fallback={initialExtract(cmt.author.username)}
             />
 
