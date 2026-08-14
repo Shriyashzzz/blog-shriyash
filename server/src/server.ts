@@ -16,7 +16,7 @@ import { searchRouter } from "./routes/searchRouter.js";
 const app = express();
 app.use(passport.initialize());
 passport.use(jwtStrategy);
-const allowlist = [process.env.CLIENT_USER_URL, process.env.CLIENT_SERVER_URL];
+const allowlist = [process.env.CLIENT_USER_URL, process.env.CLIENT_ADMIN_URL];
 const corsOpts = {
   origin: function (
     origin: string | undefined,
