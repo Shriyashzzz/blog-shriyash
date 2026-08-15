@@ -94,7 +94,7 @@ export function EditPost() {
     <div className="w-full  sm:w-4/5 flex flex-col gap-2">
       <EditBlogToolBar title={title} markdownRef={markdownRef} post={post} />
       <section className=" flex gap-5 bg-gray-900 mb-3">
-        <TitleTextField setTitle={setTitle} title={title} />s
+        <TitleTextField setTitle={setTitle} title={title} />
       </section>
       <MDXEditor
         className=" prose gap-5 border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200  leading-relaxed  dark:bg-gray-900 dark:text-white"
