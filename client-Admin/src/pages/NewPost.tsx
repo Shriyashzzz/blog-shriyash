@@ -29,6 +29,37 @@ import type { MDXEditorMethods } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { TitleTextField } from "../components/TitleTextField";
 import { PostBlogToolBar } from "../components/PostBlogToolBar";
+import { EditorView } from "@codemirror/view";
+
+const codeMirrorDarkTheme = EditorView.theme(
+  {
+    "&": {
+      backgroundColor: "#111827", // gray-900
+      color: "#f3f4f6", // gray-100
+    },
+    ".cm-content": {
+      caretColor: "#f3f4f6",
+    },
+    ".cm-gutters": {
+      backgroundColor: "#111827 !important",
+      color: "#9ca3af", // gray-400
+      border: "none",
+    },
+    ".cm-activeLine": {
+      backgroundColor: "rgba(255, 255, 255, 0.03)",
+    },
+    ".cm-activeLineGutter": {
+      backgroundColor: "rgba(255, 255, 255, 0.03)",
+    },
+    "&.cm-focused .cm-selectionBackground, .cm-selectionBackground": {
+      backgroundColor: "rgba(59, 130, 246, 0.25) !important",
+    },
+    ".cm-cursor": {
+      borderLeftColor: "#f3f4f6",
+    },
+  },
+  { dark: true },
+);
 
 export function NewPost() {
   const markdownRef = useRef<MDXEditorMethods>(null);
@@ -59,6 +90,7 @@ export function NewPost() {
               css: "CSS",
               tsx: "TypeScript",
             },
+            codeMirrorExtensions: [codeMirrorDarkTheme],
           }),
           toolbarPlugin({
             toolbarClassName: "toolbar",
