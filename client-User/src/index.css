@@ -18,4 +18,16 @@
   .prose .dark {
     --tw-prose-hr: #e5e7eb; /* custom border color */
   }
+  .prose {
+    li {
+      font-size: large;
+    }
+  }
+  .prose thead {
+    font-size: large;
+  }
+
+  .prose tbody {
+    font-size: medium;
+  }
 }

@@ -71,7 +71,7 @@ export function NewPost() {
         <TitleTextField setTitle={setTitle} />
       </section>
       <MDXEditor
-        className="prose h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200  leading-relaxed  dark:bg-gray-900 dark:text-white"
+        className="prose prose-li:text-lg h-full border prose-headings:dark:text-white dark:prose-invert prose-p:text-base sm:prose-p:text-xl prose-pre:max-h-120 mx-auto flex w-full max-w-full flex-col bg-gray-200  leading-relaxed  dark:bg-gray-900 dark:text-white"
         ref={markdownRef}
         markdown={""}
         plugins={[
