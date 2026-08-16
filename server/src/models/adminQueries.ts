@@ -21,6 +21,9 @@ class AdminQueries {
   async getPostsForAdmin(): Promise<PostsResponse> {
     try {
       const posts = await prisma.post.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
         include: {
           _count: {
             select: {

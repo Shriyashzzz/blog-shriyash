@@ -14,7 +14,6 @@ import commentAdminRouter from "./adminRoutes/commentAdminRouter.js";
 import { searchRouter } from "./routes/searchRouter.js";
 
 const app = express();
-
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
 app.use(passport.initialize());

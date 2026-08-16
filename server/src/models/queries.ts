@@ -30,6 +30,9 @@ class Queries {
         where: {
           published: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
         include: {
           _count: {
             select: { loves: true },
