@@ -25,7 +25,7 @@ export function PreviewPost({ post }: PreviewPostProps) {
           {post.title}
         </h1>
       </div>
-      <div className="line-clamp-2 max-w-[1600px] truncate">
+      <div className="line-clamp-2 max-w-[1600px] truncate [&_strong]:font-normal">
         <Markdown
           remarkPlugins={[remarkGm]}
           rehypePlugins={[rehypeRaw, rehypeSanitize]}
