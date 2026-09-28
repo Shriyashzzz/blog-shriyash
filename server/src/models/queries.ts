@@ -1,3 +1,4 @@
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { prisma } from "../config/prisma.js";
 import type { Comment, Post } from "../generated/prisma/client.js";
 import { Prisma } from "../generated/prisma/client.js";
@@ -9,6 +10,13 @@ interface CommentPost {
 interface PostLove {
   ok: boolean;
   loved?: boolean;
+}
+
+// something new I learned to do, instead of creating type for each return, this is an generic return type, if you want to return more data, declare the type in place of T .
+// also too lazy to refactor rest of the code, so I'l let them be. I'll spare them from eradicating them from existence ;p
+interface QueryReturn<T = unknown> {
+  ok: boolean;
+  data?: T;
 }
 
 interface PostTitleQueryResponse {
@@ -223,6 +231,25 @@ class Queries {
     if (!blogs) return { ok: false };
 
     return { ok: true, posts: blogs };
+  }
+
+  async signUpNewsLetter(
+    email: string,
+  ): Promise<QueryReturn<{ duplicate: boolean }>> {
+    try {
+      await prisma.newsletter.create({
+        data: {
+          email: email,
+        },
+      });
+      return { ok: true };
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError && e.code == "P2002") {
+        return { ok: false, data: { duplicate: true } };
+      }
+      console.error(e);
+      return { ok: false, data: { duplicate: false } };
+    }
   }
 }
 

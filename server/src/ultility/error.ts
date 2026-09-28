@@ -3,9 +3,9 @@ import type { Errback, NextFunction, Request, Response } from "express";
 class AppError extends Error {
   isIntentional: boolean;
   statusCode: number;
-  constructor(message: string, statusCode: number) {
+  constructor(message: string, statusCode: number, isIntentional = true) {
     super(message);
-    this.isIntentional = true;
+    this.isIntentional = isIntentional;
     this.statusCode = statusCode;
   }
 }
