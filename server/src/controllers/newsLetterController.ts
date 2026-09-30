@@ -4,7 +4,7 @@ import { AppError } from "../ultility/error";
 import queries from "../models/queries";
 
 const validationEmail = [
-  body("email").trim().notEmpty().isEmail().withMessage("400: Invalid Email"),
+  body("email").isEmail().withMessage("400: Invalid Email"),
 ];
 
 const signUp = [

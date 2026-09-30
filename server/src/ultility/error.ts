@@ -23,7 +23,8 @@ function errorHandler(
   next: NextFunction,
 ) {
   const statusCode = err.statusCode || 500;
-  console.error(err);
+  if (!err.isIntentional) console.error(err);
+
   res.status(statusCode).json({
     message: err.isIntentional ? err.message : "Something went wrong",
   });

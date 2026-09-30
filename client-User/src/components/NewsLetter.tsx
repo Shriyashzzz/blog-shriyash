@@ -1,16 +1,43 @@
 import { Form } from "radix-ui";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   className: String;
 };
 function SubNewsLetter({ className }: Props) {
   const emailRef = useRef<HTMLInputElement | null>(null);
+  const [responseInfo, setResponseInfo] = useState<String>("");
 
-  const handleSubscribeClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubscribeClick = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     e.preventDefault();
-    if (!e.currentTarget || !e.currentTarget.value) return;
-    const 
+
+    if (!emailRef.current) return;
+    const emailBody = JSON.stringify({
+      email: emailRef.current.value,
+    });
+    const response = await fetch("/api/newsletter/signup", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: emailBody,
+    });
+    if (response.ok && response.status == 200) {
+      setResponseInfo("Thanks for subscribing <3");
+      emailRef.current.value = "";
+      return;
+    }
+    if (response.status == 409) {
+      setResponseInfo("You are already subscribed <3");
+      emailRef.current.value = "";
+      return;
+    }
+    if (!response.ok) {
+      setResponseInfo("Unable to subscribe at this moment");
+      emailRef.current.value = "";
+      return;
+    }
   };
 
   return (
@@ -56,6 +83,9 @@ function SubNewsLetter({ className }: Props) {
             Subscribe to my newsletter
           </button>
         </Form.Submit>
+        <div className="w-full p-1 text-[13px] text-black dark:text-white">
+          <p className="flex w-full justify-center"> {responseInfo} </p>
+        </div>
       </Form.Root>{" "}
     </section>
   );
