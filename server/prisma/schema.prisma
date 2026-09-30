@@ -9,7 +9,7 @@ datasource db {
   provider = "postgresql"
 }
 
-model newsletter {
+model newsletter_subscribers {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   createdAt DateTime @default(now())

@@ -237,7 +237,7 @@ class Queries {
     email: string,
   ): Promise<QueryReturn<{ duplicate: boolean }>> {
     try {
-      await prisma.newsletter.create({
+      await prisma.newsletter_subscribers.create({
         data: {
           email: email,
         },

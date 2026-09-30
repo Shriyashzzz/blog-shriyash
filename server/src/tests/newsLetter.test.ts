@@ -5,7 +5,7 @@ import { app } from "../app.js";
 describe("test newsLetter Signup ", () => {
   const email = "testEmail@testmail.com";
   afterAll(async () => {
-    await prisma.newsletter.delete({
+    await prisma.newsletter_subscribers.delete({
       where: {
         email: email,
       },
@@ -21,7 +21,7 @@ describe("test newsLetter Signup ", () => {
   });
 
   it("check if the user exists in the database", async () => {
-    const response = await prisma.newsletter.findUniqueOrThrow({
+    const response = await prisma.newsletter_subscribers.findUniqueOrThrow({
       where: {
         email: email,
       },
