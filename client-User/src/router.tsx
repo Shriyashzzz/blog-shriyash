@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App";
 import { AllPostContainer } from "./components/AllPostContainer";
-import { LoginPage } from "./Pages/Login";
 import { SignUp } from "./Pages/SignUp";
 import ErrorPage from "./Pages/Error";
 import { ViewPost } from "./Pages/ViewPost";
 import { About } from "./Pages/About";
+import { LoginPage } from "./Pages/Login";
 
 export const router = createBrowserRouter([
   {

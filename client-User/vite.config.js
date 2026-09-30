@@ -10,6 +10,9 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     envDir: "./",
     server: {
+      watch: {
+        usePolling: true,
+      },
       proxy: {
         "/api": {
           target: env.VITE_SERVER_ADDRESS,
