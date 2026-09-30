@@ -18,7 +18,7 @@ export function PreviewPost({ post }: PreviewPostProps) {
   return (
     <article
       onClick={() => navToViewPost()}
-      className="mx-auto flex h-full min-h-35 w-full cursor-pointer flex-col justify-around bg-gray-100 p-2 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl max-sm:w-full lg:w-4/5 dark:bg-gray-500 dark:hover:shadow-green-950"
+      className="mx-auto flex h-full min-h-35 w-full cursor-pointer flex-col justify-around bg-gray-100 p-2 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl max-sm:w-full xl:w-4/5 dark:bg-gray-500 dark:hover:shadow-green-950"
     >
       <div>
         <h1 className="cursor-pointer text-lg font-bold text-green-700 sm:text-2xl dark:text-green-500">

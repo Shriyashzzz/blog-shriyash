@@ -6,6 +6,7 @@ import { Navigate } from "react-router";
 import { MySpinner } from "./MySpinner";
 import { ToolBar } from "./ToolBar";
 import { SearchPost } from "./SearchComponents/SearchPost";
+import SubNewsLetter from "./newsLetter";
 
 export interface Post {
   authorId: number;
@@ -42,7 +43,7 @@ export function AllPostContainer() {
           title: "OPPS WE GOT THE ERROR: 500",
           message: "Could not fetch the Posts",
         }}
-        replace //stops the user from hitting "back" and landing on a broken/errored pages
+        replace
       />
     );
   }
@@ -51,21 +52,25 @@ export function AllPostContainer() {
   }
 
   return (
-    <>
-      <div className="flex w-full flex-col items-center gap-2 lg:w-4/5">
-        <ToolBar def={"Home"} />
-        <SearchPost
-          className="w-full"
-          placeholder="Search content..."
-          variant="classic"
-        />
-      </div>
-
-      <section className="mt-5 grid h-full w-full auto-rows-fr grid-cols-1 gap-4 lg:w-4/5">
-        {posts.map((post) => {
-          return <PreviewPost key={post.id} post={post} />;
-        })}
+    <div className="flex w-full flex-col xl:flex-row">
+      <section className="col-start-2 flex w-full flex-col items-center justify-center xl:items-end">
+        <div className="flex w-full flex-col items-center gap-2 xl:w-4/5">
+          <ToolBar def={"Home"} />
+          <SearchPost
+            className="w-full"
+            placeholder="Search content..."
+            variant="classic"
+          />
+        </div>
+        <section className="mt-5 grid h-full w-full auto-rows-fr grid-cols-1 gap-4 xl:w-4/5">
+          {posts.map((post) => {
+            return <PreviewPost key={post.id} post={post} />;
+          })}
+        </section>
       </section>
-    </>
+      <SubNewsLetter
+        className={"flex w-full justify-center not-xl:justify-start xl:w-1/5"}
+      />
+    </div>
   );
 }
