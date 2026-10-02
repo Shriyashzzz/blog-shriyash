@@ -9,7 +9,7 @@ interface Config {
   JWT_SECRET: string;
   SMTP_PORT: number;
   SMTP_HOST: string;
-  SMTP_EMAIL: string;
+  SMTP_USER: string;
   SMTP_PASSWORD: string;
   FROM_EMAIL: string;
   API_SERVER_URL: string;
@@ -35,7 +35,7 @@ if (!process.env.API_SERVER_URL) {
 if (
   !process.env.FROM_EMAIL ||
   !process.env.SMTP_HOST ||
-  !process.env.SMTP_EMAIL ||
+  !process.env.SMTP_USER ||
   !process.env.SMTP_PASSWORD ||
   !process.env.SMTP_PORT
 ) {
@@ -50,7 +50,7 @@ const config: Config = {
   JWT_SECRET: process.env.JWT_SECRET,
   SMTP_PORT: Number(process.env.SMTP_PORT),
   SMTP_HOST: process.env.SMTP_HOST,
-  SMTP_EMAIL: process.env.SMTP_EMAIL,
+  SMTP_USER: process.env.SMTP_USER,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   FROM_EMAIL: process.env.FROM_EMAIL,
   API_SERVER_URL: process.env.API_SERVER_URL,

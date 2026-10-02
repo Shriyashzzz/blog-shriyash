@@ -241,7 +241,7 @@ class Queries {
       await prisma.newsSubscribers.create({
         data: {
           email: email,
-          unsubscribeToken: token,
+          userToken: token,
         },
       });
       return { ok: true };

@@ -4,9 +4,9 @@ import config from "./config";
 export const transporter = nodemailer.createTransport({
   host: config.SMTP_HOST,
   port: config.SMTP_PORT,
-  secure: false,
+  secure: true,
   auth: {
-    user: config.SMTP_EMAIL,
+    user: config.SMTP_USER,
     pass: config.SMTP_PASSWORD,
   },
 });

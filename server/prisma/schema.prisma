@@ -10,10 +10,10 @@ datasource db {
 }
 
 model NewsSubscribers {
-  id               Int      @id @default(autoincrement())
-  email            String   @unique
-  createdAt        DateTime @default(now())
-  unsubscribeToken String   @unique
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  userToken String   @unique
 }
 
 // tracks if the newsletter was successfully sent

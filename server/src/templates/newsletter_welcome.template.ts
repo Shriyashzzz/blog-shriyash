@@ -9,7 +9,7 @@ const escapeHtml = (value: string): string =>
 export const welcomeNewsletterTemplate = (
   name?: string | undefined,
 ): string => {
-  const safeName = escapeHtml((name && name.trim()) || "there");
+  const safeName = escapeHtml((name && name.trim()) || "There");
 
   return `
    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px 24px; color: #111827; line-height: 1.7; background-color: #e5e7eb;">
@@ -30,7 +30,7 @@ export const welcomeNewsletterTemplate = (
         <p style="margin: 0 0 24px; font-size: 15px; color: #374151;"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWxybmUxMGR1ZzRkYTIxZW80ZHBudGEybmFrYXV6d2Vpdnc2cDJydiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dJnRozE0LjU6zTq10M/giphy.gif" alt="Bro love" width="207" height="207" /></p>
         <p style="margin: 0 0 24px; font-size: 15px; color: #374151;">&nbsp;See you next time.</p>
         <hr style="border: none; border-top: 1px solid #d1d5db; margin: 24px 0;" />
-        <p style="margin: 0; font-size: 15px; color: #374151;">Cheers,<br /> <strong style="color: #008000;">Shriyash Ghimire</strong><br /> <span style="font-size: 13px; color: #6b7280;">Full-Stack Developer &amp; Creator of <em>Shriyash Uncompiled</em></span></p>
+        <p style="margin: 0; font-size: 15px; color: #374151;">Cheers,<br /> <strong style="color: #008000;">Shriyash Ghimire</strong><br /> <span style="font-size: 13px; color: #6b7280;">Full-Stack Developer &amp; Creator of <em>Shriyash Uncompiled</em></span><br/> You can reply to my newsletters, I read every single email ;)</p>
 </div>
   `;
 };

@@ -167,7 +167,7 @@ class AdminQueries {
   ) {
     try {
       const subscriber = await prisma.newsSubscribers.findUniqueOrThrow({
-        where: { unsubscribeToken: token },
+        where: { userToken: token },
       });
       let statusCol = await prisma.mTStatus.findUnique({
         where: {

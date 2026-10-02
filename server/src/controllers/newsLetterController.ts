@@ -49,7 +49,7 @@ const unsubscribe = async (
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405); //invalid request method;
+  if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405); //invalid request method
   const { token } = req.query;
   if (!token) return res.status(400);
   //verify if token is valid
@@ -57,7 +57,7 @@ const unsubscribe = async (
     return res.status(401); // invalid token
   }
   await prisma.newsSubscribers.deleteMany({
-    where: { unsubscribeToken: token },
+    where: { userToken: token },
   });
   if (req.method === "POST") return res.sendStatus(200);
   res.send("<h1>You've been unsubscribed.</h1>");
