@@ -2,7 +2,10 @@ import type { Request, Response, NextFunction } from "express";
 import { validationResult, matchedData, body } from "express-validator";
 import { AppError } from "../ultility/error.js";
 import queries from "../models/queries.js";
-import { generateSubscriberToken } from "../ultility/getSubscriberToken.js";
+import {
+  generateSubscriberToken,
+  verifySubscribersToken,
+} from "../ultility/getSubscriberToken.js";
 import { prisma } from "../config/prisma.js";
 import { sendWelcomeNewsLetterMessage } from "../scripts/welcomeNewsletter.js";
 
@@ -46,15 +49,16 @@ const unsubscribe = async (
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405);
+  if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405); //invalid request method;
   const { token } = req.query;
   if (!token) return res.status(400);
-  if (token) {
-    await prisma.newsSubscribers.deleteMany({
-      where: { unsubscribeToken: token },
-    });
+  //verify if token is valid
+  if (!verifySubscribersToken(token)) {
+    return res.status(401); // invalid token
   }
-
+  await prisma.newsSubscribers.deleteMany({
+    where: { unsubscribeToken: token },
+  });
   if (req.method === "POST") return res.sendStatus(200);
   res.send("<h1>You've been unsubscribed.</h1>");
 };
