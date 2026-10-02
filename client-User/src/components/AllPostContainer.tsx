@@ -47,8 +47,20 @@ export function AllPostContainer() {
       />
     );
   }
-  if (loading || posts.length == 0) {
+  if (loading) {
     return <MySpinner />;
+  }
+
+  if (posts.length == 0) {
+    return (
+      <div className="flex h-fit w-4/5 items-center justify-center">
+        {" "}
+        <h2 className="text-2xl">
+          No Posts yet! Meanwhile Sign up for my NewsLetter.
+        </h2>
+        <p className="text-lg">No Spam emails/promotions promise ;&#41;</p>
+      </div>
+    );
   }
 
   return (
