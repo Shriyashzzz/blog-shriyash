@@ -12,6 +12,7 @@ interface Config {
   SMTP_EMAIL: string;
   SMTP_PASSWORD: string;
   FROM_EMAIL: string;
+  API_SERVER_URL: string;
 }
 
 if (!process.env.JWT_SECRET) {
@@ -23,6 +24,11 @@ if (!process.env.JWT_SECRET) {
 if (!process.env.DATABASE_URL) {
   throw new Error(
     "CRITICAL CONFIG ERROR: process.env.DATABASE_URL is not defined.",
+  );
+}
+if (!process.env.API_SERVER_URL) {
+  throw new Error(
+    "CRITICAL CONFIG ERROR: process.env.API_SERVER_URL is not defined.",
   );
 }
 
@@ -47,6 +53,7 @@ const config: Config = {
   SMTP_EMAIL: process.env.SMTP_EMAIL,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   FROM_EMAIL: process.env.FROM_EMAIL,
+  API_SERVER_URL: process.env.API_SERVER_URL,
 } satisfies Config;
 
 export default config;

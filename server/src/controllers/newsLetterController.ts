@@ -2,6 +2,8 @@ import type { Request, Response, NextFunction } from "express";
 import { validationResult, matchedData, body } from "express-validator";
 import { AppError } from "../ultility/error.js";
 import queries from "../models/queries.js";
+import { generateSubscriberToken } from "../ultility/getSubscriberToken.js";
+import { prisma } from "../config/prisma.js";
 
 const validationEmail = [
   body("email").isEmail().withMessage("400: Invalid Email"),
@@ -16,7 +18,9 @@ const signUp = [
     }
     const { email } = matchedData(req);
     try {
-      const response = await queries.signUpNewsLetter(email);
+      const token = generateSubscriberToken(email);
+      if (!token) return next(new AppError("Server Error", 500, true));
+      const response = await queries.signUpNewsLetter(email, token);
       if (response.ok) {
         return res.status(200).json({
           message: "successfully subscribed to the newsletter",
@@ -31,4 +35,22 @@ const signUp = [
   },
 ];
 
-export default { signUp };
+// validate using express-validator later
+const unsubscribe = async (
+  req: Request<{}, {}, {}, { token: string | undefined }>,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405);
+  const { token } = req.query;
+  if (!token) return res.status(400);
+  if (token) {
+    await prisma.newsSubscribers.deleteMany({
+      where: { unsubscribeToken: token },
+    });
+  }
+
+  if (req.method === "POST") return res.sendStatus(200);
+  res.send("<h1>You've been unsubscribed.</h1>");
+};
+export default { signUp, unsubscribe };

@@ -235,11 +235,13 @@ class Queries {
 
   async signUpNewsLetter(
     email: string,
+    token: string,
   ): Promise<QueryReturn<{ duplicate: boolean }>> {
     try {
       await prisma.newsSubscribers.create({
         data: {
           email: email,
+          unsubscribeToken: token,
         },
       });
       return { ok: true };

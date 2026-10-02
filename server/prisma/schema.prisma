@@ -10,9 +10,10 @@ datasource db {
 }
 
 model NewsSubscribers {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  createdAt DateTime @default(now())
+  id               Int      @id @default(autoincrement())
+  email            String   @unique
+  createdAt        DateTime @default(now())
+  unsubscribeToken String
 }
 
 model NewsLetter {
