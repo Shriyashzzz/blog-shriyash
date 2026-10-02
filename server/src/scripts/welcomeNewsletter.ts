@@ -6,11 +6,11 @@ export async function sendWelcomeNewsLetterMessage(
   userToken: string,
   subscribers: Array<string>,
 ): Promise<boolean> {
-  if (userToken) {
+  try {
     await sendWelcomeEmail(welcomeNewsletterTemplate(), subscribers, userToken);
     return true;
-  } else {
-    console.log("dummy token was undefined");
+  } catch (e) {
+    console.log(e);
     return false;
   }
 }

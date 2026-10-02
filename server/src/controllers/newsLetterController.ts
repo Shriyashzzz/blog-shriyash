@@ -40,7 +40,7 @@ const signUp = [
   },
 ];
 
-// validate using express-validator later
+// validate token using express-validator later
 const unsubscribe = async (
   req: Request<{}, {}, {}, { token: string | undefined }>,
   res: Response,
@@ -49,7 +49,6 @@ const unsubscribe = async (
   if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405);
   const { token } = req.query;
   if (!token) return res.status(400);
-  //delete user from the table
   if (token) {
     await prisma.newsSubscribers.deleteMany({
       where: { unsubscribeToken: token },
