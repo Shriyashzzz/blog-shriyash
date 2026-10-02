@@ -13,7 +13,17 @@ model NewsSubscribers {
   id               Int      @id @default(autoincrement())
   email            String   @unique
   createdAt        DateTime @default(now())
-  unsubscribeToken String
+  unsubscribeToken String   @unique
+}
+
+// tracks if the newsletter was successfully sent
+model MTStatus {
+  subscriberId Int
+  newsLetterId Int
+  letterSent   Boolean
+  err          String?
+
+  @@unique([subscriberId, newsLetterId])
 }
 
 model NewsLetter {

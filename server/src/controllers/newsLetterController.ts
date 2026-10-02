@@ -4,6 +4,7 @@ import { AppError } from "../ultility/error.js";
 import queries from "../models/queries.js";
 import { generateSubscriberToken } from "../ultility/getSubscriberToken.js";
 import { prisma } from "../config/prisma.js";
+import { sendWelcomeNewsLetterMessage } from "../scripts/welcomeNewsletter.js";
 
 const validationEmail = [
   body("email").isEmail().withMessage("400: Invalid Email"),
@@ -22,6 +23,10 @@ const signUp = [
       if (!token) return next(new AppError("Server Error", 500, true));
       const response = await queries.signUpNewsLetter(email, token);
       if (response.ok) {
+        const welcomeMsgSent = await sendWelcomeNewsLetterMessage(token, [
+          email,
+        ]);
+        if (!welcomeMsgSent) console.error("unable to send welcome message");
         return res.status(200).json({
           message: "successfully subscribed to the newsletter",
         });
@@ -44,6 +49,7 @@ const unsubscribe = async (
   if (req.method !== "GET" && req.method !== "POST") return res.sendStatus(405);
   const { token } = req.query;
   if (!token) return res.status(400);
+  //delete user from the table
   if (token) {
     await prisma.newsSubscribers.deleteMany({
       where: { unsubscribeToken: token },

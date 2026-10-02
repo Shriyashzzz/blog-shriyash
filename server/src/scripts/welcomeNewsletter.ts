@@ -1,21 +1,55 @@
-import { sendNewsLetterToSubscribers } from "../services/email.service.js";
 import { welcomeNewsletterTemplate } from "../templates/newsletter_welcome.template.js";
-import { generateSubscriberToken } from "../ultility/getSubscriberToken.js";
+import config from "../config/config.js";
+import { transporter } from "../config/smtp.config.js";
 
-// test script
-
-const dummySubscribers = ["ghimireshriyash@gmail.com"];
-const welcomeSubject = "Heya, Thanks for subscribing to my newsletter!";
-const dummyToken: string | undefined = generateSubscriberToken(
-  "ghimireshriyash@gmail.com",
-);
-if (dummyToken) {
-  await sendNewsLetterToSubscribers(
-    welcomeSubject,
-    welcomeNewsletterTemplate(),
-    dummySubscribers,
-    dummyToken,
-  );
-} else {
-  console.log("dummy token was undefined");
+export async function sendWelcomeNewsLetterMessage(
+  userToken: string,
+  subscribers: Array<string>,
+): Promise<boolean> {
+  if (userToken) {
+    await sendWelcomeEmail(welcomeNewsletterTemplate(), subscribers, userToken);
+    return true;
+  } else {
+    console.log("dummy token was undefined");
+    return false;
+  }
 }
+
+export const sendWelcomeEmail = async (
+  html: string,
+  to: Array<string>,
+  token: string,
+) => {
+  const welcomeSubject = "Heya, Thanks for subscribing to my newsletter!";
+  const unsubscribeUrl = `${config.API_SERVER_URL}/api/newsletter/unsubscribe?token=${token}`;
+  const body = `
+        ${html}
+        <hr />
+        <p style="font-size:12px;color:#888;text-align:center;">
+          Don't want these emails?
+          <a href="${unsubscribeUrl}">Unsubscribe</a>
+        </p>
+      `;
+  const mailOptions = {
+    from: `Shriyash Ghimire ${config.FROM_EMAIL},`,
+    to: to,
+    subject: welcomeSubject,
+    html: body,
+    list: {
+      // List-Unsubscribe: <http://example.com> ( Unsubscribes from the newsletter through the email. )
+      unsubscribe: {
+        url: unsubscribeUrl,
+        comment: "Unsubscribe from my newsletters :(",
+      },
+    },
+    headers: {
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+    },
+  };
+
+  return transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+};

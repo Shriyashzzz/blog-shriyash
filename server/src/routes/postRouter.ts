@@ -3,7 +3,7 @@ import {
   checkIfLoved,
   getPost,
   loveUnlovePost,
-} from "../controllers/postController.js";
+} from "../generated/postController.js";
 import passport from "passport";
 
 const postRouter = Router({ mergeParams: true });

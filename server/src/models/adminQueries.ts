@@ -158,6 +158,52 @@ class AdminQueries {
       return { ok: false, error: e };
     }
   }
+
+  //to update email sent/unsent status bw server & user
+  async newsLetterMTPStatus(
+    token: string,
+    newsLetterId: number,
+    letterSent: boolean,
+  ) {
+    try {
+      const subscriber = await prisma.newsSubscribers.findUniqueOrThrow({
+        where: { unsubscribeToken: token },
+      });
+      let statusCol = await prisma.mTStatus.findUnique({
+        where: {
+          subscriberId_newsLetterId: {
+            subscriberId: subscriber.id,
+            newsLetterId: newsLetterId,
+          },
+        },
+      });
+      if (!statusCol) {
+        await prisma.mTStatus.create({
+          data: {
+            newsLetterId: newsLetterId,
+            subscriberId: subscriber.id,
+            letterSent: letterSent,
+          },
+        });
+      } else {
+        await prisma.mTStatus.update({
+          where: {
+            subscriberId_newsLetterId: {
+              subscriberId: subscriber.id,
+              newsLetterId: newsLetterId,
+            },
+          },
+          data: {
+            letterSent: letterSent,
+          },
+        });
+      }
+      return { ok: true };
+    } catch (e) {
+      console.error(e);
+      return { ok: false };
+    }
+  }
 }
 
 const adminQueries = new AdminQueries();
