@@ -12,7 +12,7 @@ import cors from "cors";
 import postAdminRouter from "./adminRoutes/postAdminRouter.js";
 import commentAdminRouter from "./adminRoutes/commentAdminRouter.js";
 import { searchRouter } from "./routes/searchRouter.js";
-import newsLetterRouter from "./routes/newsLetter.js";
+import newsLetterRouter from "./adminRoutes/newsLetter.js";
 
 export const app = express();
 app.disable("x-powered-by");

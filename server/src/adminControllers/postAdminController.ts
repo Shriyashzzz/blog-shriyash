@@ -104,8 +104,6 @@ const updatePost = [
   ...postIdValidator,
   ...updatePostPayloadValidator,
   async (req: Request, res: Response, next: NextFunction) => {
-    //validatae the incoming payload later
-    // send there is nothing to change if all undefined
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return next(new AppError(JSON.stringify(errors), 400));

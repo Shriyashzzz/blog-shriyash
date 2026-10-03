@@ -1,5 +1,7 @@
 import type { Post } from "../generated/prisma/client.js";
 import { prisma } from "../config/prisma.js";
+import type { NewsLetter } from "../generated/prisma/client.js";
+import { error } from "node:console";
 
 interface PostsResponse {
   ok: boolean;
@@ -12,10 +14,15 @@ interface UpdatePost {
   published?: boolean;
 }
 
-interface QueryResponse {
+export interface QueryResponse<T = unknown> {
   ok: boolean;
+  data?: T;
   error?: unknown;
 }
+
+export type TypeNewsLetter = {
+  new_NewsLetter: NewsLetter;
+};
 
 class AdminQueries {
   async getPostsForAdmin(): Promise<PostsResponse> {
@@ -201,6 +208,75 @@ class AdminQueries {
       return { ok: true };
     } catch (e) {
       console.error(e);
+      return { ok: false };
+    }
+  }
+
+  async createNewsLetter(
+    subject: string,
+    html: string,
+    isDraft: boolean,
+  ): Promise<QueryResponse<TypeNewsLetter>> {
+    try {
+      const newLetter: NewsLetter = await prisma.newsLetter.create({
+        data: { subject: subject, html: html, isDraft: isDraft },
+      });
+      return { ok: true, data: { new_NewsLetter: newLetter } };
+    } catch (e) {
+      console.error(e);
+      return { ok: false };
+    }
+  }
+  async getNewsLetter(
+    id: number,
+  ): Promise<QueryResponse<{ letter: NewsLetter }>> {
+    try {
+      const letter: NewsLetter = await prisma.newsLetter.findUniqueOrThrow({
+        where: { id: id },
+      });
+      return { ok: true, data: { letter: letter } };
+    } catch (e) {
+      console.error(e);
+      return { ok: false };
+    }
+  }
+  async updateNewsLetter(
+    id: number,
+    html: string,
+    subject: string,
+    isDraft: boolean,
+  ): Promise<QueryResponse<{ letter: NewsLetter }>> {
+    try {
+      let updatedLetter;
+      if (html) {
+        updatedLetter = await prisma.newsLetter.update({
+          where: { id: id },
+          data: { html: html },
+        });
+      }
+      if (subject) {
+        updatedLetter = await prisma.newsLetter.update({
+          where: { id: id },
+          data: { subject: subject },
+        });
+      }
+      if (isDraft) {
+        updatedLetter = await prisma.newsLetter.update({
+          where: { id: id },
+          data: { draft: isDraft },
+        });
+      }
+
+      if (updatedLetter) {
+        return {
+          ok: true,
+          data: { letter: updatedLetter },
+        };
+      } else {
+        return { ok: false };
+      }
+    } catch (e) {
+      console.log(error);
       return { ok: false };
     }
   }
