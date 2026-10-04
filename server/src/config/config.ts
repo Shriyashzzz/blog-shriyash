@@ -13,6 +13,7 @@ interface Config {
   SMTP_PASSWORD: string;
   FROM_EMAIL: string;
   API_SERVER_URL: string;
+  REDIS_URL: string;
 }
 
 if (!process.env.JWT_SECRET) {
@@ -43,6 +44,10 @@ if (
     "CRITICAL CONFIG ERROR: SMTP Variable not defined, Double check",
   );
 }
+
+if (!process.env.REDIS_URL) {
+  throw new Error("CRITICAL CONFIG ERROR: REDIS_URL Variable not defined.");
+}
 const config: Config = {
   port: Number(process.env.PORT || 4000),
   nodeEnv: process.env.ENV || "DEV",
@@ -54,6 +59,7 @@ const config: Config = {
   SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   FROM_EMAIL: process.env.FROM_EMAIL,
   API_SERVER_URL: process.env.API_SERVER_URL,
+  REDIS_URL: process.env.REDIS_URL,
 } satisfies Config;
 
 export default config;

@@ -167,50 +167,50 @@ class AdminQueries {
   }
 
   //to update email sent/unsent status bw server & user
-  async newsLetterMTPStatus(
-    token: string,
-    newsLetterId: number,
-    letterSent: boolean,
-  ) {
-    try {
-      const subscriber = await prisma.newsSubscribers.findUniqueOrThrow({
-        where: { userToken: token },
-      });
-      let statusCol = await prisma.mTStatus.findUnique({
-        where: {
-          subscriberId_newsLetterId: {
-            subscriberId: subscriber.id,
-            newsLetterId: newsLetterId,
-          },
-        },
-      });
-      if (!statusCol) {
-        await prisma.mTStatus.create({
-          data: {
-            newsLetterId: newsLetterId,
-            subscriberId: subscriber.id,
-            letterSent: letterSent,
-          },
-        });
-      } else {
-        await prisma.mTStatus.update({
-          where: {
-            subscriberId_newsLetterId: {
-              subscriberId: subscriber.id,
-              newsLetterId: newsLetterId,
-            },
-          },
-          data: {
-            letterSent: letterSent,
-          },
-        });
-      }
-      return { ok: true };
-    } catch (e) {
-      console.error(e);
-      return { ok: false };
-    }
-  }
+  // async newsLetterMTPStatus(
+  //   token: string,
+  //   newsLetterId: number,
+  //   letterSent: boolean,
+  // ) {
+  //   try {
+  //     const subscriber = await prisma.newsSubscribers.findUniqueOrThrow({
+  //       where: { userToken: token },
+  //     });
+  //     let statusCol = await prisma.mTStatus.findUnique({
+  //       where: {
+  //         subscriberId_newsLetterId: {
+  //           subscriberId: subscriber.id,
+  //           newsLetterId: newsLetterId,
+  //         },
+  //       },
+  //     });
+  //     if (!statusCol) {
+  //       await prisma.mTStatus.create({
+  //         data: {
+  //           newsLetterId: newsLetterId,
+  //           subscriberId: subscriber.id,
+  //           letterSent: letterSent,
+  //         },
+  //       });
+  //     } else {
+  //       await prisma.mTStatus.update({
+  //         where: {
+  //           subscriberId_newsLetterId: {
+  //             subscriberId: subscriber.id,
+  //             newsLetterId: newsLetterId,
+  //           },
+  //         },
+  //         data: {
+  //           letterSent: letterSent,
+  //         },
+  //       });
+  //     }
+  //     return { ok: true };
+  //   } catch (e) {
+  //     console.error(e);
+  //     return { ok: false };
+  //   }
+  // }
 
   async createNewsLetter(
     subject: string,
@@ -219,7 +219,7 @@ class AdminQueries {
   ): Promise<QueryResponse<TypeNewsLetter>> {
     try {
       const newLetter: NewsLetter = await prisma.newsLetter.create({
-        data: { subject: subject, html: html, isDraft: isDraft },
+        data: { subject: subject, html: html, draft: isDraft },
       });
       return { ok: true, data: { new_NewsLetter: newLetter } };
     } catch (e) {
@@ -277,6 +277,21 @@ class AdminQueries {
       }
     } catch (e) {
       console.log(error);
+      return { ok: false };
+    }
+  }
+
+  async getSubscribers() {
+    try {
+      const data = await prisma.newsSubscribers.findMany({
+        select: {
+          email: true,
+          userToken: true,
+        },
+      });
+      return { ok: true, data: data };
+    } catch (e) {
+      console.log(e);
       return { ok: false };
     }
   }

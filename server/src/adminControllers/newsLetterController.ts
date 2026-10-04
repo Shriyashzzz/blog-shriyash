@@ -13,11 +13,13 @@ import {
   verifySubscribersToken,
 } from "../ultility/getSubscriberToken.js";
 import { prisma } from "../config/prisma.js";
-import { sendWelcomeNewsLetterMessage } from "../scripts/welcomeNewsletter.js";
+import { sendWelcomeEmail } from "../scripts/welcomeNewsletter.js";
 import adminQueries from "../models/adminQueries.js";
 import type { QueryResponse } from "../models/adminQueries.js";
 import type { TypeNewsLetter } from "../models/adminQueries.js";
 import type { NewsLetter } from "../generated/prisma/client.js";
+import { jobQueue } from "../jobs/newletter.job.js";
+import "../workers/newsletter.worker.js";
 
 const validationEmail = [
   body("email").isEmail().withMessage("400: Invalid Email"),
@@ -44,9 +46,7 @@ const signUp = [
       if (!token) return next(new AppError("Server Error", 500, true));
       const response = await queries.signUpNewsLetter(email, token);
       if (response.ok) {
-        const welcomeMsgSent = await sendWelcomeNewsLetterMessage(token, [
-          email,
-        ]);
+        const welcomeMsgSent = await sendWelcomeEmail(email, token);
         if (!welcomeMsgSent) console.error("unable to send welcome message");
         return res.status(200).json({
           message: "successfully subscribed to the newsletter",
@@ -108,7 +108,31 @@ const createNewsLetter = [
 
     if (response.ok && response.data) {
       if (!isDraft) {
-        //if isDraft == false, sned the newsletter out
+        //get subscribers
+        const subResponse = await adminQueries.getSubscribers();
+        if (!subResponse.ok)
+          next(new AppError("Error fetching subscribers", 500, false));
+        const subscribers = subResponse.data;
+        //add jobs to the queue
+        subscribers?.map((sub) => {
+          jobQueue.add(
+            "send-newsletter",
+            {
+              email: sub.email,
+              token: sub.userToken,
+              subject: subject,
+              html: html,
+            },
+            {
+              attempts: 3,
+              priority: 1,
+              removeOnComplete: true,
+              removeOnFail: {
+                age: 24 * 3600, // keep up to 24 hours
+              },
+            },
+          );
+        });
       }
       return res.status(200).json({
         message: "Succesfully created a new newsletter!",
@@ -163,6 +187,7 @@ const validation_patch_newsletter = [
 
 const updateNewsLetter = [
   ...validation_Letter_Id_Query,
+  ...validation_patch_newsletter,
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = matchedData(req);
     if (!errors.isEmpty())
@@ -184,6 +209,31 @@ const updateNewsLetter = [
     if (currentQueryResponse.ok) {
       if (!currentNewsLetter.draft && currentQueryResponse.data?.letter.draft) {
         // send the newsletter since the letter status has changed from draft => send
+        //get subscribers
+        const subResponse = await adminQueries.getSubscribers();
+        if (!subResponse.ok)
+          next(new AppError("Error fetching subscribers", 500, false));
+        const subscribers = subResponse.data;
+        //add jobs to the queue
+        subscribers?.map((sub) => {
+          jobQueue.add(
+            "send-newsletter",
+            {
+              email: sub.email,
+              token: sub.userToken,
+              subject: subject,
+              html: html,
+            },
+            {
+              attempts: 3,
+              priority: 1,
+              removeOnComplete: true,
+              removeOnFail: {
+                age: 24 * 3600, // keep up to 24 hours
+              },
+            },
+          );
+        });
       }
       return res.status(200).json({
         message: "Succedfully updated the newsletter",

@@ -11,19 +11,19 @@ newsLetterRouter.all(
 );
 
 newsLetterRouter.post(
-  "/newsLetter/create",
-  passport.authenticate("jwt", { session: false }),
+  "/create",
+
   newsLetterController.createNewsLetter,
 );
 
 newsLetterRouter.get(
-  "/newsLetter/:letterId",
+  "get/:letterId",
   passport.authenticate("jwt", { session: false }),
   newsLetterController.getNewsLetter,
 );
 
 newsLetterRouter.patch(
-  "/newsLetter/:letterId",
+  "patch/:letterId",
   passport.authenticate("jwt", { session: false }),
   newsLetterController.updateNewsLetter,
 );

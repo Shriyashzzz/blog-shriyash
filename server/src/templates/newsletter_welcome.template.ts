@@ -11,7 +11,7 @@ export const welcomeNewsletterTemplate = (
 ): string => {
   const safeName = escapeHtml((name && name.trim()) || "There");
 
-  return `
+  return `  
    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px 24px; color: #111827; line-height: 1.7; background-color: #e5e7eb;">
         <h1 style="margin: 0 0 16px; font-size: 24px; font-weight: bold; color: #111827;">Hi there!</h1>
         <p><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2l0Z2g2Ymh1NHdmYnZrMjBrY3Y4aDFlNnp2azRkNW5iZ3RrM2ZkNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LR5GeZFCwDRcpG20PR/giphy.gif" alt="Chud Shrek" width="297" height="167" /></p>
