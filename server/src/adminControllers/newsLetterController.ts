@@ -113,7 +113,7 @@ const createNewsLetter = [
         if (!subResponse.ok)
           next(new AppError("Error fetching subscribers", 500, false));
         const subscribers = subResponse.data;
-        //add jobs to the queue
+        //add jobs to the queue to send the newsletter
         subscribers?.map((sub) => {
           jobQueue.add(
             "send-newsletter",

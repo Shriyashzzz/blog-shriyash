@@ -26,16 +26,25 @@ function SubNewsLetter({ className }: Props) {
     if (response.ok && response.status == 200) {
       setResponseInfo("Thanks for subscribing <3");
       emailRef.current.value = "";
+      setTimeout(() => {
+        setResponseInfo("");
+      }, 4000);
       return;
     }
     if (response.status == 409) {
       setResponseInfo("You are already subscribed <3");
       emailRef.current.value = "";
+      setTimeout(() => {
+        setResponseInfo("");
+      }, 4000);
       return;
     }
     if (!response.ok) {
       setResponseInfo("Unable to subscribe at this moment");
       emailRef.current.value = "";
+      setTimeout(() => {
+        setResponseInfo("");
+      }, 4000);
       return;
     }
   };

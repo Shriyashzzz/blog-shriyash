@@ -12,7 +12,7 @@ newsLetterRouter.all(
 
 newsLetterRouter.post(
   "/create",
-
+  passport.authenticate("jwt", { session: false }),
   newsLetterController.createNewsLetter,
 );
 
