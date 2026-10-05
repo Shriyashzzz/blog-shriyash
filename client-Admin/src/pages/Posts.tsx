@@ -7,7 +7,8 @@ import useFetch from "../hooks/useFetch";
 import { PostItem } from "../components/PostItem";
 import { Grid } from "@radix-ui/themes";
 import { MenuBar } from "../components/MenuBar";
-export function Home() {
+import { ToolBar } from "../components/Toolbar";
+export function Posts() {
   const auth = useSelector((state: RootState) => state.auth.value);
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,7 +34,9 @@ export function Home() {
   if (data && data.posts)
     return (
       <section className="sm:w-4/5 w-full p-5 flex flex-col gap-5">
-        <MenuBar />
+        <ToolBar def={"Posts"} />
+        <MenuBar ButtonText="New Post?" OnClickNav="/new/post" BtnColor="red" />
+
         <Grid
           columns="repeat(auto-fit, minmax(250px, 350px))"
           rows="repeat(auto-fill, minmax(250px, 350px))"

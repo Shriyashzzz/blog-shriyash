@@ -248,10 +248,30 @@ const updateNewsLetter = [
   },
 ];
 
+const getAllNewsletters = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const response = await adminQueries.getAllNewsLetter();
+  if (!response.ok)
+    return next(
+      new AppError(
+        "Server Error fetching newsletter from the database",
+        500,
+        true,
+      ),
+    );
+  return res
+    .status(200)
+    .json({ message: "Successful fetching newsletters", data: response.data });
+};
+
 export default {
   signUp,
   unsubscribe,
   createNewsLetter,
   getNewsLetter,
   updateNewsLetter,
+  getAllNewsletters,
 };

@@ -28,4 +28,9 @@ newsLetterRouter.patch(
   newsLetterController.updateNewsLetter,
 );
 
+newsLetterRouter.get(
+  "/getall",
+  passport.authenticate("jwt", { session: false }),
+  newsLetterController.getAllNewsletters,
+);
 export default newsLetterRouter;

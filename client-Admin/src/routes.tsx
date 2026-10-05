@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App";
 import { LoginPage } from "./pages/Login";
-import { Home } from "./pages/Home";
+import { Posts } from "./pages/Posts";
 import ErrorPage from "./pages/Error";
 import { NewPost } from "./pages/NewPost";
 import { EditPost } from "./pages/EditPost";
+import { NewNewsLetter } from "./pages/NewNewsletter";
+import { Newsletters } from "./pages/Newsletters";
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +14,8 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Posts /> },
+      { element: <Newsletters />, path: "/home/newsletters" },
       {
         element: <LoginPage />,
         path: "/login",
@@ -21,8 +24,9 @@ export const router = createBrowserRouter([
         element: <ErrorPage />,
         path: "/error",
       },
-      { element: <NewPost />, path: "/new" },
+      { element: <NewPost />, path: "/new/post" },
       { element: <EditPost />, path: "/edit/:postId" },
+      { element: <NewNewsLetter />, path: "/new/newsletter" },
     ],
   },
 ]);

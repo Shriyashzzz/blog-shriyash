@@ -3,10 +3,16 @@ import { Container } from "@radix-ui/themes";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router";
 
-export function MenuBar() {
+type Props = {
+  ButtonText: string;
+  OnClickNav: string;
+  BtnColor: any;
+};
+
+export function MenuBar({ ButtonText, OnClickNav, BtnColor }: Props) {
   const navigate = useNavigate();
   const onNewPost = () => {
-    navigate("/new", { viewTransition: true });
+    navigate(OnClickNav, { viewTransition: true });
   };
 
   return (
@@ -14,9 +20,13 @@ export function MenuBar() {
       {" "}
       <div className="flex w-full justify-center items-center gap-2">
         <p className="font-extrabold text-xl ">What's on your mind today?</p>
-        <Button onClick={onNewPost} color="red" style={{ cursor: "pointer" }}>
+        <Button
+          onClick={onNewPost}
+          color={BtnColor}
+          style={{ cursor: "pointer" }}
+        >
           {" "}
-          New Post <Pencil2Icon />
+          {ButtonText} <Pencil2Icon />
         </Button>
       </div>
     </Container>
