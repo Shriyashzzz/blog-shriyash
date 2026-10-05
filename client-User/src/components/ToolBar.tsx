@@ -9,10 +9,18 @@ export function ToolBar({ def }: ToolBarProp) {
   const naviagte = useNavigate();
   return (
     <SegmentedControl.Root defaultValue={def} radius="medium">
-      <SegmentedControl.Item value="Home" onClick={() => naviagte("/")}>
+      <SegmentedControl.Item
+        value="Home"
+        onClick={() => naviagte("/")}
+        style={{ cursor: "pointer" }}
+      >
         Home
       </SegmentedControl.Item>
-      <SegmentedControl.Item value="About" onClick={() => naviagte("/about")}>
+      <SegmentedControl.Item
+        value="About"
+        onClick={() => naviagte("/about")}
+        style={{ cursor: "pointer" }}
+      >
         About
       </SegmentedControl.Item>
     </SegmentedControl.Root>
