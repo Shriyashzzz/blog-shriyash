@@ -1,7 +1,6 @@
 import type { Post } from "../generated/prisma/client.js";
 import { prisma } from "../config/prisma.js";
 import type { NewsLetter } from "../generated/prisma/client.js";
-import { error } from "node:console";
 
 interface PostsResponse {
   ok: boolean;
@@ -230,7 +229,7 @@ class AdminQueries {
         return { ok: false };
       }
     } catch (e) {
-      console.log(error);
+      console.log(e);
       return { ok: false };
     }
   }

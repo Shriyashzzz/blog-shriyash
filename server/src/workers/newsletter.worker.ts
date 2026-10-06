@@ -1,5 +1,8 @@
-import { sendLetter, type NewsLetterPayload } from "../services/email.service";
-import { redisConnection } from "../config/redis";
+import {
+  sendLetter,
+  type NewsLetterPayload,
+} from "../services/email.service.js";
+import { redisConnection } from "../config/redis.js";
 import { Worker } from "bullmq";
 
 const newsLetterWorker = new Worker(

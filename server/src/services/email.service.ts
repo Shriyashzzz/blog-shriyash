@@ -2,8 +2,8 @@
 // What will I need to implement it?
 //redis queue to keep track of emails that i sent.
 //an worker function to send emails. To ensure it does not block my Api
-import config from "../config/config";
-import { transporter } from "../config/smtp.config";
+import config from "../config/config.js";
+import { transporter } from "../config/smtp.config.js";
 
 export interface NewsLetterPayload {
   html: string;
