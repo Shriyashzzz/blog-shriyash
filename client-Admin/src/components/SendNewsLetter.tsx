@@ -7,9 +7,11 @@ import { useNavigate } from "react-router";
 interface Props {
   html: string;
   subject: string;
+  isEdited?: boolean;
+  id?: number;
 }
 
-export function SendNewsLetter({ html, subject }: Props) {
+export function SendNewsLetter({ html, subject, isEdited, id }: Props) {
   const navigate = useNavigate();
   const [isDraft, setIsDraft] = useState<boolean>(true);
   const sendNewsletter = async () => {

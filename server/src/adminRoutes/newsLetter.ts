@@ -17,13 +17,13 @@ newsLetterRouter.post(
 );
 
 newsLetterRouter.get(
-  "get/:letterId",
+  "/get/:letterId",
   passport.authenticate("jwt", { session: false }),
   newsLetterController.getNewsLetter,
 );
 
 newsLetterRouter.patch(
-  "patch/:letterId",
+  "/patch/:letterId",
   passport.authenticate("jwt", { session: false }),
   newsLetterController.updateNewsLetter,
 );

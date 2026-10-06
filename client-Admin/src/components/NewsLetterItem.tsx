@@ -44,7 +44,7 @@ export function NewsLetterItem({ NewsLetter }: Props) {
           <Button
             style={{ cursor: "pointer" }}
             color={"green"}
-            onClick={() => navigate(`/edit/newsletter/:${NewsLetter.id}`)}
+            onClick={() => navigate(`/edit/newsletter/${NewsLetter.id}`)}
           >
             Edit Letter
           </Button>

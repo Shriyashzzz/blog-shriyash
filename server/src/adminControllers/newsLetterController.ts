@@ -159,7 +159,8 @@ const getNewsLetter = [
       next(new AppError("Invalid newletter id param", 500, false));
 
     const { letterId } = matchedData(req);
-    const response = await adminQueries.getNewsLetter(letterId);
+    const numId: number = parseInt(letterId);
+    const response = await adminQueries.getNewsLetter(numId);
     if (response.ok && response.data) {
       return res.status(200).json({
         message: "Successful fetching the newsletter",
