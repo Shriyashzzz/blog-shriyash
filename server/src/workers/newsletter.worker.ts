@@ -9,8 +9,6 @@ import { sendWelcomeEmail } from "../scripts/welcomeNewsletter.js";
 const newsLetterWorker = new Worker(
   `newsletter-queue`, // name of the job this particular worker looks at
   async (job) => {
-    console.log("[worker] got job", job.name, job.id);
-
     switch (job.name) {
       case "send-newsletter":
         await sendLetter({
@@ -35,10 +33,7 @@ const newsLetterWorker = new Worker(
 );
 
 newsLetterWorker.on("error", (err) => console.error("Worker error:", err));
-newsLetterWorker.on("ready", () => console.log("Newletter Worker Ready"));
+newsLetterWorker.on("ready", () => console.log("Newsletter Worker Ready"));
 newsLetterWorker.on("failed", (job, err) =>
   console.error(`job ${job?.name} (${job?.id}) failed:`, err.message),
-);
-newsLetterWorker.on("completed", (job) =>
-  console.log(`job ${job.name} (${job.id}) done`),
 );
