@@ -6,12 +6,14 @@ import {
 } from "@radix-ui/react-icons";
 import { dateParser } from "../util/dateParse";
 import { NewsLetter } from "../pages/Newsletters";
+import { useNavigate } from "react-router";
 
 interface Props {
   NewsLetter: NewsLetter;
 }
 
 export function NewsLetterItem({ NewsLetter }: Props) {
+  const navigate = useNavigate();
   return (
     <Box
       style={{
@@ -39,7 +41,11 @@ export function NewsLetterItem({ NewsLetter }: Props) {
       {/* buttons */}
       {!NewsLetter.draft && (
         <div className="p-5 w-full flex justify-start ">
-          <Button style={{ cursor: "pointer" }} color={"green"}>
+          <Button
+            style={{ cursor: "pointer" }}
+            color={"green"}
+            onClick={() => navigate(`/edit/newsletter/:${NewsLetter.id}`)}
+          >
             Edit Letter
           </Button>
         </div>

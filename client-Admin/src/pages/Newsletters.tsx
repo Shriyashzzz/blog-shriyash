@@ -68,7 +68,6 @@ export function Newsletters() {
         justify={"center"}
       >
         {newsletters.map((currLetter) => {
-          console.log(currLetter);
           return <NewsLetterItem key={currLetter.id} NewsLetter={currLetter} />;
         })}
       </Grid>

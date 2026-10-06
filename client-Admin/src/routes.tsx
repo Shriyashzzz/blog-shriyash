@@ -7,6 +7,7 @@ import { NewPost } from "./pages/NewPost";
 import { EditPost } from "./pages/EditPost";
 import { NewNewsLetter } from "./pages/NewNewsletter";
 import { Newsletters } from "./pages/Newsletters";
+import { EditNewsLetter } from "./pages/EditNewsLetter";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
       { element: <NewPost />, path: "/new/post" },
       { element: <EditPost />, path: "/edit/:postId" },
       { element: <NewNewsLetter />, path: "/new/newsletter" },
+      { element: <EditNewsLetter />, path: "/edit/newsletter/:letterId" },
     ],
   },
 ]);
