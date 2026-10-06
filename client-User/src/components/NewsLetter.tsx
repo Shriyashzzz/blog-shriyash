@@ -61,7 +61,7 @@ function SubNewsLetter({ className }: Props) {
           <Form.Control asChild>
             <input
               ref={emailRef}
-              className="bg-blackA2 shadow-blackA6 selection:bg-blackA6 box-border inline-flex h-8.75 w-full appearance-none items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] outline-none selection:text-white hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black] dark:text-white"
+              className="bg-blackA2 shadow-blackA6 selection:bg-blackA6 selection:text-gray box-border inline-flex h-8.75 w-full appearance-none items-center justify-center rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] outline-none dark:border-white dark:text-white dark:hover:shadow-[0_0_0_1px_white] dark:focus:shadow-[0_0_0_2px_white]"
               type="email"
               placeholder="email@example.com"
               required
@@ -87,7 +87,7 @@ function SubNewsLetter({ className }: Props) {
         <Form.Submit asChild>
           <button
             onClick={(e) => handleSubscribeClick(e)}
-            className="text-violet11 hover:bg-mauve3 shadow-white-200 focus:shadow-black-600 box-border inline-flex h-8.75 w-full cursor-pointer items-center justify-center rounded bg-gray-300 px-3.75 leading-none font-medium shadow-[0_2px_3px] focus:shadow-[0_0_0_2px] focus:outline-none dark:bg-gray-400 dark:shadow-[0_2px_3px]"
+            className="hover:bg-mauve3 shadow-white-200 focus:shadow-black-600 box-border inline-flex h-8.75 w-full cursor-pointer items-center justify-center rounded bg-gray-300 px-3.75 leading-none font-medium shadow-[0_2px_3px] focus:shadow-[0_0_0_2px] focus:outline-none dark:bg-gray-500 dark:shadow-[0_2px_3px]"
           >
             Subscribe to my newsletter!
           </button>
