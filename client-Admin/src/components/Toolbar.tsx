@@ -12,7 +12,7 @@ export function ToolBar({ def }: ToolBarProp) {
       defaultValue={def}
       radius="medium"
       size={"2"}
-      className="mt-2 p-0 m-0 "
+      className="mt-2 p-0 m-0 w-full"
     >
       <SegmentedControl.Item
         value="Posts"

@@ -53,8 +53,10 @@ export function Newsletters() {
   if (loading) return <Spinner />;
 
   return (
-    <section className="sm:w-4/5 w-full h-full p-5 flex flex-col gap-5">
-      <ToolBar def={"Newsletters"} />
+    <section className="sm:w-4/5 w-full h-full p-5 flex flex-col justify-center items-center gap-5 ">
+      <div className=" lg:w-3/5 w-full">
+        <ToolBar def={"Newsletters"} />
+      </div>
       <MenuBar
         ButtonText="New Newsletter?"
         OnClickNav="/new/newsletter"

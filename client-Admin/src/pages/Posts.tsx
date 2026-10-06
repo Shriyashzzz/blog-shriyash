@@ -33,8 +33,11 @@ export function Posts() {
   if (loading) return <Spinner />;
   if (data && data.posts)
     return (
-      <section className="sm:w-4/5 w-full p-5 flex flex-col gap-5">
-        <ToolBar def={"Posts"} />
+      <section className="sm:w-4/5 w-full h-full p-5 flex flex-col justify-center items-center gap-5 ">
+        <div className=" lg:w-3/5 w-full">
+          {" "}
+          <ToolBar def={"Posts"} />
+        </div>
         <MenuBar ButtonText="New Post?" OnClickNav="/new/post" BtnColor="red" />
 
         <Grid
