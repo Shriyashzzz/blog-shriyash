@@ -32,7 +32,7 @@ function SubNewsLetter({ className = "" }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-
+      console.log(response);
       if (response.ok) {
         showMessage("Thanks for subscribing <3");
         form.reset();

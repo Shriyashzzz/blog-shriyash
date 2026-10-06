@@ -13,12 +13,11 @@ import {
   verifySubscribersToken,
 } from "../ultility/getSubscriberToken.js";
 import { prisma } from "../config/prisma.js";
-import { sendWelcomeEmail } from "../scripts/welcomeNewsletter.js";
 import adminQueries from "../models/adminQueries.js";
 import type { QueryResponse } from "../models/adminQueries.js";
 import type { TypeNewsLetter } from "../models/adminQueries.js";
 import type { NewsLetter } from "../generated/prisma/client.js";
-import { jobQueue } from "../jobs/newletter.job.js";
+import { EmailjobQueue } from "../jobs/newletter.job.js";
 import "../workers/newsletter.worker.js";
 
 const validationEmail = [
@@ -46,8 +45,15 @@ const signUp = [
       if (!token) return next(new AppError("Server Error", 500, true));
       const response = await queries.signUpNewsLetter(email, token);
       if (response.ok) {
-        const welcomeMsgSent = await sendWelcomeEmail(email, token);
-        if (!welcomeMsgSent) console.error("unable to send welcome message");
+        EmailjobQueue.add(
+          "send-welcome-script",
+          { email, token },
+          {
+            attempts: 3,
+            backoff: { type: "exponential", delay: 5000 },
+            removeOnComplete: true,
+          },
+        ).catch((err) => console.error("welcome enqueue failed", err));
         return res.status(200).json({
           message: "successfully subscribed to the newsletter",
         });
@@ -115,7 +121,7 @@ const createNewsLetter = [
         const subscribers = subResponse.data;
         //add jobs to the queue to send the newsletter
         subscribers?.map((sub) => {
-          jobQueue.add(
+          EmailjobQueue.add(
             "send-newsletter",
             {
               email: sub.email,
@@ -217,7 +223,7 @@ const updateNewsLetter = [
         const subscribers = subResponse.data;
         //add jobs to the queue
         subscribers?.map((sub) => {
-          jobQueue.add(
+          EmailjobQueue.add(
             "send-newsletter",
             {
               email: sub.email,

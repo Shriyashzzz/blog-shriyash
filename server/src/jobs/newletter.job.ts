@@ -7,8 +7,10 @@ import { redisConnection } from "../config/redis.js";
 // --------example-----------
 
 //make the new queue on the redis
-const jobQueue = new Queue("newsletter-queue", { connection: redisConnection });
+const EmailjobQueue = new Queue("newsletter-queue", {
+  connection: redisConnection,
+});
 
-jobQueue.on("error", (err) => console.error("Queue error:", err));
+EmailjobQueue.on("error", (err) => console.error("Queue error:", err));
 
-export { jobQueue };
+export { EmailjobQueue };
