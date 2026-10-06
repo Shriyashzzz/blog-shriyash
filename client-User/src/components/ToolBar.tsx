@@ -8,7 +8,7 @@ interface ToolBarProp {
 export function ToolBar({ def }: ToolBarProp) {
   const naviagte = useNavigate();
   return (
-    <SegmentedControl.Root defaultValue={def} radius="medium">
+    <SegmentedControl.Root defaultValue={def} radius="medium" className="w-85">
       <SegmentedControl.Item
         value="Home"
         onClick={() => naviagte("/")}
