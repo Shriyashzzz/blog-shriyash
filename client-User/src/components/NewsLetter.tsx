@@ -87,7 +87,7 @@ function SubNewsLetter({ className }: Props) {
         <Form.Submit asChild>
           <button
             onClick={(e) => handleSubscribeClick(e)}
-            className="hover:bg-mauve3 shadow-white-200 focus:shadow-black-600 box-border inline-flex h-8.75 w-full cursor-pointer items-center justify-center rounded bg-gray-300 px-3.75 leading-none font-medium shadow-[0_2px_3px] focus:shadow-[0_0_0_2px] focus:outline-none dark:bg-gray-500 dark:shadow-[0_2px_3px]"
+            className="hover:bg-mauve3 box-border inline-flex h-8.75 w-full cursor-pointer items-center justify-center rounded bg-gray-300 px-3.75 leading-none font-medium shadow-[0_2px_3px] transition-all duration-100 focus:outline-none focus-visible:shadow-[0_0_0_2px] active:translate-y-px active:shadow-none disabled:cursor-wait disabled:opacity-60 dark:bg-gray-500"
           >
             Subscribe to my newsletter!
           </button>
