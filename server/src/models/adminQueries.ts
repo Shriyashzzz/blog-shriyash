@@ -259,6 +259,9 @@ class AdminQueries {
           createdAt: true,
           draft: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
       return { ok: true, data: data };
     } catch (e) {
