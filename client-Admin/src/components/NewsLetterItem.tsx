@@ -39,17 +39,27 @@ export function NewsLetterItem({ NewsLetter }: Props) {
         </div>
       </section>
       {/* buttons */}
-      {!NewsLetter.draft && (
-        <div className="p-5 w-full flex justify-start ">
+
+      <div className="p-5 w-full flex justify-start ">
+        {NewsLetter.draft && (
+          <Button
+            style={{ cursor: "pointer" }}
+            color={"red"}
+            onClick={() => navigate(`/edit/newsletter/${NewsLetter.id}`)}
+          >
+            Edit Letter
+          </Button>
+        )}
+        {!NewsLetter.draft && (
           <Button
             style={{ cursor: "pointer" }}
             color={"green"}
             onClick={() => navigate(`/edit/newsletter/${NewsLetter.id}`)}
           >
-            Edit Letter
+            View Letter
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </Box>
   );
 }

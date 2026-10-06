@@ -14,7 +14,7 @@ export function NewNewsLetter() {
 
   return (
     <div className="  w-full sm:w-4/5 p-5 gap-5 flex flex-col">
-      <SendNewsLetter html={html} subject={subject} />
+      <SendNewsLetter html={html} subject={subject} isEdited={false} />
       <section className="flex gap-5 bg-gray-900 p-3  ">
         <TextField.Root
           value={subject && subject}

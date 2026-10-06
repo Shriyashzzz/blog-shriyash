@@ -8,7 +8,7 @@ interface Props {
   html: string;
   subject: string;
   isEdited?: boolean;
-  id?: number;
+  id?: string;
 }
 
 export function SendNewsLetter({ html, subject, isEdited, id }: Props) {
@@ -22,19 +22,38 @@ export function SendNewsLetter({ html, subject, isEdited, id }: Props) {
         html: html,
         isDraft: isDraft,
       };
-
+      if (isEdited && id && isDraft) {
+        const response = await fetch(`/api/newsletter/patch/${id}`, {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestBody),
+        });
+        // error handling
+        if (response.ok) {
+          navigate("/home/newsletters", { viewTransition: true });
+          return;
+        }
+        const data = await response.json();
+        navigate("/error", {
+          viewTransition: true,
+          state: { title: "Error: 500", message: data.message },
+        });
+        return;
+      }
       const response = await fetch("/api/newsletter/create", {
         credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
       });
+
       if (response.ok) {
         navigate("/home/newsletters", { viewTransition: true });
         return;
       }
+      //error handling
       const data = await response.json();
-      console.log(data);
       navigate("/error", {
         viewTransition: true,
         state: { title: "Error: 500", message: data.message },

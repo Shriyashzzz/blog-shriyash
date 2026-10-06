@@ -11,6 +11,7 @@ export function EditNewsLetter() {
   const [html, setHtml] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const { letterId } = useParams();
+  const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
   useEffect(() => {
     async function getSave() {
@@ -21,6 +22,7 @@ export function EditNewsLetter() {
       });
       if (response.ok) {
         const data = await response.json();
+        if (data.letter.draft) setIsViewMode(false);
         setHtml(data.letter.html);
         setSubject(data.letter.subject);
       } else {
@@ -36,7 +38,15 @@ export function EditNewsLetter() {
 
   return (
     <div className="  w-full sm:w-4/5 p-5 gap-5 flex flex-col">
-      <SendNewsLetter html={html} subject={subject} />
+      {!isViewMode && (
+        <SendNewsLetter
+          html={html}
+          subject={subject}
+          isEdited={true}
+          id={letterId}
+        />
+      )}
+
       <section className="flex gap-5 bg-gray-900 p-3  ">
         <TextField.Root
           value={subject && subject}
