@@ -5,10 +5,7 @@ import passport from "passport";
 const newsLetterRouter = Router({ mergeParams: true });
 
 newsLetterRouter.post("/signup", newsLetterController.signUp);
-newsLetterRouter.all(
-  "/unsubscribe/newsLetter",
-  newsLetterController.unsubscribe,
-);
+newsLetterRouter.all("/unsubscribe", newsLetterController.unsubscribe);
 
 newsLetterRouter.post(
   "/create",
