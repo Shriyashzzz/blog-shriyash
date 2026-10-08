@@ -72,10 +72,10 @@ const unsubscribe = [
   ...validationToken,
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+    const { token } = matchedData(req);
     if (!errors.isEmpty()) {
       return res.status(400);
     }
-    const { token } = matchedData(req);
     if (req.method !== "GET" && req.method !== "POST")
       return res.sendStatus(405); //invalid request method
     if (!verifySubscribersToken(token)) {
@@ -196,7 +196,7 @@ const updateNewsLetter = [
   ...validation_Letter_Id_Query,
   ...validation_patch_newsletter,
   async (req: Request, res: Response, next: NextFunction) => {
-    const errors = matchedData(req);
+    const errors = validationResult(req);
     if (!errors.isEmpty())
       return next(new AppError("Invalid reqest payload", 500, false));
     //Send emails if isDraft is turned to true
