@@ -201,7 +201,8 @@ const updateNewsLetter = [
       return next(new AppError("Invalid reqest payload", 500, false));
     //Send emails if isDraft is turned to true
     const { html, isDraft, subject, letterId } = matchedData(req);
-    const response = await adminQueries.getNewsLetter(letterId);
+    const intLetterId: number = parseInt(letterId);
+    const response = await adminQueries.getNewsLetter(intLetterId);
     if (!response.ok || !response.data) return next(new Error("Server Error"));
     const currentNewsLetter: NewsLetter = response.data.letter;
     if (currentNewsLetter.draft == true)
@@ -211,7 +212,12 @@ const updateNewsLetter = [
 
     const currentQueryResponse: QueryResponse<{
       letter: NewsLetter;
-    }> = await adminQueries.updateNewsLetter(letterId, html, subject, isDraft);
+    }> = await adminQueries.updateNewsLetter(
+      intLetterId,
+      html,
+      subject,
+      isDraft,
+    );
 
     if (currentQueryResponse.ok) {
       if (!currentNewsLetter.draft && currentQueryResponse.data?.letter.draft) {
