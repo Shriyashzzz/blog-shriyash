@@ -205,7 +205,7 @@ const updateNewsLetter = [
     const response = await adminQueries.getNewsLetter(intLetterId);
     if (!response.ok || !response.data) return next(new Error("Server Error"));
     const currentNewsLetter: NewsLetter = response.data.letter;
-    if (currentNewsLetter.draft == true)
+    if (currentNewsLetter.draft == false)
       return res
         .status(405)
         .json({ message: "Sent Email's cannot be taken back" });
