@@ -50,11 +50,21 @@ app.use(
     └── src/
         ├── adminControllers/
         ├── adminRoutes/
+        ├── config/
         ├── controllers/
         ├── routes/
         ├── middlewares/
         ├── models/
+        ├── jobs/
+        ├── routes/
+        ├── services/
+        ├── templates/
+        ├── tests/
+        ├── workers/
+        ├── utility/
+        ├── types/
         └── server.ts
+
 ```
 
 ## Environment Variables (`server/.env`)

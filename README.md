@@ -28,6 +28,7 @@ A personal full-stack blog web app with a REST API backend (Node.js / Express / 
 
 - **Frontend:** React, Redux, TypeScript, Tailwind, React Router, Radix UI, Tailwind Typography
 - **Backend:** Express 5, TypeScript, Prisma ORM, PostgreSQL, Supabase
+- **Newsletter** NodeMailer, Resend, Redis, BullMQ, ImprovMX
 - **Auth:** Passport (JWT strategy), JWT cookies, bcryptjs password hashing
 - **Validation:** express-validator
 - **Frontends:** `client-User` (public blog with interactive post management), `client-Admin` (admin-side post and comment management)

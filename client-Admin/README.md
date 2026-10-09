@@ -20,6 +20,7 @@ The CMS frontend for ** &lt; Shriyash Uncompiled /> &gt;** — where the admin w
 - Manage comments — delete any comment across posts
 - View all posts, including unpublished drafts
 - Admin-only login with JWT-based auth (via cookie, 2-day token lifetime)
+- Newletter front end to send newsletter/ make drafts etc, used 'react-simple-wysiwyg' for parsing text to html
 
 ## Shortcuts
 
