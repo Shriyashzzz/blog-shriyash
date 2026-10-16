@@ -115,7 +115,7 @@ export function ViewPost() {
               {post.content}
             </Markdown>
             <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-1 items-center justify-start gap-4">
+              <div className="flex flex-1 items-center justify-start gap-2">
                 <SubNewsLetter
                   className={
                     "flex w-full justify-start not-xl:justify-start xl:w-1/5"
