@@ -7,7 +7,7 @@ type Props = {
 
 export function AuthorCard({ className }: Props) {
   return (
-    <div className={`flex flex-col items-center justify-center ${className}`}>
+    <div className={`flex flex-col items-start justify-center ${className}`}>
       <p className="font-[Nabla] text-amber-600 sm:text-xl">
         Author: Shriyash Ghimire
       </p>
