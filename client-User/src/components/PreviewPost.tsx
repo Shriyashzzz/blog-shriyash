@@ -4,17 +4,26 @@ import { Post } from "./AllPostContainer";
 import { useNavigate } from "react-router";
 import rehypeSanitize from "rehype-sanitize";
 import rehypeRaw from "rehype-raw";
-
+import { remark } from "remark";
+import { useEffect, useState } from "react";
+import strip from "strip-markdown";
 interface PreviewPostProps {
   post: Post;
 }
 
-export function PreviewPost({ post }: PreviewPostProps) {
+export async function PreviewPost({ post }: PreviewPostProps) {
   const navigate = useNavigate();
   const navToViewPost = (): void => {
     navigate(`/viewpost/${post.id}`);
   };
-
+  const [postContent, setPostContent] = useState<string>("");
+  useEffect(() => {
+    const stripLinks = async () => {
+      const postContent = await remark().use(strip).process(post.content);
+      setPostContent(String(postContent));
+    };
+    stripLinks();
+  }, [post]);
   return (
     <article
       onClick={() => navToViewPost()}
@@ -30,7 +39,7 @@ export function PreviewPost({ post }: PreviewPostProps) {
           remarkPlugins={[remarkGm]}
           rehypePlugins={[rehypeRaw, rehypeSanitize]}
         >
-          {post.content}
+          {postContent}
         </Markdown>
       </div>
     </article>
