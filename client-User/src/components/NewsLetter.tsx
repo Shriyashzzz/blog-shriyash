@@ -51,7 +51,7 @@ function SubNewsLetter({ className = "" }: Props) {
 
   return (
     <section className={className}>
-      <Form.Root className="p-3" onSubmit={handleSubmit}>
+      <Form.Root className="" onSubmit={handleSubmit}>
         <Form.Field className="mb-2.5 grid" name="email">
           <Form.Label className="font-[Nabla] text-[15px] leading-[35px] font-medium text-green-600 dark:text-white">
             Like my Blogs?

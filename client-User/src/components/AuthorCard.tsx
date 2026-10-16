@@ -1,9 +1,13 @@
 import { Card, Flex, Box, Avatar, Text } from "@radix-ui/themes";
 import AuthorIcon from "../assets/icons/authorIcon.jpg";
 
-export function AuthorCard() {
+type Props = {
+  className?: string;
+};
+
+export function AuthorCard({ className }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className={`flex flex-col items-center justify-center ${className}`}>
       <p className="font-[Nabla] text-amber-600 sm:text-xl">
         Author: Shriyash Ghimire
       </p>
