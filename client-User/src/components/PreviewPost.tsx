@@ -11,7 +11,7 @@ interface PreviewPostProps {
   post: Post;
 }
 
-export async function PreviewPost({ post }: PreviewPostProps) {
+export function PreviewPost({ post }: PreviewPostProps) {
   const navigate = useNavigate();
   const navToViewPost = (): void => {
     navigate(`/viewpost/${post.id}`);
