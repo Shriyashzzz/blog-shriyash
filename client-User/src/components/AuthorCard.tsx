@@ -3,7 +3,7 @@ import AuthorIcon from "../assets/icons/authorIcon.jpg";
 
 export function AuthorCard() {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <p className="font-[Nabla] text-amber-600 sm:text-xl">
         Author: Shriyash Ghimire
       </p>

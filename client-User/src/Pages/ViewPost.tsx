@@ -18,6 +18,7 @@ import { iso8061DateParser } from "../utils/ISO8061DateParser";
 import { LovePost } from "../components/LovePost";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
+import SubNewsLetter from "../components/NewsLetter";
 
 export interface Author {
   id: number;
@@ -114,13 +115,20 @@ export function ViewPost() {
               {post.content}
             </Markdown>
             <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-1 items-center justify-start gap-4">
+                <SubNewsLetter
+                  className={
+                    "flex w-full justify-start not-xl:justify-start xl:w-1/5"
+                  }
+                />
+                <LovePost
+                  post={post}
+                  setPostLoveNum={setPostLoveNum}
+                  size="4"
+                  color="green"
+                />
+              </div>
               <AuthorCard />{" "}
-              <LovePost
-                post={post}
-                setPostLoveNum={setPostLoveNum}
-                size="4"
-                color="green"
-              />
             </div>
           </section>
         </div>
