@@ -117,6 +117,8 @@ export function EditPost() {
               js: "JavaScript",
               css: "CSS",
               tsx: "TypeScript",
+              bash: "Bash",
+              sh: "Shell",
             },
             codeMirrorExtensions: [codeMirrorDarkTheme],
           }),
